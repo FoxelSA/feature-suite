@@ -6,6 +6,7 @@
     MAKE_KEYSIFT=feature-key-SIFT
     MAKE_KEYSURF=feature-key-SURF
     MAKE_KEYVIEW=feature-key-view
+    MAKE_KEYSCAL=feature-key-scale
     MAKE_MATSIFT=feature-match-SIFT
     MAKE_MATSURF=feature-match-SURF
     MAKE_MATSIEV=feature-match-sieve
@@ -41,6 +42,9 @@
 
     $(MAKE_KEYVIEW):directories
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_KEYVIEW) clean && $(MAKE) -C $(MAKE_SOURCE)/$(MAKE_KEYVIEW) all && cp $(MAKE_SOURCE)/$(MAKE_KEYVIEW)/$(MAKE_BINARY)/$(MAKE_KEYVIEW) $(MAKE_BINARY)/
+
+    $(MAKE_KEYSCAL):directories
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_KEYSCAL) clean && $(MAKE) -C $(MAKE_SOURCE)/$(MAKE_KEYSCAL) all && cp $(MAKE_SOURCE)/$(MAKE_KEYSCAL)/$(MAKE_BINARY)/$(MAKE_KEYSCAL) $(MAKE_BINARY)/
 
     $(MAKE_MATSIFT):directories
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATSIFT) clean && $(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATSIFT) all && cp $(MAKE_SOURCE)/$(MAKE_MATSIFT)/$(MAKE_BINARY)/$(MAKE_MATSIFT) $(MAKE_BINARY)/
