@@ -85,7 +85,7 @@
         if ( stda( argc, argv, "--help", "-h" ) ) {
 
             /* Display message */
-            std::cout << "Dave, this conversation can serve no purpose anymore. Goodbye." << std::endl;
+            std::cout << FS_HELP;
 
         } else {
     
@@ -129,7 +129,7 @@
                     if ( fsMatchfile.is_open() == true ) {
 
                         /* Export match count */
-                        fsMatchfile << fsMatches.size() << " 0 0 0 0 0" << std::endl;
+                        fsMatchfile << fsMatches.size() << std::endl;
 
                         /* Export match coordinates */
                         for ( unsigned int fsIndex = 0; fsIndex < fsMatches.size(); fsIndex ++ ) {

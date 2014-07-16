@@ -13,7 +13,6 @@
     MAKE_MATVIEW=feature-match-view
     MAKE_IMGEQUA=feature-image-equal
     MAKE_IMGEXPO=feature-image-expose
-    MAKE_DECENTR=feature-image-decent
     MAKE_GRAYCON=feature-image-gray
 
 
@@ -22,6 +21,7 @@
 #
 
     MAKE_BINARY=bin
+    MAKE_DOCUME=doc
     MAKE_SOURCE=src
 
 #
@@ -64,11 +64,26 @@
     $(MAKE_IMGEXPO):directories
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_IMGEXPO) clean && $(MAKE) -C $(MAKE_SOURCE)/$(MAKE_IMGEXPO) all && cp $(MAKE_SOURCE)/$(MAKE_IMGEXPO)/$(MAKE_BINARY)/$(MAKE_IMGEXPO) $(MAKE_BINARY)/
 
-    $(MAKE_DECENTR):directories
-	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_DECENTR) clean && $(MAKE) -C $(MAKE_SOURCE)/$(MAKE_DECENTR) all && cp $(MAKE_SOURCE)/$(MAKE_DECENTR)/$(MAKE_BINARY)/$(MAKE_DECENTR) $(MAKE_BINARY)/
-
     $(MAKE_GRAYCON):directories
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_GRAYCON) clean && $(MAKE) -C $(MAKE_SOURCE)/$(MAKE_GRAYCON) all && cp $(MAKE_SOURCE)/$(MAKE_GRAYCON)/$(MAKE_BINARY)/$(MAKE_GRAYCON) $(MAKE_BINARY)/
+
+#
+#   make - Documentation
+#
+
+    documentation:directories
+	mkdir -p $(MAKE_DOCUME)/html && rm $(MAKE_DOCUME)/html/* -f
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_KEYSIFT) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_KEYSIFT)/$(MAKE_DOCUME)/html $(MAKE_KEYSIFT) && cd -
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_KEYSURF) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_KEYSURF)/$(MAKE_DOCUME)/html $(MAKE_KEYSURF) && cd -
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_KEYVIEW) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_KEYVIEW)/$(MAKE_DOCUME)/html $(MAKE_KEYVIEW) && cd -
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_KEYSCAL) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_KEYSCAL)/$(MAKE_DOCUME)/html $(MAKE_KEYSCAL) && cd -
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATSIFT) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_MATSIFT)/$(MAKE_DOCUME)/html $(MAKE_MATSIFT) && cd -
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATSURF) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_MATSURF)/$(MAKE_DOCUME)/html $(MAKE_MATSURF) && cd -
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATVIEW) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_MATVIEW)/$(MAKE_DOCUME)/html $(MAKE_MATVIEW) && cd -
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATSIEV) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_MATSIEV)/$(MAKE_DOCUME)/html $(MAKE_MATSIEV) && cd -
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_IMGEQUA) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_IMGEQUA)/$(MAKE_DOCUME)/html $(MAKE_IMGEQUA) && cd -
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_IMGEXPO) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_IMGEXPO)/$(MAKE_DOCUME)/html $(MAKE_IMGEXPO) && cd -
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_GRAYCON) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_GRAYCON)/$(MAKE_DOCUME)/html $(MAKE_GRAYCON) && cd -
 
 #
 #   make - Directories
@@ -76,6 +91,7 @@
 
     directories:
 	mkdir -p $(MAKE_BINARY)
+	mkdir -p $(MAKE_DOCUME)
 
 #
 #   make - Cleaning

@@ -36,41 +36,40 @@
  *      Attribution" section of <http://foxel.ch/license>.
  */
 
+    //! @file   feature-key-scale.hpp
+    //! @author Nils Hamel (nils.hamel@foxel.ch)
+    //! 
+    //! Software main header (single function software)
 
 /* 
     Header - Include guard
  */
 
-    # ifndef __FEATURE_IMAGE_DECENT__
-    # define __FEATURE_IMAGE_DECENT__
+    # ifndef __FEATURE_KEY_SCALE__
+    # define __FEATURE_KEY_SCALE__
 
 /* 
     Header - Includes
  */
 
     # include <iostream>
+    # include <fstream>
     # include <vector>
-    # include <cmath>
-    # include <opencv2/opencv.hpp>
-    # include <opencv2/highgui/highgui_c.h>
+    # include <numeric>
     # include "common-stdap.hpp"
 
 /* 
     Header - Preprocessor definitions
  */
 
-    /* Define entropic sampling rectangle */
-    # define FS_SAMPLE_X 4
-    # define FS_SAMPLE_Y 4
-    # define FS_SAMPLE_C ( ( FS_SAMPLE_X + 1 ) * ( FS_SAMPLE_X + 1 ) )
+    /* Standard help */
+    # define FS_HELP "feature-key-scale - feature-suite\n" \
+                     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
+                     "See https://github.com/FoxelSA/feature-suite for more information\n"
 
 /* 
     Header - Preprocessor macros
  */
-
-    /* Min and max macro */
-    # define FS_MIN(x,y) ( ( ( x ) < ( y ) ) ? ( x ) : ( y ) )
-    # define FS_MAX(x,y) ( ( ( x ) > ( y ) ) ? ( x ) : ( y ) )
 
 /* 
     Header - Typedefs
@@ -84,7 +83,16 @@
     Header - Function prototypes
  */
 
-    float fs_imagedecent_shannon( float fsAccum[], int fsStack );
+    //! Software main function (single function software)
+
+    //! The main function frame follows : parameters are initialized and read. The input
+    //! keypoints file is read line by line. The lines are scaled and immediately exported
+    //! in the output keypoints file.
+    //! 
+    //! @param argc Standard main parameters
+    //! @param argv Standard main parameters
+
+    int main ( int argc, char ** argv );
 
 /*
     Header - Include guard

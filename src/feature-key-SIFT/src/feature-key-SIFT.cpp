@@ -86,7 +86,7 @@
         if ( stda( argc, argv, "--help", "-h" ) ) {
 
             /* Display message */
-            std::cout << "Dave, this conversation can serve no purpose anymore. Goodbye." << std::endl;
+            std::cout << FS_HELP;
 
         } else {
     
@@ -112,7 +112,7 @@
                 if ( fsKeyfile.is_open() == true ) {
 
                     /* Export keypoint count */
-                    fsKeyfile << fsKey.size() << " 2" << std::endl;
+                    fsKeyfile << fsKey.size() << std::endl;
 
                     /* Export results */
                     for ( unsigned int fsIndex = 0; fsIndex < fsKey.size(); fsIndex ++ ) {

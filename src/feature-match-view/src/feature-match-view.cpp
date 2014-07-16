@@ -57,7 +57,6 @@
 
         /* Keypoint matrix size */
         int   fsRows = 0;
-        int   fsCols = 0;
 
         /* Keypoint coordinates */
         float fsKeyAI = 0.0;
@@ -85,7 +84,7 @@
         if ( stda( argc, argv, "--help", "-h" ) ) {
 
             /* Display message */
-            std::cout << "Dave, this conversation can serve no purpose anymore. Goodbye." << std::endl;
+            std::cout << FS_HELP;
 
         } else {
     
@@ -112,7 +111,7 @@
                 if ( fsMatchfile.is_open() == true ) {
 
                     /* Read keypoint matrix size */
-                    fsMatchfile >> fsRows >> fsCols >> fsCols >> fsCols >> fsCols >> fsCols;
+                    fsMatchfile >> fsRows;
 
                     /* Export results */
                     for ( int fsIndex = 0; fsIndex < fsRows; fsIndex ++ ) {

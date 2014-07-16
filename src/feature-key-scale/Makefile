@@ -3,7 +3,7 @@
 #   make - Configuration
 #
 
-	MAKE_NAME=feature-image-decent
+	MAKE_NAME=feature-key-scale
 	MAKE_CODE=cpp
 	MAKE_TYPE=application
 
@@ -49,7 +49,7 @@ ifeq ($(MAKE_CODE),cpp)
 	MAKE_SRCOPTN=-Wall -funsigned-char -std=c++11 -O3
 endif
 endif
-	MAKE_OBJOPTN=`pkg-config --cflags --libs opencv`
+	MAKE_OBJOPTN=
 
 #
 #   make - All

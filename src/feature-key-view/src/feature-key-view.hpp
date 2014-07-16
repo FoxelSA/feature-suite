@@ -36,6 +36,10 @@
  *      Attribution" section of <http://foxel.ch/license>.
  */
 
+    //! @file   feature-key-view.hpp
+    //! @author Nils Hamel (nils.hamel@foxel.ch)
+    //! 
+    //! Software main header (single function software)
 
 /* 
     Header - Include guard
@@ -59,6 +63,11 @@
     Header - Preprocessor definitions
  */
 
+    /* Standard help */
+    # define FS_HELP "feature-key-view - feature-suite\n" \
+                     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
+                     "See https://github.com/FoxelSA/feature-suite for more information\n"
+
 /* 
     Header - Preprocessor macros
  */
@@ -74,6 +83,17 @@
 /* 
     Header - Function prototypes
  */
+
+    //! Software main function (single function software)
+
+    //! The main function frame follows : parameters are initialized and read. The
+    //! input image is imported in grayscale mode and the keypoints file is read. 
+    //! The keypoints are drawn on the grayscale image that is then exported.
+    //! 
+    //! @param argc Standard main parameters
+    //! @param argv Standard main parameters
+
+    int main ( int argc, char ** argv );
 
 /*
     Header - Include guard

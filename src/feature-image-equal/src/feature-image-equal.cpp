@@ -79,7 +79,7 @@
         if ( stda( argc, argv, "--help", "-h" ) ) {
 
             /* Display message */
-            std::cout << "Dave, this conversation can serve no purpose anymore. Goodbye." << std::endl;
+            std::cout << FS_HELP;
 
         } else {
 

@@ -36,6 +36,10 @@
  *      Attribution" section of <http://foxel.ch/license>.
  */
 
+    //! @file   feature-image-equal.hpp
+    //! @author Nils Hamel (nils.hamel@foxel.ch)
+    //! 
+    //! Software main header (single function software)
 
 /* 
     Header - Include guard
@@ -67,6 +71,11 @@
     Header - Preprocessor macros
  */
 
+    /* Standard help */
+    # define FS_HELP "feature-image-equal - feature-suite\n" \
+                     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
+                     "See https://github.com/FoxelSA/feature-suite for more information\n"
+
     /* Compute vector mean value */
     # define FS_VMEAN(v)         ( ( float ) std::accumulate( v.begin(), v.end(), 0.0) / ( float ) v.size() )
 
@@ -84,6 +93,18 @@
 /* 
     Header - Function prototypes
  */
+
+    //! Software main function (single function software)
+
+    //! The main function frame follows : parameters are initialized and read. The
+    //! two images are loaded and their statistical quantities are computed. The
+    //! two images are then aligned in term of exposure according to parameters.
+    //! The two images are finally both exported.
+    //! 
+    //! @param argc Standard main parameters
+    //! @param argv Standard main parameters
+
+    int main ( int argc, char ** argv );
 
 /*
     Header - Include guard

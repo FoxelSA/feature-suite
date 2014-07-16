@@ -55,7 +55,6 @@
 
         /* Reading variables */
         int   fsCount = 0;
-        int   fsVoid  = 0;
 
         /* Filters parameters */
         float fsStrength = 1.0;
@@ -82,7 +81,7 @@
         if ( stda( argc, argv, "--help", "-h" ) ) {
 
             /* Display message */
-            std::cout << "Dave, this conversation can serve no purpose anymore. Goodbye." << std::endl;
+            std::cout << FS_HELP;
 
         } else {
 
@@ -93,7 +92,7 @@
             if ( fsStream.is_open() == true ) {
 
                 /* Read matches count and padding */
-                fsStream >> fsCount >> fsVoid >> fsVoid >> fsVoid >> fsVoid >> fsVoid;
+                fsStream >> fsCount;
 
                 /* Read matches coordinates */
                 for ( int fsIndex = 0; fsIndex < fsCount; fsIndex ++ ) {
@@ -144,7 +143,7 @@
                 if ( fsStream.is_open() == true ) {
 
                     /* Export matches count and padding */
-                    fsStream << fsMatch.size() << " 0 0 0 0 0" << std::endl;
+                    fsStream << fsMatch.size() << std::endl;
 
                     /* Export matches coordinates */
                     for ( unsigned int fsIndex = 0; fsIndex < fsMatch.size(); fsIndex ++ ) {

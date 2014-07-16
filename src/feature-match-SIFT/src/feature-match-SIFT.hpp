@@ -36,6 +36,10 @@
  *      Attribution" section of <http://foxel.ch/license>.
  */
 
+    //! @file   feature-match-SIFT.hpp
+    //! @author Nils Hamel (nils.hamel@foxel.ch)
+    //! 
+    //! Software main header
 
 /* 
     Header - Include guard
@@ -59,6 +63,11 @@
     Header - Preprocessor definitions
  */
 
+    /* Standard help */
+    # define FS_HELP "feature-match-SIFT - feature-suite\n" \
+                     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
+                     "See https://github.com/FoxelSA/feature-suite for more information\n"
+
 /* 
     Header - Preprocessor macros
  */
@@ -74,6 +83,25 @@
 /* 
     Header - Function prototypes
  */
+
+    //! Software main function
+
+    //! The main function frame follows : parameters are initialized and read. The
+    //! two input images are imported in grayscale mode and the two keypoints files
+    //! are read. The OpenCV SIFT descriptor is called befor the OpenCV Flann matcher
+    //! generate the matches. The list of matches is then exported.
+    //! 
+    //! @param argc Standard main parameters
+    //! @param argv Standard main parameters
+
+    int main ( int argc, char ** argv );
+
+    //! Keypoints file reader
+
+    //! The function simply load the keypoint information from the specified file.
+    //!
+    //! @param fsKeyfile Path of the keypoints file
+    //! @return Read keypoint
 
     std::vector < cv::KeyPoint > fs_matchSIFT_readkey ( const char * const fsKeyfile );
 

@@ -61,7 +61,6 @@
 
         /* Keypoint matrix size */
         int   fsRows = 0;
-        int   fsCols = 0;
 
         /* Input stream */
         std::ifstream fsKeyfile;
@@ -78,7 +77,7 @@
         if ( stda( argc, argv, "--help", "-h" ) ) {
 
             /* Display message */
-            std::cout << "Dave, this conversation can serve no purpose anymore. Goodbye." << std::endl;
+            std::cout << FS_HELP;
 
         } else {
     
@@ -98,7 +97,7 @@
                 if ( fsKeyfile.is_open() == true ) {
 
                     /* Read keypoint matrix size */
-                    fsKeyfile >> fsRows >> fsCols;
+                    fsKeyfile >> fsRows;
 
                     /* Export results */
                     for ( int fsIndex = 0; fsIndex < fsRows; fsIndex ++ ) {

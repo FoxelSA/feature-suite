@@ -36,6 +36,10 @@
  *      Attribution" section of <http://foxel.ch/license>.
  */
 
+    //! @file   feature-image-expose.hpp
+    //! @author Nils Hamel (nils.hamel@foxel.ch)
+    //! 
+    //! Software main header (single function software)
 
 /* 
     Header - Include guard
@@ -63,6 +67,11 @@
     Header - Preprocessor macros
  */
 
+    /* Standard help */
+    # define FS_HELP "feature-image-expose - feature-suite\n" \
+                     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
+                     "See https://github.com/FoxelSA/feature-suite for more information\n"
+
     /* Compute vector mean value */
     # define FS_VMEAN(v)        ( ( float ) std::accumulate( v.begin(), v.end(), 0.0) / ( float ) v.size() )
 
@@ -80,6 +89,18 @@
 /* 
     Header - Function prototypes
  */
+
+    //! Software main function (single function software)
+
+    //! The main function frame follows : parameters are initialized and read. The
+    //! input image is imported and its statistical quantities are computed. The
+    //! exposure is then corrected according to parameters. The result is then
+    //! exported.
+    //! 
+    //! @param argc Standard main parameters
+    //! @param argv Standard main parameters
+
+    int main ( int argc, char ** argv );
 
 /*
     Header - Include guard

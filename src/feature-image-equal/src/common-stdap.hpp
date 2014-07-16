@@ -7,7 +7,7 @@
  *
  * Author(s):
  *
- * Nils Hamel <nils.hamel@foxel.ch>
+ *      Nils Hamel <n.hamel@foxel.ch>
  *
  *
  * This file is part of the FOXEL project <http://foxel.ch>.
@@ -19,23 +19,27 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
  * Additional Terms:
  *
- * You are required to preserve legal notices and author attributions in
- * that material or in the Appropriate Legal Notices displayed by works
- * containing it.
+ *      You are required to preserve legal notices and author attributions in
+ *      that material or in the Appropriate Legal Notices displayed by works
+ *      containing it.
  *
- * You are required to attribute the work as explained in the "Usage and
- * Attribution" section of <http://foxel.ch/license>.
+ *      You are required to attribute the work as explained in the "Usage and
+ *      Attribution" section of <http://foxel.ch/license>.
  */
 
+    //! @file   common-stdap.hpp
+    //! @author Nils Hamel (nils.hamel@foxel.ch)
+    //! 
+    //! Universal simple parameter parser
 
 /* 
     Header - Include guard
@@ -87,7 +91,31 @@
     Header - Function prototypes
  */
 
+    //! Search agrument position in argv
+
+    //! This function search in the argv string array the position of the argument
+    //! defined through ltag/stag and return the index of the corresponding parameter
+    //! in argv.
+    //!
+    //! @param argc Standard main parameters
+    //! @param argv Standard main parameters
+    //! @param ltag Long-form argument string (--argument)
+    //! @param stag Short-form argument string (-a)
+    //! @return Index of parameter in argv
+
     int  stda ( int argc, char ** argv, const char * const ltag, const char * const stag );
+
+    //! Paramerer reader in argv
+
+    //! This function interpret the parameter in the desired type and return it through
+    //! the param variable. The argi variable is typically set using stda function. If
+    //! argi is set to __STDA_NULL, the function does nothing.
+    //!
+    //! @param argi Index of the parameter in argv
+    //! @param argv Standard main parameters
+    //! @param param Pointer to the variable that recieve the parameter
+    //! @param type Type to use for parameter interpretation
+
     void stdp ( int argi, char ** argv, void * param, int type );
 
 /*
