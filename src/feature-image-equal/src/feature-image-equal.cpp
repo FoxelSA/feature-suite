@@ -73,7 +73,7 @@
         stdp( stda( argc, argv, "--input-b" , "-b" ), argv,   fsImBIPath, __STDP_STRING );
         stdp( stda( argc, argv, "--output-a", "-c" ), argv,   fsEqAOPath, __STDP_STRING );
         stdp( stda( argc, argv, "--output-b", "-d" ), argv,   fsEqBOPath, __STDP_STRING );
-        stdp( stda( argc, argv, "--mode"    , "-m" ), argv, & fsMode      , __STDP_INT    );
+        stdp( stda( argc, argv, "--mode"    , "-m" ), argv, & fsMode      , __STDP_INT  );
 
         /* Software swicth */
         if ( stda( argc, argv, "--help", "-h" ) ) {
