@@ -34,5 +34,5 @@ information.
 
 This program depends on the following software and libraries.
 
-*   __OpenCV 2.4.6__<br />
+*   __OpenCV 2.4.6__ <br />
     <[http://opencv.org/](http://opencv.org/)>
