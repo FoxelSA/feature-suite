@@ -77,7 +77,7 @@
         stdp( stda( argc, argv,"--output"   , "-o" ), argv,   fsMatOPath  , __STDP_STRING );
         stdp( stda( argc, argv,"--extended" , "-t" ), argv, & fsSURFextended, __STDP_INT    );
         stdp( stda( argc, argv,"--upright"  , "-u" ), argv, & fsSURFupright , __STDP_INT    );
-        stdp( stda( argc, argv,"--layer"    , "-l" ), argv, & fsSURFlayers  , __STDP_INT    );
+        stdp( stda( argc, argv,"--layer"    , "-y" ), argv, & fsSURFlayers  , __STDP_INT    );
         stdp( stda( argc, argv,"--octave"   , "-a" ), argv, & fsSURFoctave  , __STDP_INT    );
         stdp( stda( argc, argv,"--hessian"  , "-s" ), argv, & fsSURFhessian , __STDP_FLOAT  );
 
