@@ -64,9 +64,9 @@
         /* Search in parameters */
         stdp( stda( argc, argv, "--input" , "-i" ), argv,   fsImgIPath, __STDP_STRING );
         stdp( stda( argc, argv, "--output", "-o" ), argv,   fsImgOPath, __STDP_STRING );
-        stdp( stda( argc, argv, "--red"   , "-r" ), argv, & fsFactorR     , __STDP_FLOAT  );
-        stdp( stda( argc, argv, "--green" , "-r" ), argv, & fsFactorG     , __STDP_FLOAT  );
-        stdp( stda( argc, argv, "--blue"  , "-r" ), argv, & fsFactorB     , __STDP_FLOAT  );
+        stdp( stda( argc, argv, "--red"   , "-r" ), argv, & fsFactorR , __STDP_FLOAT  );
+        stdp( stda( argc, argv, "--green" , "-g" ), argv, & fsFactorG , __STDP_FLOAT  );
+        stdp( stda( argc, argv, "--blue"  , "-b" ), argv, & fsFactorB , __STDP_FLOAT  );
 
         /* Software swicth */
         if ( stda( argc, argv, "--help", "-h" ) ) {
