@@ -6,7 +6,7 @@ Software suite for feature detection on images.
 
 ### Documentation
 
-This library is currently in early days of development.
+Find more documentation on the [wiki](https://github.com/FoxelSA/feature-suite/wiki).
 
 
 ### Copyright
