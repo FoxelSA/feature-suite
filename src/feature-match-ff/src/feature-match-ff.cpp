@@ -84,7 +84,8 @@
         std::vector < cv::Point2f > fsKeyB;
 
         /* Matches array */
-        std::vector < fs_match > fsMatch;
+        std::vector < fs_match > fsIMatch;
+        std::vector < fs_match > fsOMatch;
 
         /* Fundamental matrix */
         cv::Mat fsFundmat;
@@ -160,7 +161,7 @@
                             fsStream >> fsBuffer.ai >> fsBuffer.bi >> fsBuffer.ax >> fsBuffer.ay >> fsBuffer.bx >> fsBuffer.by; 
 
                             /* Push reading buffer */
-                            fsMatch.push_back( fsBuffer );
+                            fsIMatch.push_back( fsBuffer );
 
                         }
 
@@ -168,14 +169,14 @@
                         fsStream.close();
 
                         /* Apply fundamental matrix sieve */
-                        for ( unsigned int fsIndex( 0 ); fsIndex < fsMatch.size(); fsIndex ++ ) {
+                        for ( unsigned int fsIndex( 0 ); fsIndex < fsIMatch.size(); fsIndex ++ ) {
 
                             /* Create homogenous vectors */
-                            fsPointA[0] = fsMatch[fsIndex].ax;
-                            fsPointA[1] = fsMatch[fsIndex].ay;
+                            fsPointA[0] = fsIMatch[fsIndex].ax;
+                            fsPointA[1] = fsIMatch[fsIndex].ay;
                             fsPointA[2] = 1.0;
-                            fsPointB[0] = fsMatch[fsIndex].bx;
-                            fsPointB[1] = fsMatch[fsIndex].by;
+                            fsPointB[0] = fsIMatch[fsIndex].bx;
+                            fsPointB[1] = fsIMatch[fsIndex].by;
                             fsPointB[2] = 1.0;
 
                             /* Reset epipolar line coefficients */
@@ -196,11 +197,11 @@
                                 for ( int fsj ( 0 ); fsj < int( 3 ); fsj ++ ) {
 
                                     /* Fundamental matrix condition */
-                                    fsCondition += fsPointB[fsi] * fsFundmat.at < float > ( fsi, fsj ) * fsPointA[fsj];
+                                    fsCondition += fsPointB[fsi] * ( fsFundmat.at < double > ( fsi, fsj ) ) * fsPointA[fsj];
 
                                     /* Epipolar line coefficients */
-                                    fsEpiplB[fsi] += fsFundmat.at < float > ( fsi, fsj ) * fsPointA[fsj];
-                                    fsEpiplA[fsi] += fsFundmat.at < float > ( fsj, fsi ) * fsPointB[fsj];
+                                    fsEpiplB[fsi] += ( fsFundmat.at < double > ( fsi, fsj ) ) * fsPointA[fsj];
+                                    fsEpiplA[fsi] += ( fsFundmat.at < double > ( fsj, fsi ) ) * fsPointB[fsj];
 
                                 }
 
@@ -210,8 +211,8 @@
                             if ( ( ( fabs( fsCondition ) / sqrt( fsEpiplA[0] * fsEpiplA[0] + fsEpiplA[1] * fsEpiplA[1] ) ) <  fsTolerence ) &&
                                  ( ( fabs( fsCondition ) / sqrt( fsEpiplB[0] * fsEpiplB[0] + fsEpiplB[1] * fsEpiplB[1] ) ) <  fsTolerence ) ) {
 
-                                /* Remove match from the input list and update index */
-                                fsMatch.erase( fsMatch.begin() + ( fsIndex -- ) );
+                                /* Matches passed the fundamental matrix sieve */
+                                fsOMatch.push_back( fsIMatch[fsIndex] );
 
                             }
 
@@ -224,18 +225,18 @@
                         if ( fsStream.is_open() == true ) {
 
                             /* Export matches count */
-                            fsStream << fsMatch.size() << std::endl;
+                            fsStream << fsOMatch.size() << std::endl;
 
                             /* Export matches coordinates and index */
-                            for ( unsigned int fsIndex( 0 ); fsIndex < fsMatch.size(); fsIndex ++ ) {
+                            for ( unsigned int fsIndex( 0 ); fsIndex < fsOMatch.size(); fsIndex ++ ) {
 
                                 /* Export matches coordinates */
-                                fsStream << fsMatch[fsIndex].ai << " " 
-                                         << fsMatch[fsIndex].bi << " " 
-                                         << fsMatch[fsIndex].ax << " " 
-                                         << fsMatch[fsIndex].ay << " " 
-                                         << fsMatch[fsIndex].bx << " " 
-                                         << fsMatch[fsIndex].by << std::endl;
+                                fsStream << fsOMatch[fsIndex].ai << " " 
+                                         << fsOMatch[fsIndex].bi << " " 
+                                         << fsOMatch[fsIndex].ax << " " 
+                                         << fsOMatch[fsIndex].ay << " " 
+                                         << fsOMatch[fsIndex].bx << " " 
+                                         << fsOMatch[fsIndex].by << std::endl;
 
                             }    
 
@@ -243,7 +244,7 @@
                             fsStream.close();
 
                             /* Display message */
-                            std::cout << fsMatch.size() << " matches have passed the sieve !" << std::endl;
+                            std::cout << fsOMatch.size() << " matches have passed the sieve !" << std::endl;
 
                         /* Display message */
                         } else { std::cout << "Error : Unable to open output matches file" << std::endl; }
