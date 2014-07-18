@@ -50,18 +50,18 @@
     int main ( int argc, char ** argv ) {
 
         /* Path strings */
-        char  fsImAIPath[256] = { '\0' };
-        char  fsKeAIPath[256] = { '\0' };
-        char  fsImBIPath[256] = { '\0' };
-        char  fsKeBIPath[256] = { '\0' };
-        char  fsMatOPath[256] = { '\0' };
+        char  fsImAIPath[256] = { };
+        char  fsKeAIPath[256] = { };
+        char  fsImBIPath[256] = { };
+        char  fsKeBIPath[256] = { };
+        char  fsMatOPath[256] = { };
 
         /* Surf variables */
-        int   fsSURFextended = 1;
-        int   fsSURFupright  = 0;
-        int   fsSURFlayers   = 2;
-        int   fsSURFoctave   = 4;
-        float fsSURFhessian  = 400;
+        int   fsSURFextended ( 1   );
+        int   fsSURFupright  ( 0   );
+        int   fsSURFlayers   ( 2   );
+        int   fsSURFoctave   ( 4   );
+        float fsSURFhessian  ( 400 );
 
         /* Image variable */
         cv::Mat fsImageA, fsImageB;
@@ -70,11 +70,11 @@
         std::ofstream fsMatchfile;
 
         /* Search in parameters */
-        stdp( stda( argc, argv,"--input-a"  , "-i" ), argv,   fsImAIPath  , __STDP_STRING );
-        stdp( stda( argc, argv,"--input-b"  , "-j" ), argv,   fsImBIPath  , __STDP_STRING );
-        stdp( stda( argc, argv,"--keyfile-a", "-k" ), argv,   fsKeAIPath  , __STDP_STRING );
-        stdp( stda( argc, argv,"--keyfile-b", "-l" ), argv,   fsKeBIPath  , __STDP_STRING );
-        stdp( stda( argc, argv,"--output"   , "-o" ), argv,   fsMatOPath  , __STDP_STRING );
+        stdp( stda( argc, argv,"--input-a"  , "-i" ), argv,   fsImAIPath    , __STDP_STRING );
+        stdp( stda( argc, argv,"--input-b"  , "-j" ), argv,   fsImBIPath    , __STDP_STRING );
+        stdp( stda( argc, argv,"--keyfile-a", "-k" ), argv,   fsKeAIPath    , __STDP_STRING );
+        stdp( stda( argc, argv,"--keyfile-b", "-l" ), argv,   fsKeBIPath    , __STDP_STRING );
+        stdp( stda( argc, argv,"--output"   , "-o" ), argv,   fsMatOPath    , __STDP_STRING );
         stdp( stda( argc, argv,"--extended" , "-t" ), argv, & fsSURFextended, __STDP_INT    );
         stdp( stda( argc, argv,"--upright"  , "-u" ), argv, & fsSURFupright , __STDP_INT    );
         stdp( stda( argc, argv,"--layer"    , "-y" ), argv, & fsSURFlayers  , __STDP_INT    );
@@ -132,7 +132,7 @@
                         fsMatchfile << fsMatches.size() << std::endl;
 
                         /* Export match coordinates */
-                        for ( unsigned int fsIndex = 0; fsIndex < fsMatches.size(); fsIndex ++ ) {
+                        for ( unsigned int fsIndex( 0 ); fsIndex < fsMatches.size(); fsIndex ++ ) {
 
                             /* Export match index */
                             fsMatchfile << fsMatches[fsIndex].queryIdx << " "
@@ -181,10 +181,10 @@
         std::ifstream fsFile( fsKeyfile, std::ios::in );
 
         /* Size parameters */
-        int fsRows = 0, fsCols = 0;
+        int fsRows ( 0 ), fsCols ( 0 );
 
         /* Reading variable */
-        float fsX = 0.0, fsY = 0.0, fsSize = 0.0, fsAngle = 0.0, fsResponse = 0.0, fsOctave = 0.0;
+        float fsX ( 0.0 ), fsY ( 0.0 ), fsSize ( 0.0 ), fsAngle ( 0.0 ), fsResponse ( 0.0 ), fsOctave ( 0.0 );
 
         /* Verify file */
         if ( fsFile.is_open() == true ) {
@@ -193,7 +193,7 @@
             fsFile >> fsRows >> fsCols;
 
             /* Reading keypoints */
-            for ( int fsIndex = 0; fsIndex < fsRows; fsIndex ++ ) {
+            for ( int fsIndex( 0 ); fsIndex < fsRows; fsIndex ++ ) {
 
                 /* Read keypoints */
                 fsFile >> fsX >> fsY >> fsSize >> fsAngle >> fsResponse >> fsOctave;

@@ -54,9 +54,9 @@
     int main( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsSMatchfile[256] = "strict-match.dat";
-        char fsIMatchfile[256] = "input-match.dat";
-        char fsOMatchfile[256] = "output-match.dat";
+        char fsSMatchfile[256] = { };
+        char fsIMatchfile[256] = { };
+        char fsOMatchfile[256] = { };
 
         /* Reading variables */
         int   fsCount  ( 0   );

@@ -50,17 +50,17 @@
     int main ( int argc, char ** argv ) {
 
         /* Path strings */
-        char  fsImgIPath[256] = { '\0' };
-        char  fsImgOPath[256] = { '\0' };
-        char  fsKeyIPath[256] = { '\0' };
+        char  fsImgIPath[256] = { };
+        char  fsImgOPath[256] = { };
+        char  fsKeyIPath[256] = { };
 
         /* Keypoint coordinates */
-        float fsKeyX = 0.0;
-        float fsKeyY = 0.0;
-        float fsVoid = 0.0;
+        float fsKeyX ( 0.0 );
+        float fsKeyY ( 0.0 );
+        float fsVoid ( 0.0 );
 
         /* Keypoint matrix size */
-        int   fsRows = 0;
+        int fsRows ( 0 );
 
         /* Input stream */
         std::ifstream fsKeyfile;
@@ -96,11 +96,11 @@
                 /* Verify stream state */
                 if ( fsKeyfile.is_open() == true ) {
 
-                    /* Read keypoint matrix size */
+                    /* Read keypoint count */
                     fsKeyfile >> fsRows;
 
                     /* Export results */
-                    for ( int fsIndex = 0; fsIndex < fsRows; fsIndex ++ ) {
+                    for ( int fsIndex( 0 ); fsIndex < fsRows; fsIndex ++ ) {
 
                         /* Read current keypoint */
                         fsKeyfile >> fsKeyX >> fsKeyY >> fsVoid >> fsVoid >> fsVoid >> fsVoid;

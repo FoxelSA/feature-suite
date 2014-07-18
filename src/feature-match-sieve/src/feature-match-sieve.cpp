@@ -50,19 +50,19 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char  fsMatchfile[256] = { '\0' };
-        char  fsSievefile[256] = { '\0' };
+        char  fsMatchfile[256] = { };
+        char  fsSievefile[256] = { };
 
         /* Reading variables */
-        int   fsCount = 0;
+        int   fsCount ( 0 );
 
         /* Filters parameters */
-        float fsStrength = 1.0;
-        float fsMinimum  = 10.0;
-        float fsMaximum  = 100.0;
+        float fsStrength ( 1.0   );
+        float fsMinimum  ( 10.0  );
+        float fsMaximum  ( 100.0 );
 
         /* Matches reading buffer */
-        fs_match fsBuffer = { 0 };
+        fs_match fsBuffer = { };
 
         /* Matches array variables */
         std::vector < fs_match > fsMatch;
@@ -91,11 +91,11 @@
             /* Check stream openning */
             if ( fsStream.is_open() == true ) {
 
-                /* Read matches count and padding */
+                /* Read matches count */
                 fsStream >> fsCount;
 
                 /* Read matches coordinates */
-                for ( int fsIndex = 0; fsIndex < fsCount; fsIndex ++ ) {
+                for ( int fsIndex( 0 ); fsIndex < fsCount; fsIndex ++ ) {
 
                     /* Read matches coordinates */
                     fsStream >> fsBuffer.ai >> fsBuffer.bi >> fsBuffer.ax >> fsBuffer.ay >> fsBuffer.bx >> fsBuffer.by; 
@@ -146,7 +146,7 @@
                     fsStream << fsMatch.size() << std::endl;
 
                     /* Export matches coordinates and index */
-                    for ( unsigned int fsIndex = 0; fsIndex < fsMatch.size(); fsIndex ++ ) {
+                    for ( unsigned int fsIndex( 0 ); fsIndex < fsMatch.size(); fsIndex ++ ) {
 
                         /* Export matches coordinates */
                         fsStream << fsMatch[fsIndex].ai << " " 
@@ -191,11 +191,11 @@
         std::vector < float > fsDist;
 
         /* Statistical quantities variables */
-        float fsMean = 0.0;
-        float fsStdd = 0.0;
+        float fsMean ( 0.0 );
+        float fsStdd ( 0.0 );
 
         /* Compute distances */
-        for ( unsigned int fsIndex = 0; fsIndex < fsRaw.size(); fsIndex ++ )
+        for ( unsigned int fsIndex( 0 ); fsIndex < fsRaw.size(); fsIndex ++ )
 
             /* Push current distance */
             fsDist.push_back( FS_DIST( fsRaw[fsIndex] ) );
@@ -205,7 +205,7 @@
         fsStdd = FS_VSTDD( fsDist, fsMean );
 
         /* Statistical distance filter */
-        for ( unsigned int fsIndex = 0; fsIndex < fsRaw.size(); fsIndex ++ )
+        for ( unsigned int fsIndex( 0 ); fsIndex < fsRaw.size(); fsIndex ++ )
 
             /* Apply sieve */
             if ( ( fsDist[fsIndex] - fsMean ) < fsStrength * fsStdd ) fsSieve.push_back( fsRaw[fsIndex] );
@@ -225,7 +225,7 @@
         std::vector < fs_match > fsSieve;
 
         /* Threshold distance filter */
-        for ( unsigned int fsIndex = 0; fsIndex < fsRaw.size(); fsIndex ++ )
+        for ( unsigned int fsIndex( 0 ); fsIndex < fsRaw.size(); fsIndex ++ )
 
             /* Apply sieve */
             if ( ( FS_DIST( fsRaw[fsIndex] ) > fsMininum ) && 
@@ -250,13 +250,13 @@
         std::vector < float > fsDispY;
 
         /* Statistical quantities variables */
-        float fsMeanX = 0.0;
-        float fsMeanY = 0.0;
-        float fsStddX = 0.0;
-        float fsStddY = 0.0;
+        float fsMeanX ( 0.0 );
+        float fsMeanY ( 0.0 );
+        float fsStddX ( 0.0 );
+        float fsStddY ( 0.0 );
 
         /* Compute displacement */
-        for ( unsigned int fsIndex = 0; fsIndex < fsRaw.size(); fsIndex ++ ) {
+        for ( unsigned int fsIndex( 0 ); fsIndex < fsRaw.size(); fsIndex ++ ) {
 
             /* Push current distance */
             fsDispX.push_back( fabs( fsRaw[fsIndex].ax - fsRaw[fsIndex].bx ) );
@@ -271,7 +271,7 @@
         fsStddY = FS_VSTDD( fsDispY, fsMeanY );
 
         /* Statistical distance filter */
-        for ( unsigned int fsIndex = 0; fsIndex < fsRaw.size(); fsIndex ++ )
+        for ( unsigned int fsIndex( 0 ); fsIndex < fsRaw.size(); fsIndex ++ )
 
             /* Apply sieve */
             if ( ( ( fsDispX[fsIndex] - fsMeanX ) < fsStrength * fsStddX ) && 
@@ -296,13 +296,13 @@
         std::vector < float > fsDispY;
 
         /* Statistical quantities variables */
-        float fsMeanX = 0.0;
-        float fsMeanY = 0.0;
-        float fsStddX = 0.0;
-        float fsStddY = 0.0;
+        float fsMeanX ( 0.0 );
+        float fsMeanY ( 0.0 );
+        float fsStddX ( 0.0 );
+        float fsStddY ( 0.0 );
 
         /* Compute displacement */
-        for ( unsigned int fsIndex = 0; fsIndex < fsRaw.size(); fsIndex ++ ) {
+        for ( unsigned int fsIndex( 0 ); fsIndex < fsRaw.size(); fsIndex ++ ) {
 
             /* Push current distance */
             fsDispX.push_back( fabs( fsRaw[fsIndex].ax - fsRaw[fsIndex].bx ) / FS_DIST( fsRaw[fsIndex] ) );
@@ -317,7 +317,7 @@
         fsStddY = FS_VSTDD( fsDispY, fsMeanY );
 
         /* Statistical distance filter */
-        for ( unsigned int fsIndex = 0; fsIndex < fsRaw.size(); fsIndex ++ )
+        for ( unsigned int fsIndex( 0 ); fsIndex < fsRaw.size(); fsIndex ++ )
 
             /* Apply sieve */
             if ( ( ( fsDispX[fsIndex] - fsMeanX ) < fsStrength * fsStddX ) && 
@@ -342,11 +342,11 @@
         std::vector < float > fsDiffY;
 
         /* Statistical variables */
-        int fsMeanX = 0.0;
-        int fsMeanY = 0.0;
+        int fsMeanX ( 0.0 );
+        int fsMeanY ( 0.0 );
 
         /* Compute dichotomous filter */
-        for ( unsigned int fsIndex = 0; fsIndex < fsRaw.size(); fsIndex ++ ) {
+        for ( unsigned int fsIndex( 0 ); fsIndex < fsRaw.size(); fsIndex ++ ) {
 
             /* Push differentials */
             fsDiffX.push_back( fsRaw[fsIndex].ax - fsRaw[fsIndex].bx );
@@ -359,7 +359,7 @@
         fsMeanY = FS_SIGN( FS_VMEAN( fsDiffY ) );
 
         /* Dichotomous slope filter */
-        for ( unsigned int fsIndex = 0; fsIndex < fsRaw.size(); fsIndex ++ ) {
+        for ( unsigned int fsIndex( 0 ); fsIndex < fsRaw.size(); fsIndex ++ ) {
 
             /* Apply sieve */
             if ( ( FS_SIGN( fsDiffX[fsIndex] ) == fsMeanX ) && 

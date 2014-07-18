@@ -68,8 +68,7 @@
  */
 
     /* Standard help */
-    # define FS_HELP "feature-image-expose - feature-suite\n" \
-                     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
+    # define FS_HELP "feature-image-expose - feature-suite\nCopyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
                      "See https://github.com/FoxelSA/feature-suite for more information\n"
 
     /* Compute vector mean value */
@@ -97,8 +96,8 @@
     //! exposure is then corrected according to parameters. The result is then
     //! exported.
     //! 
-    //! @param argc Standard main parameters
-    //! @param argv Standard main parameters
+    //! @param argc Standard main parameter
+    //! @param argv Standard main parameter
 
     int main ( int argc, char ** argv );
 

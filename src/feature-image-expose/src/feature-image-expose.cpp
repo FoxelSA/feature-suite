@@ -49,17 +49,17 @@
 
     int main ( int argc, char ** argv ) {
 
-        /* Path strings */
-        char  fsImgIPath[256] = { '\0' };
-        char  fsImgOPath[256] = { '\0' };
+        /* Path variables */
+        char fsImgIPath[256] = { };
+        char fsImgOPath[256] = { };
 
         /* Parameters variables */
-        float fsFixMean = 0.0;
-        float fsFixStdd = 0.0;
+        float fsFixMean ( 0.0 );
+        float fsFixStdd ( 0.0 );
 
         /* Statistical variables */
-        float fsMean = 0.0;
-        float fsStdd = 0.0;  
+        float fsMean ( 0.0 );
+        float fsStdd ( 0.0 );
 
         /* Image variable */
         cv::Mat fsImage;

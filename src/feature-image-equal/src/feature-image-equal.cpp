@@ -49,20 +49,20 @@
 
     int main ( int argc, char ** argv ) {
 
-        /* Path varaibles */
-        char  fsImAIPath[256] = { '\0' };
-        char  fsImBIPath[256] = { '\0' };
-        char  fsEqAOPath[256] = { '\0' };
-        char  fsEqBOPath[256] = { '\0' };
+        /* Path variables */
+        char fsImAIPath[256] = { };
+        char fsImBIPath[256] = { };
+        char fsEqAOPath[256] = { };
+        char fsEqBOPath[256] = { };
 
         /* Parameters variables */
-        int   fsMode = FS_MODE_TO_HIGHEST;
+        int fsMode = FS_MODE_TO_HIGHEST;
 
         /* Equalization variables */
-        double fsMeanA = 0.0;
-        double fsMeanB = 0.0;
-        double fsStddA = 0.0;
-        double fsStddB = 0.0;
+        double fsMeanA ( 0.0 );
+        double fsMeanB ( 0.0 );
+        double fsStddA ( 0.0 );
+        double fsStddB ( 0.0 );
 
         /* Images variables */
         cv::Mat fsImageA;
@@ -73,7 +73,7 @@
         stdp( stda( argc, argv, "--input-b" , "-b" ), argv,   fsImBIPath, __STDP_STRING );
         stdp( stda( argc, argv, "--output-a", "-c" ), argv,   fsEqAOPath, __STDP_STRING );
         stdp( stda( argc, argv, "--output-b", "-d" ), argv,   fsEqBOPath, __STDP_STRING );
-        stdp( stda( argc, argv, "--mode"    , "-m" ), argv, & fsMode      , __STDP_INT  );
+        stdp( stda( argc, argv, "--mode"    , "-m" ), argv, & fsMode    , __STDP_INT    );
 
         /* Software swicth */
         if ( stda( argc, argv, "--help", "-h" ) ) {

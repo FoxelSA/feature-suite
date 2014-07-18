@@ -72,8 +72,7 @@
  */
 
     /* Standard help */
-    # define FS_HELP "feature-image-equal - feature-suite\n" \
-                     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
+    # define FS_HELP "feature-image-equal - feature-suite\nCopyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
                      "See https://github.com/FoxelSA/feature-suite for more information\n"
 
     /* Compute vector mean value */
@@ -99,10 +98,10 @@
     //! The main function frame follows : parameters are initialized and read. The
     //! two images are loaded and their statistical quantities are computed. The
     //! two images are then aligned in term of exposure according to parameters.
-    //! The two images are finally both exported.
+    //! The two images are finaly both exported.
     //! 
-    //! @param argc Standard main parameters
-    //! @param argv Standard main parameters
+    //! @param argc Standard main parameter
+    //! @param argv Standard main parameter
 
     int main ( int argc, char ** argv );
 

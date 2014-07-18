@@ -64,8 +64,7 @@
  */
 
     /* Standard help */
-    # define FS_HELP "feature-key-SURF - feature-suite\n" \
-                     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
+    # define FS_HELP "feature-key-SURF - feature-suite\nCopyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
                      "See https://github.com/FoxelSA/feature-suite for more information\n"
 
 /* 
@@ -91,8 +90,8 @@
     //! is then called to generate the keypoints list. The list is then exported
     //! in the output file.
     //! 
-    //! @param argc Standard main parameters
-    //! @param argv Standard main parameters
+    //! @param argc Standard main parameter
+    //! @param argv Standard main parameter
 
     int main ( int argc, char ** argv );
 

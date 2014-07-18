@@ -71,8 +71,7 @@
  */
 
     /* Standard help */
-    # define FS_HELP "feature-match-sieve - feature-suite\n" \
-                     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
+    # define FS_HELP "feature-match-sieve - feature-suite\nCopyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
                      "See https://github.com/FoxelSA/feature-suite for more information\n"
 
     /* Compute match distance */
@@ -97,7 +96,7 @@
 
     //! Match structure
 
-    //! Structure that stores the description of a match betwen two keypoints.
+    //! Structure that stores the description of a match between two keypoints.
 
     typedef struct fs_matchSIEVE_match_struct {
 
@@ -121,8 +120,8 @@
     //! The matches that passed the sieve are then exported in the output matches
     //! file.
     //! 
-    //! @param argc Standard main parameters
-    //! @param argv Standard main parameters
+    //! @param argc Standard main parameter
+    //! @param argv Standard main parameter
 
     int main ( int argc, char ** argv );
 
@@ -142,7 +141,7 @@
     //! Threshold distance sieve
 
     //! This function filter the matches by removing the ones that have a disparity
-    //! beyond the threshold values.
+    //! outside of the range defined by the minimum and maximum parameters.
     //!
     //! @param fsRaw Raw matches
     //! @param fsMininum Minimum disparity threshold
@@ -178,7 +177,7 @@
     //! Dichotomous slop sieve
 
     //! This function compute the sign of the slope of the matches disparity. The matches
-    //! that have the same slope as statistically most represented slope are kept.
+    //! that have the same slope as the statistically most represented one are kept.
     //!
     //! @param fsRaw Raw matches
     //! @return Matches that passed the sieve

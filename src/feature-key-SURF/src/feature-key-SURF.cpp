@@ -50,20 +50,20 @@
     int main ( int argc, char ** argv ) {
 
         /* Path strings */
-        char  fsImgIPath[256] = { '\0' };
-        char  fsKeyOPath[256] = { '\0' };
+        char fsImgIPath[256] = { };
+        char fsKeyOPath[256] = { };
 
         /* SIFT variables */
-        int   fsSURFexported = 0;
-        int   fsSURFextended = 1;
-        int   fsSURFupright  = 0;
-        int   fsSURFlayers   = 2;
-        int   fsSURFoctave   = 4;
-        float fsSURFhessian  = 400;
+        int   fsSURFexported ( 0   );
+        int   fsSURFextended ( 1   );
+        int   fsSURFupright  ( 0   );
+        int   fsSURFlayers   ( 2   );
+        int   fsSURFoctave   ( 4   );
+        float fsSURFhessian  ( 400 );
 
         /* Geometric filter */
-        int   fsEdgeX = 0;
-        int   fsEdgeY = 0;
+        int fsEdgeX ( 0 );
+        int fsEdgeY ( 0 );
 
         /* Output stream */
         std::ofstream fsKeyfile;
@@ -115,7 +115,7 @@
                     fsKeyfile << fsKey.size() << std::endl;
 
                     /* Export results */
-                    for ( unsigned int fsIndex = 0; fsIndex < fsKey.size(); fsIndex ++ ) {
+                    for ( unsigned int fsIndex( 0 ); fsIndex < fsKey.size(); fsIndex ++ ) {
 
                         /* Apply geometric filtering */
                         if ( ( fsKey[fsIndex].pt.x >= fsEdgeX ) && ( fsKey[fsIndex].pt.x < fsImage.cols - fsEdgeX ) &&

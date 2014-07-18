@@ -64,8 +64,7 @@
  */
 
     /* Standard help */
-    # define FS_HELP "feature-image-gray - feature-suite\n" \
-                     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
+    # define FS_HELP "feature-image-gray - feature-suite\nCopyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
                      "See https://github.com/FoxelSA/feature-suite for more information\n"
 
 /* 
@@ -88,11 +87,11 @@
 
     //! The main function frame follows : parameters are initialized and read. The
     //! input image is imported and its layers are extracted. A grayscale image is
-    //! then computed using layer weights provided through parameters. The grayscale
+    //! then computed using layer weights provided by parameters. The grayscale
     //! image is then exported.
     //! 
-    //! @param argc Standard main parameters
-    //! @param argv Standard main parameters
+    //! @param argc Standard main parameter
+    //! @param argv Standard main parameter
 
     int main ( int argc, char ** argv );
 

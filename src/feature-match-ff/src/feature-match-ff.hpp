@@ -73,8 +73,7 @@
  */
 
     /* Standard help */
-    # define FS_HELP "feature-match-ff - feature-suite\n" \
-                     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
+    # define FS_HELP "feature-match-ff - feature-suite\nCopyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
                      "See https://github.com/FoxelSA/feature-suite for more information\n"
 
 /* 
@@ -91,7 +90,7 @@
 
     //! Match structure
 
-    //! Structure that stores the description of a match betwen two keypoints.
+    //! Structure that stores the description of a match between two keypoints.
 
     typedef struct fs_matchSIEVE_match_struct {
 
@@ -110,9 +109,13 @@
 
     //! Software main function
 
+    //! The main function frame follows : parameters are initialized and read. The
+    //! assumed good matches are read and the fundamental matrix estimation is
+    //! performed on their basis. The set of matches to filter is read and the
+    //! fundamental matrix sieve applies. The filtered matches are then exported.
     //! 
-    //! @param argc Standard main parameters
-    //! @param argv Standard main parameters
+    //! @param argc Standard main parameter
+    //! @param argv Standard main parameter
 
     int main ( int argc, char ** argv );
 

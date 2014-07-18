@@ -64,8 +64,7 @@
  */
 
     /* Standard help */
-    # define FS_HELP "feature-key-view - feature-suite\n" \
-                     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
+    # define FS_HELP "feature-key-view - feature-suite\nCopyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
                      "See https://github.com/FoxelSA/feature-suite for more information\n"
 
 /* 
@@ -90,8 +89,8 @@
     //! input image is imported in grayscale mode and the keypoints file is read. 
     //! The keypoints are drawn on the grayscale image that is then exported.
     //! 
-    //! @param argc Standard main parameters
-    //! @param argv Standard main parameters
+    //! @param argc Standard main parameter
+    //! @param argv Standard main parameter
 
     int main ( int argc, char ** argv );
 

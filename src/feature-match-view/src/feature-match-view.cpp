@@ -50,21 +50,21 @@
     int main ( int argc, char ** argv ) {
 
         /* Path strings */
-        char  fsImAIPath[256] = { '\0' };
-        char  fsImBIPath[256] = { '\0' };
-        char  fsMatIPath[256] = { '\0' };
-        char  fsImgOPath[256] = { '\0' };
+        char  fsImAIPath[256] = { };
+        char  fsImBIPath[256] = { };
+        char  fsMatIPath[256] = { };
+        char  fsImgOPath[256] = { };
 
         /* Keypoint matrix size */
-        int   fsRows = 0;
+        int   fsRows ( 0 );
 
         /* Keypoint coordinates */
-        float fsKeyAI = 0.0;
-        float fsKeyAX = 0.0;
-        float fsKeyAY = 0.0;
-        float fsKeyBI = 0.0;
-        float fsKeyBX = 0.0;
-        float fsKeyBY = 0.0;
+        float fsKeyAI ( 0.0 );
+        float fsKeyAX ( 0.0 );
+        float fsKeyAY ( 0.0 );
+        float fsKeyBI ( 0.0 );
+        float fsKeyBX ( 0.0 );
+        float fsKeyBY ( 0.0 );
 
         /* Input stream */
         std::ifstream fsMatchfile;
@@ -114,7 +114,7 @@
                     fsMatchfile >> fsRows;
 
                     /* Export results */
-                    for ( int fsIndex = 0; fsIndex < fsRows; fsIndex ++ ) {
+                    for ( int fsIndex( 0 ); fsIndex < fsRows; fsIndex ++ ) {
 
                         /* Read current keypoint */
                         fsMatchfile >> fsKeyAI >> fsKeyBI >> fsKeyAX >> fsKeyAY >> fsKeyBX >> fsKeyBY;
