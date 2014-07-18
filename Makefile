@@ -10,6 +10,7 @@
     MAKE_MATSIFT=feature-match-SIFT
     MAKE_MATSURF=feature-match-SURF
     MAKE_MATSIEV=feature-match-sieve
+    MAKE_MATFFIL=feature-match-ff
     MAKE_MATVIEW=feature-match-view
     MAKE_IMGEQUA=feature-image-equal
     MAKE_IMGEXPO=feature-image-expose
@@ -28,7 +29,7 @@
 #   make - All
 #
 
-    all:$(MAKE_KEYSIFT) $(MAKE_KEYSURF) $(MAKE_KEYVIEW) $(MAKE_MATSIFT) $(MAKE_MATSURF) $(MAKE_MATVIEW) $(MAKE_MATSIEV) $(MAKE_IMGEQUA) $(MAKE_IMGEXPO) $(MAKE_GRAYCON)
+    all:$(MAKE_KEYSIFT) $(MAKE_KEYSURF) $(MAKE_KEYVIEW) $(MAKE_MATSIFT) $(MAKE_MATSURF) $(MAKE_MATVIEW) $(MAKE_MATSIEV) $(MAKE_IMGEQUA) $(MAKE_IMGEXPO) $(MAKE_GRAYCON) $(MAKE_MATFFIL)
 
 #
 #   make - Branches
@@ -58,6 +59,9 @@
     $(MAKE_MATSIEV):directories
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATSIEV) clean && $(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATSIEV) all && cp $(MAKE_SOURCE)/$(MAKE_MATSIEV)/$(MAKE_BINARY)/$(MAKE_MATSIEV) $(MAKE_BINARY)/
 
+    $(MAKE_MATFFIL):directories
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATFFIL) clean && $(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATFFIL) all && cp $(MAKE_SOURCE)/$(MAKE_MATFFIL)/$(MAKE_BINARY)/$(MAKE_MATFFIL) $(MAKE_BINARY)/
+
     $(MAKE_IMGEQUA):directories
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_IMGEQUA) clean && $(MAKE) -C $(MAKE_SOURCE)/$(MAKE_IMGEQUA) all && cp $(MAKE_SOURCE)/$(MAKE_IMGEQUA)/$(MAKE_BINARY)/$(MAKE_IMGEQUA) $(MAKE_BINARY)/
 
@@ -81,6 +85,7 @@
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATSURF) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_MATSURF)/$(MAKE_DOCUME)/html $(MAKE_MATSURF) && cd -
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATVIEW) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_MATVIEW)/$(MAKE_DOCUME)/html $(MAKE_MATVIEW) && cd -
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATSIEV) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_MATSIEV)/$(MAKE_DOCUME)/html $(MAKE_MATSIEV) && cd -
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATFFIL) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_MATFFIL)/$(MAKE_DOCUME)/html $(MAKE_MATFFIL) && cd -
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_IMGEQUA) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_IMGEQUA)/$(MAKE_DOCUME)/html $(MAKE_IMGEQUA) && cd -
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_IMGEXPO) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_IMGEXPO)/$(MAKE_DOCUME)/html $(MAKE_IMGEXPO) && cd -
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_GRAYCON) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_GRAYCON)/$(MAKE_DOCUME)/html $(MAKE_GRAYCON) && cd -

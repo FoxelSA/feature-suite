@@ -95,7 +95,6 @@
     Header - Structures
  */
 
-
     //! Match structure
 
     //! Structure that stores the description of a match betwen two keypoints.

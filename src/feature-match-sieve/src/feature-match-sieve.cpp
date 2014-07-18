@@ -49,7 +49,7 @@
 
     int main ( int argc, char ** argv ) {
 
-        /* Path varaibles */
+        /* Path variables */
         char  fsMatchfile[256] = { '\0' };
         char  fsSievefile[256] = { '\0' };
 
@@ -142,10 +142,10 @@
                 /* Check stream openning */
                 if ( fsStream.is_open() == true ) {
 
-                    /* Export matches count and padding */
+                    /* Export matches count */
                     fsStream << fsMatch.size() << std::endl;
 
-                    /* Export matches coordinates */
+                    /* Export matches coordinates and index */
                     for ( unsigned int fsIndex = 0; fsIndex < fsMatch.size(); fsIndex ++ ) {
 
                         /* Export matches coordinates */
