@@ -49,12 +49,12 @@
 
     int main ( int argc, char ** argv ) {
 
-        /* Path strings */
-        char  fsImAIPath[256] = { };
-        char  fsKeAIPath[256] = { };
-        char  fsImBIPath[256] = { };
-        char  fsKeBIPath[256] = { };
-        char  fsMatOPath[256] = { };
+        /* Path variables */
+        char fsImAIPath[256] = { };
+        char fsKeAIPath[256] = { };
+        char fsImBIPath[256] = { };
+        char fsKeBIPath[256] = { };
+        char fsMatOPath[256] = { };
 
         /* Surf variables */
         int   fsSURFextended ( 1   );

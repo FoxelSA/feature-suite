@@ -50,11 +50,11 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char  fsMatchfile[256] = { };
-        char  fsSievefile[256] = { };
+        char fsMatchfile[256] = { };
+        char fsSievefile[256] = { };
 
         /* Reading variables */
-        int   fsCount ( 0 );
+        int fsCount ( 0 );
 
         /* Filters parameters */
         float fsStrength ( 1.0   );

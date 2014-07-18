@@ -50,13 +50,13 @@
     int main ( int argc, char ** argv ) {
 
         /* Path strings */
-        char  fsImAIPath[256] = { };
-        char  fsImBIPath[256] = { };
-        char  fsMatIPath[256] = { };
-        char  fsImgOPath[256] = { };
+        char fsImAIPath[256] = { };
+        char fsImBIPath[256] = { };
+        char fsMatIPath[256] = { };
+        char fsImgOPath[256] = { };
 
         /* Keypoint matrix size */
-        int   fsRows ( 0 );
+        int fsRows ( 0 );
 
         /* Keypoint coordinates */
         float fsKeyAI ( 0.0 );
