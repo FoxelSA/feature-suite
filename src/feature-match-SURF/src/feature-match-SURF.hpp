@@ -37,7 +37,7 @@
  */
 
     //! @file   feature-match-SURF.hpp
-    //! @author Nils Hamel (nils.hamel@foxel.ch)
+    //! @author Nils Hamel (n.hamel@foxel.ch)
     //! 
     //! Software main header
 
