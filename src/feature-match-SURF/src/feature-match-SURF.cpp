@@ -56,13 +56,6 @@
         char fsKeBIPath[256] = { };
         char fsMatOPath[256] = { };
 
-        /* Surf variables */
-        int   fsSURFextended ( 1   );
-        int   fsSURFupright  ( 0   );
-        int   fsSURFlayers   ( 2   );
-        int   fsSURFoctave   ( 4   );
-        float fsSURFhessian  ( 400 );
-
         /* Image variable */
         cv::Mat fsImageA, fsImageB;
 
@@ -75,11 +68,6 @@
         stdp( stda( argc, argv,"--keyfile-a", "-k" ), argv,   fsKeAIPath    , __STDP_STRING );
         stdp( stda( argc, argv,"--keyfile-b", "-l" ), argv,   fsKeBIPath    , __STDP_STRING );
         stdp( stda( argc, argv,"--output"   , "-o" ), argv,   fsMatOPath    , __STDP_STRING );
-        stdp( stda( argc, argv,"--extended" , "-t" ), argv, & fsSURFextended, __STDP_INT    );
-        stdp( stda( argc, argv,"--upright"  , "-u" ), argv, & fsSURFupright , __STDP_INT    );
-        stdp( stda( argc, argv,"--layer"    , "-y" ), argv, & fsSURFlayers  , __STDP_INT    );
-        stdp( stda( argc, argv,"--octave"   , "-a" ), argv, & fsSURFoctave  , __STDP_INT    );
-        stdp( stda( argc, argv,"--hessian"  , "-s" ), argv, & fsSURFhessian , __STDP_FLOAT  );
 
         /* Software swicth */
         if ( stda( argc, argv, "--help", "-h" ) ) {
@@ -104,7 +92,7 @@
                 if ( ( fsKeyA.size() > 0 ) && ( fsKeyB.size() > 0 ) ) {
 
                     /* Instance SIFT detector */
-                    cv::SURF fsSurf( fsSURFhessian, fsSURFoctave, fsSURFlayers, fsSURFextended, fsSURFupright );
+                    cv::SURF fsSurf;
 
                     /* Instance SIFT descriptor */
                     cv::Mat fsDescriptA, fsDescriptB;

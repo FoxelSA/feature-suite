@@ -56,13 +56,6 @@
         char fsKeBIPath[256] = { };
         char fsMatOPath[256] = { };
 
-        /* SIFT variables */
-        int   fsSIFTmaximum  ( 0    );
-        int   fsSIFToctave   ( 3    );
-        float fsSIFTcontrast ( 0.04 );
-        float fsSIFTedge     ( 10   );
-        float fsSIFTsigma    ( 1.6  );
-
         /* Image variable */
         cv::Mat fsImageA, fsImageB;
 
@@ -75,11 +68,6 @@
         stdp( stda( argc, argv,  "--keyfile-a", "-k" ), argv,   fsKeAIPath    , __STDP_STRING );
         stdp( stda( argc, argv,  "--keyfile-b", "-l" ), argv,   fsKeBIPath    , __STDP_STRING );
         stdp( stda( argc, argv,  "--output"   , "-o" ), argv,   fsMatOPath    , __STDP_STRING );
-        stdp( stda( argc, argv,  "--maximum"  , "-m" ), argv, & fsSIFTmaximum , __STDP_INT    );
-        stdp( stda( argc, argv,  "--octave"   , "-a" ), argv, & fsSIFToctave  , __STDP_INT    );
-        stdp( stda( argc, argv,  "--contrast" , "-c" ), argv, & fsSIFTcontrast, __STDP_FLOAT  );
-        stdp( stda( argc, argv,  "--edge"     , "-e" ), argv, & fsSIFTedge    , __STDP_FLOAT  );
-        stdp( stda( argc, argv,  "--sigma"    , "-s" ), argv, & fsSIFTsigma   , __STDP_FLOAT  );
 
         /* Software swicth */
         if ( stda( argc, argv, "--help", "-h" ) ) {
@@ -104,7 +92,7 @@
                 if ( ( fsKeyA.size() > 0 ) && ( fsKeyB.size() > 0 ) ) {
 
                     /* Instance SIFT detector */
-                    cv::SIFT fsSift( fsSIFTmaximum, fsSIFToctave, fsSIFTcontrast, fsSIFTedge, fsSIFTsigma );
+                    cv::SIFT fsSift;
 
                     /* Instance SIFT descriptor */
                     cv::Mat fsDescriptA, fsDescriptB;
