@@ -3,10 +3,10 @@
 #   make - Configuration
 #
 
+    MAKE_FILCONC=feature-file-concat
     MAKE_KEYSIFT=feature-key-SIFT
     MAKE_KEYSURF=feature-key-SURF
     MAKE_KEYVIEW=feature-key-view
-    MAKE_KEYSCAL=feature-key-scale
     MAKE_MATSIFT=feature-match-SIFT
     MAKE_MATSURF=feature-match-SURF
     MAKE_MATSIEV=feature-match-sieve
@@ -29,11 +29,14 @@
 #   make - All
 #
 
-    all:$(MAKE_KEYSIFT) $(MAKE_KEYSURF) $(MAKE_KEYVIEW) $(MAKE_MATSIFT) $(MAKE_MATSURF) $(MAKE_MATVIEW) $(MAKE_MATSIEV) $(MAKE_IMGEQUA) $(MAKE_IMGEXPO) $(MAKE_GRAYCON) $(MAKE_MATFFIL)
+    all:$(MAKE_FILCONC) $(MAKE_KEYSIFT) $(MAKE_KEYSURF) $(MAKE_KEYVIEW) $(MAKE_MATSIFT) $(MAKE_MATSURF) $(MAKE_MATVIEW) $(MAKE_MATSIEV) $(MAKE_IMGEQUA) $(MAKE_IMGEXPO) $(MAKE_GRAYCON) $(MAKE_MATFFIL)
 
 #
 #   make - Branches
 #
+
+    $(MAKE_FILCONC):directories
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_FILCONC) clean && $(MAKE) -C $(MAKE_SOURCE)/$(MAKE_FILCONC) all && cp $(MAKE_SOURCE)/$(MAKE_FILCONC)/$(MAKE_BINARY)/$(MAKE_FILCONC) $(MAKE_BINARY)/
 
     $(MAKE_KEYSIFT):directories
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_KEYSIFT) clean && $(MAKE) -C $(MAKE_SOURCE)/$(MAKE_KEYSIFT) all && cp $(MAKE_SOURCE)/$(MAKE_KEYSIFT)/$(MAKE_BINARY)/$(MAKE_KEYSIFT) $(MAKE_BINARY)/
@@ -77,10 +80,10 @@
 
     documentation:directories
 	mkdir -p $(MAKE_DOCUME)/html && rm $(MAKE_DOCUME)/html/* -f
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_FILCONC) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_FILCONC)/$(MAKE_DOCUME)/html $(MAKE_FILCONC) && cd -
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_KEYSIFT) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_KEYSIFT)/$(MAKE_DOCUME)/html $(MAKE_KEYSIFT) && cd -
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_KEYSURF) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_KEYSURF)/$(MAKE_DOCUME)/html $(MAKE_KEYSURF) && cd -
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_KEYVIEW) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_KEYVIEW)/$(MAKE_DOCUME)/html $(MAKE_KEYVIEW) && cd -
-	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_KEYSCAL) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_KEYSCAL)/$(MAKE_DOCUME)/html $(MAKE_KEYSCAL) && cd -
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATSIFT) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_MATSIFT)/$(MAKE_DOCUME)/html $(MAKE_MATSIFT) && cd -
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATSURF) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_MATSURF)/$(MAKE_DOCUME)/html $(MAKE_MATSURF) && cd -
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_MATVIEW) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_MATVIEW)/$(MAKE_DOCUME)/html $(MAKE_MATVIEW) && cd -
