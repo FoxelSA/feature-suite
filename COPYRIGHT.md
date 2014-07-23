@@ -29,10 +29,3 @@ The content is licensed under the terms of the
 
 Please read <[http://foxel.ch/license](http://foxel.ch/license)> for more
 information.
-
-## Dependencies
-
-This program depends on the following software and libraries.
-
-*   __OpenCV 2.4.6__ <br />
-    <[http://opencv.org/](http://opencv.org/)>

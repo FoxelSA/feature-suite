@@ -15,6 +15,7 @@
     MAKE_IMGEQUA=feature-image-equal
     MAKE_IMGEXPO=feature-image-expose
     MAKE_GRAYCON=feature-image-gray
+    MAKE_IMGRMEN=feature-image-rment
 
 
 #
@@ -29,7 +30,7 @@
 #   make - All
 #
 
-    all:$(MAKE_FILCONC) $(MAKE_KEYSIFT) $(MAKE_KEYSURF) $(MAKE_KEYVIEW) $(MAKE_MATSIFT) $(MAKE_MATSURF) $(MAKE_MATVIEW) $(MAKE_MATSIEV) $(MAKE_IMGEQUA) $(MAKE_IMGEXPO) $(MAKE_GRAYCON) $(MAKE_MATFFIL)
+    all:$(MAKE_FILCONC) $(MAKE_KEYSIFT) $(MAKE_KEYSURF) $(MAKE_KEYVIEW) $(MAKE_MATSIFT) $(MAKE_MATSURF) $(MAKE_MATVIEW) $(MAKE_MATSIEV) $(MAKE_IMGEQUA) $(MAKE_IMGEXPO) $(MAKE_GRAYCON) $(MAKE_MATFFIL) $(MAKE_IMGRMEN)
 
 #
 #   make - Branches
@@ -74,6 +75,9 @@
     $(MAKE_GRAYCON):directories
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_GRAYCON) clean && $(MAKE) -C $(MAKE_SOURCE)/$(MAKE_GRAYCON) all && cp $(MAKE_SOURCE)/$(MAKE_GRAYCON)/$(MAKE_BINARY)/$(MAKE_GRAYCON) $(MAKE_BINARY)/
 
+    $(MAKE_IMGRMEN):directories
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_IMGRMEN) clean && $(MAKE) -C $(MAKE_SOURCE)/$(MAKE_IMGRMEN) all && cp $(MAKE_SOURCE)/$(MAKE_IMGRMEN)/$(MAKE_BINARY)/$(MAKE_IMGRMEN) $(MAKE_BINARY)/
+
 #
 #   make - Documentation
 #
@@ -92,6 +96,7 @@
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_IMGEQUA) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_IMGEQUA)/$(MAKE_DOCUME)/html $(MAKE_IMGEQUA) && cd -
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_IMGEXPO) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_IMGEXPO)/$(MAKE_DOCUME)/html $(MAKE_IMGEXPO) && cd -
 	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_GRAYCON) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_GRAYCON)/$(MAKE_DOCUME)/html $(MAKE_GRAYCON) && cd -
+	$(MAKE) -C $(MAKE_SOURCE)/$(MAKE_IMGRMEN) documentation && cd $(MAKE_DOCUME)/html/ && ln -s ../../$(MAKE_SOURCE)/$(MAKE_IMGRMEN)/$(MAKE_DOCUME)/html $(MAKE_IMGRMEN) && cd -
 
 #
 #   make - Directories
