@@ -65,13 +65,13 @@
         cv::Mat fsImage;
 
         /* Search in parameters */
-        stdp( stda( argc, argv, "--input" , "-i" ), argv,   fsImgIPath, __STDP_STRING );
-        stdp( stda( argc, argv, "--output", "-o" ), argv,   fsImgOPath, __STDP_STRING );
-        stdp( stda( argc, argv, "--mean"  , "-m" ), argv, & fsFixMean , __STDP_FLOAT  );
-        stdp( stda( argc, argv, "--stdd"  , "-s" ), argv, & fsFixStdd , __STDP_FLOAT  );
+        stdp( stda( argc, argv, "--input" , "-i" ), argv,   fsImgIPath, FS_STRING );
+        stdp( stda( argc, argv, "--output", "-o" ), argv,   fsImgOPath, FS_STRING );
+        stdp( stda( argc, argv, "--mean"  , "-m" ), argv, & fsFixMean , FS_FLOAT  );
+        stdp( stda( argc, argv, "--stdd"  , "-s" ), argv, & fsFixStdd , FS_FLOAT  );
 
         /* Software swicth */
-        if ( stda( argc, argv, "--help", "-h" ) ) {
+        if ( ( stda( argc, argv, "--help", "-h" ) ) || ( argc <= 1 ) ) {
 
             /* Display message */
             std::cout << FS_HELP;
@@ -112,6 +112,63 @@
 
         /* Return to system */
         return( EXIT_SUCCESS );
+
+    }
+
+/*
+    Source - Arguments common handler
+ */
+
+    int stda( int argc, char ** argv, const char * const ltag, const char * const stag ) {
+
+        /* Search for argument */
+        while ( ( -- argc ) > 0 ) {
+
+            /* Search for tag matching */
+            if ( ( strcmp( argv[ argc ], ltag ) == 0 ) || ( strcmp( argv[ argc ], stag ) == 0 ) ) {
+
+                /* Return pointer to argument parameter */
+                return( argc + 1 );
+
+            }
+
+        /* Argument not found */
+        } return( FS_NULL );
+
+    }
+
+/*
+    Source - Parameters common handler
+ */
+
+    void stdp( int argi, char ** argv, void * param, int type ) {
+
+        /* Index consistency */
+        if ( argi == FS_NULL ) return;
+
+        /* Select type */
+        switch ( type ) {
+
+            /* Specific reading operation - Integers */
+            case ( FS_CHAR   ) : { * ( signed char        * ) param = atoi ( ( const char * ) argv[argi] ); } break;
+            case ( FS_SHORT  ) : { * ( signed short       * ) param = atoi ( ( const char * ) argv[argi] ); } break;
+            case ( FS_INT    ) : { * ( signed int         * ) param = atoi ( ( const char * ) argv[argi] ); } break;
+            case ( FS_LONG   ) : { * ( signed long        * ) param = atol ( ( const char * ) argv[argi] ); } break;
+            case ( FS_LLONG  ) : { * ( signed long long   * ) param = atoll( ( const char * ) argv[argi] ); } break;
+            case ( FS_UCHAR  ) : { * ( unsigned char      * ) param = atol ( ( const char * ) argv[argi] ); } break;
+            case ( FS_USHORT ) : { * ( unsigned short     * ) param = atol ( ( const char * ) argv[argi] ); } break;
+            case ( FS_UINT   ) : { * ( unsigned int       * ) param = atol ( ( const char * ) argv[argi] ); } break;
+            case ( FS_ULONG  ) : { * ( unsigned long      * ) param = atoll( ( const char * ) argv[argi] ); } break;
+            case ( FS_ULLONG ) : { * ( unsigned long long * ) param = atoll( ( const char * ) argv[argi] ); } break;
+
+            /* Specific reading operation - Floating point */
+            case ( FS_FLOAT  ) : { * ( float              * ) param = atof ( ( const char * ) argv[argi] ); } break;
+            case ( FS_DOUBLE ) : { * ( double             * ) param = atof ( ( const char * ) argv[argi] ); } break;
+
+            /* Specific reading operation - String */
+            case ( FS_STRING ) : { strcpy( ( char * ) param, ( const char * ) argv[argi] );  } break;
+
+        };
 
     }
 

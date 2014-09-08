@@ -72,18 +72,18 @@
         cv::Mat fsImage;
 
         /* Search in parameters */
-        stdp( stda( argc, argv, "--input"   , "-i" ), argv,   fsImgIPath    , __STDP_STRING );
-        stdp( stda( argc, argv, "--output"  , "-o" ), argv,   fsKeyOPath    , __STDP_STRING );
-        stdp( stda( argc, argv, "--maximum" , "-m" ), argv, & fsSIFTmaximum , __STDP_INT    );
-        stdp( stda( argc, argv, "--octave"  , "-a" ), argv, & fsSIFToctave  , __STDP_INT    );
-        stdp( stda( argc, argv, "--contrast", "-c" ), argv, & fsSIFTcontrast, __STDP_FLOAT  );
-        stdp( stda( argc, argv, "--edge"    , "-e" ), argv, & fsSIFTedge    , __STDP_FLOAT  );
-        stdp( stda( argc, argv, "--sigma"   , "-s" ), argv, & fsSIFTsigma   , __STDP_FLOAT  );
-        stdp( stda( argc, argv, "--edge-x"  , "-x" ), argv, & fsEdgeX       , __STDP_INT    );
-        stdp( stda( argc, argv, "--edge-y"  , "-y" ), argv, & fsEdgeY       , __STDP_INT    );
+        stdp( stda( argc, argv, "--input"   , "-i" ), argv,   fsImgIPath    , FS_STRING );
+        stdp( stda( argc, argv, "--output"  , "-o" ), argv,   fsKeyOPath    , FS_STRING );
+        stdp( stda( argc, argv, "--maximum" , "-m" ), argv, & fsSIFTmaximum , FS_INT    );
+        stdp( stda( argc, argv, "--octave"  , "-a" ), argv, & fsSIFToctave  , FS_INT    );
+        stdp( stda( argc, argv, "--contrast", "-c" ), argv, & fsSIFTcontrast, FS_FLOAT  );
+        stdp( stda( argc, argv, "--edge"    , "-e" ), argv, & fsSIFTedge    , FS_FLOAT  );
+        stdp( stda( argc, argv, "--sigma"   , "-s" ), argv, & fsSIFTsigma   , FS_FLOAT  );
+        stdp( stda( argc, argv, "--edge-x"  , "-x" ), argv, & fsEdgeX       , FS_INT    );
+        stdp( stda( argc, argv, "--edge-y"  , "-y" ), argv, & fsEdgeY       , FS_INT    );
 
         /* Software swicth */
-        if ( stda( argc, argv, "--help", "-h" ) ) {
+        if ( ( stda( argc, argv, "--help", "-h" ) ) || ( argc <= 1 ) ) {
 
             /* Display message */
             std::cout << FS_HELP;
@@ -152,6 +152,63 @@
 
         /* Return to system */
         return( EXIT_SUCCESS );
+
+    }
+
+/*
+    Source - Arguments common handler
+ */
+
+    int stda( int argc, char ** argv, const char * const ltag, const char * const stag ) {
+
+        /* Search for argument */
+        while ( ( -- argc ) > 0 ) {
+
+            /* Search for tag matching */
+            if ( ( strcmp( argv[ argc ], ltag ) == 0 ) || ( strcmp( argv[ argc ], stag ) == 0 ) ) {
+
+                /* Return pointer to argument parameter */
+                return( argc + 1 );
+
+            }
+
+        /* Argument not found */
+        } return( FS_NULL );
+
+    }
+
+/*
+    Source - Parameters common handler
+ */
+
+    void stdp( int argi, char ** argv, void * param, int type ) {
+
+        /* Index consistency */
+        if ( argi == FS_NULL ) return;
+
+        /* Select type */
+        switch ( type ) {
+
+            /* Specific reading operation - Integers */
+            case ( FS_CHAR   ) : { * ( signed char        * ) param = atoi ( ( const char * ) argv[argi] ); } break;
+            case ( FS_SHORT  ) : { * ( signed short       * ) param = atoi ( ( const char * ) argv[argi] ); } break;
+            case ( FS_INT    ) : { * ( signed int         * ) param = atoi ( ( const char * ) argv[argi] ); } break;
+            case ( FS_LONG   ) : { * ( signed long        * ) param = atol ( ( const char * ) argv[argi] ); } break;
+            case ( FS_LLONG  ) : { * ( signed long long   * ) param = atoll( ( const char * ) argv[argi] ); } break;
+            case ( FS_UCHAR  ) : { * ( unsigned char      * ) param = atol ( ( const char * ) argv[argi] ); } break;
+            case ( FS_USHORT ) : { * ( unsigned short     * ) param = atol ( ( const char * ) argv[argi] ); } break;
+            case ( FS_UINT   ) : { * ( unsigned int       * ) param = atol ( ( const char * ) argv[argi] ); } break;
+            case ( FS_ULONG  ) : { * ( unsigned long      * ) param = atoll( ( const char * ) argv[argi] ); } break;
+            case ( FS_ULLONG ) : { * ( unsigned long long * ) param = atoll( ( const char * ) argv[argi] ); } break;
+
+            /* Specific reading operation - Floating point */
+            case ( FS_FLOAT  ) : { * ( float              * ) param = atof ( ( const char * ) argv[argi] ); } break;
+            case ( FS_DOUBLE ) : { * ( double             * ) param = atof ( ( const char * ) argv[argi] ); } break;
+
+            /* Specific reading operation - String */
+            case ( FS_STRING ) : { strcpy( ( char * ) param, ( const char * ) argv[argi] );  } break;
+
+        };
 
     }
 

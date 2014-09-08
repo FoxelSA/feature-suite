@@ -87,7 +87,7 @@
 
     # include <iostream>
     # include <fstream>
-    # include "common-stdap.hpp"
+    # include <cstring>
 
 /* 
     Header - Preprocessor definitions
@@ -98,8 +98,30 @@
  */
 
     /* Standard help */
-    # define FS_HELP "feature-file-concat - feature-suite\nCopyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n" \
-                     "See https://github.com/FoxelSA/feature-suite for more information\n"
+    # define FS_HELP "Usage summary :\n\n"                    \
+    "\tfeature-file-concat [Arguments] [Parameters] ...\n\n"  \
+    "Short arguments and parameters summary :\n\n"            \
+    "\t-a\tInput file\n"                                      \
+    "\t-b\tInput file\n"                                      \
+    "\t-o\tOutput file\n\n"                                   \
+    "feature-file-concat - feature-suite\n"                   \
+    "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n"
+
+    /* Define standard types */
+    # define FS_NULL        0
+    # define FS_STRING      1
+    # define FS_CHAR        2
+    # define FS_SHORT       3
+    # define FS_INT         4
+    # define FS_LONG        5
+    # define FS_LLONG       6
+    # define FS_UCHAR       7
+    # define FS_USHORT      8
+    # define FS_UINT        9
+    # define FS_ULONG      10
+    # define FS_ULLONG     11
+    # define FS_FLOAT      12
+    # define FS_DOUBLE     13
 
 /* 
     Header - Typedefs
@@ -125,6 +147,35 @@
      */
 
     int main ( int argc, char ** argv );
+
+    /*! \brief Search agrument position in argv
+     *  
+     *  This function search in the argv string array the position of the argument
+     *  defined through ltag/stag and return the index of the corresponding parameter
+     *  in argv.
+     *  
+     *  \param argc Standard main parameter
+     *  \param argv Standard main parameter
+     *  \param ltag Long-form argument string (--argument)
+     *  \param stag Short-form argument string (-a)
+     *  \return Index of parameter in argv
+     */
+
+    int  stda ( int argc, char ** argv, const char * const ltag, const char * const stag );
+
+    /*! \brief Parameter reader in argv
+     *  
+     *  This function interpret the parameter in the desired type and return it through
+     *  the param variable. The argi variable is typically set using stda function. If
+     *  argi is set to FS_NULL, the function does nothing.
+     *  
+     *  \param argi Index of the parameter in argv
+     *  \param argv Standard main parameter
+     *  \param param Pointer to the variable that recieve the parameter
+     *  \param type Type to use for parameter interpretation
+     */
+
+    void stdp ( int argi, char ** argv, void * param, int type );
 
 /*
     Header - Include guard
