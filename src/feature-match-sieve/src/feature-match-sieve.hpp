@@ -107,45 +107,45 @@
     "\t-s\tSieve parameter : strenght\n"                     \
     "\t-m\tSieve parameter : minimum\n"                      \
     "\t-a\tSieve parameter : maximum\n"                      \
-    "\t-r\tSieve selector : distance\n"                      \
-    "\t-t\tSieve selector : threshold\n"                     \
-    "\t-d\tSieve selector : disparity\n"                     \
-    "\t-f\tSieve selector : flow\n"                          \
-    "\t-l\tSieve selector : slop\n\n"                        \
+    "\t-r\tSieve mode : distance\n"                          \
+    "\t-t\tSieve mode : threshold\n"                         \
+    "\t-d\tSieve mode : disparity\n"                         \
+    "\t-f\tSieve mode : flow\n"                              \
+    "\t-l\tSieve mode : slop\n\n"                            \
     "feature-match-sieve - feature-suite\n"                  \
     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n"
 
     /* Define standard types */
-    # define FS_NULL        0
-    # define FS_STRING      1
-    # define FS_CHAR        2
-    # define FS_SHORT       3
-    # define FS_INT         4
-    # define FS_LONG        5
-    # define FS_LLONG       6
-    # define FS_UCHAR       7
-    # define FS_USHORT      8
-    # define FS_UINT        9
-    # define FS_ULONG      10
-    # define FS_ULLONG     11
-    # define FS_FLOAT      12
-    # define FS_DOUBLE     13
+    # define FS_NULL         0
+    # define FS_STRING       1
+    # define FS_CHAR         2
+    # define FS_SHORT        3
+    # define FS_INT          4
+    # define FS_LONG         5
+    # define FS_LLONG        6
+    # define FS_UCHAR        7
+    # define FS_USHORT       8
+    # define FS_UINT         9
+    # define FS_ULONG       10
+    # define FS_ULLONG      11
+    # define FS_FLOAT       12
+    # define FS_DOUBLE      13
 
 /* 
     Header - Preprocessor macros
  */
 
     /* Compute match distance */
-    # define FS_DIST(m)         ( sqrt( ( m.ax - m.bx ) * ( m.ax - m.bx ) + ( m.ay - m.by ) * ( m.ay - m.by ) ) )
+    # define FS_DIST(m)     ( sqrt( ( m.ax - m.bx ) * ( m.ax - m.bx ) + ( m.ay - m.by ) * ( m.ay - m.by ) ) )
 
     /* Compute vector mean value */
-    # define FS_VMEAN(v)        ( ( float ) std::accumulate( v.begin(), v.end(), 0.0) / ( float ) v.size() )
+    # define FS_VMEAN(v)    ( ( float ) std::accumulate( v.begin(), v.end(), 0.0) / ( float ) v.size() )
 
     /* Compute vector standard deviation */
-    # define FS_VSTDD(v,m)      ( std::sqrt( ( float ) std::inner_product( v.begin(), v.end(), v.begin(), 0.0) / ( float ) v.size() - m * m ) )
+    # define FS_VSTDD(v,m)  ( std::sqrt( ( float ) std::inner_product( v.begin(), v.end(), v.begin(), 0.0) / ( float ) v.size() - m * m ) )
 
     /* Compute sign */
-    # define FS_SIGN(x)         ( ( x > 0 ) ? 1 : -1 )
+    # define FS_SIGN(x)     ( ( x > 0 ) ? 1 : -1 )
 
 /* 
     Header - Typedefs
@@ -266,7 +266,6 @@
 
     std::vector < fs_match > fs_matchSIEVE_dich_slop ( std::vector < fs_match > fsRaw );
 
-
     /*! \brief Search agrument position in argv
      *  
      *  This function search in the argv string array the position of the argument
@@ -301,5 +300,4 @@
  */
 
     # endif
-
 

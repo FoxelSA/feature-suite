@@ -109,34 +109,34 @@
     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n"
 
     /* Define standard types */
-    # define FS_NULL        0
-    # define FS_STRING      1
-    # define FS_CHAR        2
-    # define FS_SHORT       3
-    # define FS_INT         4
-    # define FS_LONG        5
-    # define FS_LLONG       6
-    # define FS_UCHAR       7
-    # define FS_USHORT      8
-    # define FS_UINT        9
-    # define FS_ULONG      10
-    # define FS_ULLONG     11
-    # define FS_FLOAT      12
-    # define FS_DOUBLE     13
+    # define FS_NULL             0
+    # define FS_STRING           1
+    # define FS_CHAR             2
+    # define FS_SHORT            3
+    # define FS_INT              4
+    # define FS_LONG             5
+    # define FS_LLONG            6
+    # define FS_UCHAR            7
+    # define FS_USHORT           8
+    # define FS_UINT             9
+    # define FS_ULONG           10
+    # define FS_ULLONG          11
+    # define FS_FLOAT           12
+    # define FS_DOUBLE          13
 
     /* Equalization mode */
-    # define FS_MODE_TO_HIGHEST 1
-    # define FS_MODE_TO_LOWEST  2
+    # define FS_MODE_TO_HIGHEST  1
+    # define FS_MODE_TO_LOWEST   2
 
 /* 
     Header - Preprocessor macros
  */
 
     /* Compute vector mean value */
-    # define FS_VMEAN(v)         ( ( float ) std::accumulate( v.begin(), v.end(), 0.0) / ( float ) v.size() )
+    # define FS_VMEAN(v)        ( ( float ) std::accumulate( v.begin(), v.end(), 0.0) / ( float ) v.size() )
 
     /* Compute vector standard deviation */
-    # define FS_VSTDD(v,m)       ( std::sqrt( ( float ) std::inner_product( v.begin(), v.end(), v.begin(), 0.0) / ( float ) v.size() - m * m ) )
+    # define FS_VSTDD(v,m)      ( std::sqrt( ( float ) std::inner_product( v.begin(), v.end(), v.begin(), 0.0) / ( float ) v.size() - m * m ) )
 
 /* 
     Header - Typedefs
@@ -197,5 +197,4 @@
  */
 
     # endif
-
 

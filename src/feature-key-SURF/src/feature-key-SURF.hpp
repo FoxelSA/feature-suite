@@ -107,8 +107,8 @@
     "\t-l\tSURF nOctaveLayers\n"                           \
     "\t-a\tSURF nOctaves\n"                                \
     "\t-s\tSURF hessianThreshold\n"                        \
-    "\t-x\tHorizontal edges boundary size\n"               \
-    "\t-y\tVertical edges boundary size\n\n"               \
+    "\t-x\tHorizontal edges size\n"                        \
+    "\t-y\tVertical edges size\n\n"                        \
     "feature-key-SURF - feature-suite\n"                   \
     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n"
 
@@ -191,5 +191,4 @@
  */
 
     # endif
-
 

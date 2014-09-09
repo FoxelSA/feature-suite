@@ -97,7 +97,7 @@
         stdp( stda( argc, argv, "--strict"   , "-s" ), argv,   fsSMatchfile, FS_STRING );
         stdp( stda( argc, argv, "--input"    , "-i" ), argv,   fsIMatchfile, FS_STRING );
         stdp( stda( argc, argv, "--output"   , "-o" ), argv,   fsOMatchfile, FS_STRING );
-        stdp( stda( argc, argv, "--tolerence", "-t" ), argv, & fsTolerence , FS_FLOAT  );
+        stdp( stda( argc, argv, "--tolerance", "-t" ), argv, & fsTolerence , FS_FLOAT  );
 
         /* Software swicth */
         if ( ( stda( argc, argv, "--help", "-h" ) ) || ( argc <= 1 ) ) {

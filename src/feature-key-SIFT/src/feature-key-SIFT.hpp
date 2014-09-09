@@ -107,8 +107,8 @@
     "\t-c\tSIFT contrastThreshold\n"                       \
     "\t-e\tSIFT edgeThreshold\n"                           \
     "\t-s\tSIFT sigma\n"                                   \
-    "\t-x\tHorizontal edges boundary size\n"               \
-    "\t-y\tVertical edges boundary size\n\n"               \
+    "\t-x\tHorizontal edges size\n"                        \
+    "\t-y\tVertical edges size\n\n"                        \
     "feature-key-SIFT - feature-suite\n"                   \
     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n"
 
@@ -191,5 +191,4 @@
  */
 
     # endif
-
 

@@ -109,10 +109,10 @@
     # define FS_HELP "Usage summary :\n\n"                 \
     "\tfeature-match-ff [Arguments] [Parameters] ...\n\n"  \
     "Short arguments and parameters summary :\n\n"         \
-    "\t-s\tInput keypoints file (strict)\n"                \
-    "\t-i\tInput keypoints file (to filter)\n"             \
+    "\t-s\tInput keypoints file (quality)\n"               \
+    "\t-i\tInput keypoints file (raw)\n"                   \
     "\t-o\tOutput keypoints file\n"                        \
-    "\t-t\tFilter tolerence in pixels\n\n"                 \
+    "\t-t\tFilter tolerance in pixels\n\n"                 \
     "feature-match-ff - feature-suite\n"                   \
     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n"
 

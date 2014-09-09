@@ -101,7 +101,7 @@
     "\tfeature-image-gray [Arguments] [Parameters] ...\n\n" \
     "Short arguments and parameters summary :\n\n"          \
     "\t-i\tInput image\n"                                   \
-    "\t-o\tOutput file\n"                                   \
+    "\t-o\tOutput image\n"                                  \
     "\t-r\tRed component weight\n"                          \
     "\t-g\tGreen component weight\n"                        \
     "\t-b\tBlue component weight\n\n"                       \
@@ -187,5 +187,4 @@
  */
 
     # endif
-
 

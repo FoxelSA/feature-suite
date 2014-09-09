@@ -63,14 +63,14 @@
         std::ofstream fsMatchfile;
 
         /* Search in parameters */
-        stdp( stda( argc, argv,  "--input-a"  , "-i" ), argv,   fsImAIPath    , __STDP_STRING );
-        stdp( stda( argc, argv,  "--input-b"  , "-j" ), argv,   fsImBIPath    , __STDP_STRING );
-        stdp( stda( argc, argv,  "--keyfile-a", "-k" ), argv,   fsKeAIPath    , __STDP_STRING );
-        stdp( stda( argc, argv,  "--keyfile-b", "-l" ), argv,   fsKeBIPath    , __STDP_STRING );
-        stdp( stda( argc, argv,  "--output"   , "-o" ), argv,   fsMatOPath    , __STDP_STRING );
+        stdp( stda( argc, argv,  "--input-a"  , "-i" ), argv,   fsImAIPath    , FS_STRING );
+        stdp( stda( argc, argv,  "--input-b"  , "-j" ), argv,   fsImBIPath    , FS_STRING );
+        stdp( stda( argc, argv,  "--keyfile-a", "-k" ), argv,   fsKeAIPath    , FS_STRING );
+        stdp( stda( argc, argv,  "--keyfile-b", "-l" ), argv,   fsKeBIPath    , FS_STRING );
+        stdp( stda( argc, argv,  "--output"   , "-o" ), argv,   fsMatOPath    , FS_STRING );
 
         /* Software swicth */
-        if ( stda( argc, argv, "--help", "-h" ) ) {
+        if ( ( stda( argc, argv, "--help", "-h" ) ) || ( argc <= 1 ) ) {
 
             /* Display message */
             std::cout << FS_HELP;
@@ -198,6 +198,63 @@
 
         /* Return readed keypoints */
         return( fsKey );
+
+    }
+
+/*
+    Source - Arguments common handler
+ */
+
+    int stda( int argc, char ** argv, const char * const ltag, const char * const stag ) {
+
+        /* Search for argument */
+        while ( ( -- argc ) > 0 ) {
+
+            /* Search for tag matching */
+            if ( ( strcmp( argv[ argc ], ltag ) == 0 ) || ( strcmp( argv[ argc ], stag ) == 0 ) ) {
+
+                /* Return pointer to argument parameter */
+                return( argc + 1 );
+
+            }
+
+        /* Argument not found */
+        } return( FS_NULL );
+
+    }
+
+/*
+    Source - Parameters common handler
+ */
+
+    void stdp( int argi, char ** argv, void * param, int type ) {
+
+        /* Index consistency */
+        if ( argi == FS_NULL ) return;
+
+        /* Select type */
+        switch ( type ) {
+
+            /* Specific reading operation - Integers */
+            case ( FS_CHAR   ) : { * ( signed char        * ) param = atoi ( ( const char * ) argv[argi] ); } break;
+            case ( FS_SHORT  ) : { * ( signed short       * ) param = atoi ( ( const char * ) argv[argi] ); } break;
+            case ( FS_INT    ) : { * ( signed int         * ) param = atoi ( ( const char * ) argv[argi] ); } break;
+            case ( FS_LONG   ) : { * ( signed long        * ) param = atol ( ( const char * ) argv[argi] ); } break;
+            case ( FS_LLONG  ) : { * ( signed long long   * ) param = atoll( ( const char * ) argv[argi] ); } break;
+            case ( FS_UCHAR  ) : { * ( unsigned char      * ) param = atol ( ( const char * ) argv[argi] ); } break;
+            case ( FS_USHORT ) : { * ( unsigned short     * ) param = atol ( ( const char * ) argv[argi] ); } break;
+            case ( FS_UINT   ) : { * ( unsigned int       * ) param = atol ( ( const char * ) argv[argi] ); } break;
+            case ( FS_ULONG  ) : { * ( unsigned long      * ) param = atoll( ( const char * ) argv[argi] ); } break;
+            case ( FS_ULLONG ) : { * ( unsigned long long * ) param = atoll( ( const char * ) argv[argi] ); } break;
+
+            /* Specific reading operation - Floating point */
+            case ( FS_FLOAT  ) : { * ( float              * ) param = atof ( ( const char * ) argv[argi] ); } break;
+            case ( FS_DOUBLE ) : { * ( double             * ) param = atof ( ( const char * ) argv[argi] ); } break;
+
+            /* Specific reading operation - String */
+            case ( FS_STRING ) : { strcpy( ( char * ) param, ( const char * ) argv[argi] );  } break;
+
+        };
 
     }
 

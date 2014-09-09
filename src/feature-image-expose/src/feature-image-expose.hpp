@@ -128,10 +128,10 @@
  */
 
     /* Compute vector mean value */
-    # define FS_VMEAN(v)        ( ( float ) std::accumulate( v.begin(), v.end(), 0.0) / ( float ) v.size() )
+    # define FS_VMEAN(v)   ( ( float ) std::accumulate( v.begin(), v.end(), 0.0) / ( float ) v.size() )
 
     /* Compute vector standard deviation */
-    # define FS_VSTDD(v,m)      ( std::sqrt( ( float ) std::inner_product( v.begin(), v.end(), v.begin(), 0.0) / ( float ) v.size() - m * m ) )
+    # define FS_VSTDD(v,m) ( std::sqrt( ( float ) std::inner_product( v.begin(), v.end(), v.begin(), 0.0) / ( float ) v.size() - m * m ) )
 
 /* 
     Header - Typedefs
@@ -157,7 +157,6 @@
      */
 
     int main ( int argc, char ** argv );
-
 
     /*! \brief Search agrument position in argv
      *  
@@ -193,5 +192,4 @@
  */
 
     # endif
-
 

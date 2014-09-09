@@ -98,13 +98,13 @@
  */
 
     /* Standard help */
-    # define FS_HELP "Usage summary :\n\n"                    \
-    "\tfeature-file-concat [Arguments] [Parameters] ...\n\n"  \
-    "Short arguments and parameters summary :\n\n"            \
-    "\t-a\tInput file\n"                                      \
-    "\t-b\tInput file\n"                                      \
-    "\t-o\tOutput file\n\n"                                   \
-    "feature-file-concat - feature-suite\n"                   \
+    # define FS_HELP "Usage summary :\n\n"                   \
+    "\tfeature-file-concat [Arguments] [Parameters] ...\n\n" \
+    "Short arguments and parameters summary :\n\n"           \
+    "\t-a\tInput keypoints/matches file 1\n"                 \
+    "\t-b\tInput keypoints/matches file 2\n"                 \
+    "\t-o\tOutput file\n\n"                                  \
+    "feature-file-concat - feature-suite\n"                  \
     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n"
 
     /* Define standard types */
@@ -182,5 +182,4 @@
  */
 
     # endif
-
 
