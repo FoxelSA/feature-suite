@@ -6,8 +6,7 @@ The feature-suite provides tools in the context of automatic image matching. The
 
 ### Documentation
 
-Find more documentation on the [wiki](https://github.com/FoxelSA/feature-suite/wiki).
-
+A detailed documentation can be generated through doxygen. A more general documentation can be consulted on the [wiki](https://github.com/FoxelSA/feature-suite/wiki).
 
 ### Copyright
 
