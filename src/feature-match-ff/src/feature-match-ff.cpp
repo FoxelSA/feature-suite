@@ -77,15 +77,15 @@
         float fsPointB[3] = { };
 
         /* Match buffer */
-        fs_match fsBuffer = { };
+        fs_Match_t fsBuffer = { };
 
         /* Strict matches arrays */
         std::vector < cv::Point2f > fsKeyA;
         std::vector < cv::Point2f > fsKeyB;
 
         /* Matches array */
-        std::vector < fs_match > fsIMatch;
-        std::vector < fs_match > fsOMatch;
+        std::vector < fs_Match_t > fsIMatch;
+        std::vector < fs_Match_t > fsOMatch;
 
         /* Fundamental matrix */
         cv::Mat fsFundmat;
@@ -269,7 +269,7 @@
     Source - Arguments common handler
  */
 
-    int stda( int argc, char ** argv, const char * const ltag, const char * const stag ) {
+    int stda( int argc, char ** argv, char const * const ltag, char const * const stag ) {
 
         /* Search for argument */
         while ( ( -- argc ) > 0 ) {
@@ -291,7 +291,7 @@
     Source - Parameters common handler
  */
 
-    void stdp( int argi, char ** argv, void * param, int type ) {
+    void stdp( int argi, char ** argv, void * const param, int const type ) {
 
         /* Index consistency */
         if ( argi == FS_NULL ) return;

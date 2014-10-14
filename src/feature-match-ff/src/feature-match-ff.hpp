@@ -41,8 +41,8 @@
  */
 
     /*! \file   feature-match-ff.hpp
-     *  \author Stephane Flotron (s.flotron@foxel.ch)
-     *  \author Nils Hamel (n.hamel@foxel.ch)
+     *  \author Stephane Flotron <s.flotron@foxel.ch>
+     *  \author Nils Hamel <n.hamel@foxel.ch>
      *  
      *  Software main header (single function software)
      */
@@ -52,15 +52,15 @@
      *  \section feature-suite
      *  \section _ Features detection suite
      *  
-     *  The feature-suite provides tools in the context of automatic image matching.
-     *  The suite is separated into small softwares that solve a specific part of
-     *  the problem. It is designed so in order to perform research using each
-     *  software as a brick of the overall solver.
+     *  The feature-suite provides tools in the context of automatic image 
+     *  matching. The suite is separated into small softwares that solve a
+     *  specific part of the problem. It is designed so in order to perform 
+     *  research using each software as a brick of the overall solver.
      *
      *  \section Documentation
      *
-     *  More documentation can be found on the wiki provided on the project github
-     *  repository (https://github.com/FoxelSA/feature-suite/wiki).
+     *  A detailed documentation can be generated through doxygen. A more general
+     *  documentation can be consulted at https://github.com/FoxelSA/feature-suite/wiki.
      *
      *  \section Copyright
      * 
@@ -71,12 +71,13 @@
      *
      *  \section License
      *
-     *  This program is licensed under the terms of the GNU Affero General Public License
-     *  v3 (GNU AGPL), with two additional terms. The content is licensed under the terms 
-     *  of the Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA) license.
+     *  This program is licensed under the terms of the GNU Affero General Public
+     *  License v3 (GNU AGPL), with two additional terms. The content is licensed
+     *  under the terms of the Creative Commons Attribution-ShareAlike 4.0
+     *  International (CC BY-SA) license.
      *
-     *  You must read <http://foxel.ch/license> for more information about our Licensing
-     *  terms and our Usage and Attribution guidelines.
+     *  You must read <http://foxel.ch/license> for more information about our
+     *  Licensing terms and our Usage and Attribution guidelines.
      */
 
 /* 
@@ -144,26 +145,26 @@
     Header - Structures
  */
 
-    /*! \struct fs_matchSIEVE_match_struct
+    /*! \struct fs_Match_struct
      *  \brief Match structure
      *  
      *  Structure that stores the description of a match between two keypoints.
      *  
-     *  \var fs_matchSIEVE_match_struct::ai
+     *  \var fs_Match_struct::ai
      *  Index of the first keypoint in the keypoints list
-     *  \var fs_matchSIEVE_match_struct::ax
+     *  \var fs_Match_struct::ax
      *  Position x of the keypoint on the first image
-     *  \var fs_matchSIEVE_match_struct::ay 
+     *  \var fs_Match_struct::ay 
      *  Position y of the keypoint on the first image
-     *  \var fs_matchSIEVE_match_struct::bi 
+     *  \var fs_Match_struct::bi 
      *  Index of the second keypoint in the keypoints list
-     *  \var fs_matchSIEVE_match_struct::bx
+     *  \var fs_Match_struct::bx
      *  Position x of the keypoint on the second image
-     *  \var fs_matchSIEVE_match_struct::by 
+     *  \var fs_Match_struct::by 
      *  Position z of the keypoint on the second image
      */
 
-    typedef struct fs_matchSIEVE_match_struct {
+    typedef struct fs_Match_struct {
 
         int   ai;
         float ax;
@@ -172,7 +173,7 @@
         float bx;
         float by;
 
-    } fs_match;
+    } fs_Match_t;
 
 /* 
     Header - Function prototypes
@@ -180,10 +181,11 @@
 
     /*! \brief Software main function
      *  
-     *  The main function frame follows : parameters are initialized and read. The
-     *  assumed good matches are read and the fundamental matrix estimation is
-     *  performed on their basis. The set of matches to filter is read and the
-     *  fundamental matrix sieve applies. The filtered matches are then exported.
+     *  The main function frame follows : parameters are initialized and read.
+     *  The assumed good matches are read and the fundamental matrix estimation
+     *  is performed on their basis. The set of matches to filter is read and 
+     *  the fundamental matrix sieve applies. The filtered matches are then 
+     *  exported.
      *  
      *  \param argc Standard main parameter
      *  \param argv Standard main parameter
@@ -191,34 +193,35 @@
 
     int main ( int argc, char ** argv );
 
-    /*! \brief Search agrument position in argv
+    /*! \brief Arguments common handler
      *  
-     *  This function search in the argv string array the position of the argument
-     *  defined through ltag/stag and return the index of the corresponding parameter
-     *  in argv.
+     *  This function searches in the argv string array the position of the
+     *  argument defined through ltag/stag and returns the detected index.
      *  
-     *  \param argc Standard main parameter
-     *  \param argv Standard main parameter
-     *  \param ltag Long-form argument string (--argument)
-     *  \param stag Short-form argument string (-a)
-     *  \return Index of parameter in argv
+     *  \param  argc    Standard main parameter
+     *  \param  argv    Standard main parameter
+     *  \param  ltag    Long-form argument string
+     *  \param  stag    Short-form argument string
+     *
+     *  \return         Returns index of parameter in argv
      */
 
-    int  stda ( int argc, char ** argv, const char * const ltag, const char * const stag );
+    int stda ( int argc, char ** argv, char const * const ltag, char const * const stag );
 
-    /*! \brief Parameter reader in argv
+    /*! \brief Parameters common handler
      *  
-     *  This function interpret the parameter in the desired type and return it through
-     *  the param variable. The argi variable is typically set using stda function. If
-     *  argi is set to FS_NULL, the function does nothing.
+     *  This function interprets the parameter in the desired type and returns
+     *  it through the param variable. The argi variable is typically set using
+     *  stda function. If argi is set to CS_NULL, the function does nothing.
      *  
-     *  \param argi Index of the parameter in argv
-     *  \param argv Standard main parameter
-     *  \param param Pointer to the variable that recieve the parameter
-     *  \param type Type to use for parameter interpretation
+     *  \param argi     Index of the parameter in argv
+     *  \param argv     Standard main parameter
+     *  \param param    Pointer to the variable that recieve the interpreted
+     *                  parameter
+     *  \param type     Type to use for parameter interpretation
      */
 
-    void stdp ( int argi, char ** argv, void * param, int type );
+    void stdp ( int argi, char ** argv, void * const param, int const type );
 
 /*
     Header - Include guard

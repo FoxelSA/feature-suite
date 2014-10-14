@@ -62,10 +62,10 @@
         float fsMaximum  ( 100.0 );
 
         /* Matches reading buffer */
-        fs_match fsBuffer = { };
+        fs_Match_t fsBuffer = { };
 
         /* Matches array variables */
-        std::vector < fs_match > fsMatch;
+        std::vector < fs_Match_t > fsMatch;
 
         /* Stream variables */
         std::fstream fsStream;
@@ -182,10 +182,10 @@
     Source - Statistical distance filter
  */
 
-    std::vector < fs_match > fs_matchSIEVE_stat_dist( std::vector < fs_match > fsRaw, float fsStrength ) {
+    std::vector < fs_Match_t > fs_matchSIEVE_stat_dist( std::vector < fs_Match_t > const fsRaw, float const fsStrength ) {
 
         /* Instance return variable */
-        std::vector < fs_match > fsSieve;
+        std::vector < fs_Match_t > fsSieve;
 
         /* Instance distance vector */
         std::vector < float > fsDist;
@@ -219,10 +219,10 @@
     Source - Threshold distance filter
  */
 
-    std::vector < fs_match > fs_matchSIEVE_thre_dist( std::vector < fs_match > fsRaw, float fsMininum, float fsMaximum ) {
+    std::vector < fs_Match_t > fs_matchSIEVE_thre_dist( std::vector < fs_Match_t > const fsRaw, float const fsMininum, float const fsMaximum ) {
 
         /* Instance return variable */
-        std::vector < fs_match > fsSieve;
+        std::vector < fs_Match_t > fsSieve;
 
         /* Threshold distance filter */
         for ( unsigned int fsIndex( 0 ); fsIndex < fsRaw.size(); fsIndex ++ )
@@ -240,10 +240,10 @@
     Source - Statistical displacement filter
  */
 
-    std::vector < fs_match > fs_matchSIEVE_stat_disp( std::vector < fs_match > fsRaw, float fsStrength ) {
+    std::vector < fs_Match_t > fs_matchSIEVE_stat_disp( std::vector < fs_Match_t > const fsRaw, float const fsStrength ) {
 
         /* Instance return variable */
-        std::vector < fs_match > fsSieve;
+        std::vector < fs_Match_t > fsSieve;
 
         /* Instance distance vector */
         std::vector < float > fsDispX;
@@ -286,10 +286,10 @@
     Source - Statistical flow filter
  */
 
-    std::vector < fs_match > fs_matchSIEVE_stat_flow( std::vector < fs_match > fsRaw, float fsStrength ) {
+    std::vector < fs_Match_t > fs_matchSIEVE_stat_flow( std::vector < fs_Match_t > const fsRaw, float const fsStrength ) {
 
         /* Instance return variable */
-        std::vector < fs_match > fsSieve;
+        std::vector < fs_Match_t > fsSieve;
 
         /* Instance distance vector */
         std::vector < float > fsDispX;
@@ -332,10 +332,10 @@
     Source - Dichotomous slope filter
  */
 
-    std::vector < fs_match > fs_matchSIEVE_dich_slop( std::vector < fs_match > fsRaw ) {
+    std::vector < fs_Match_t > fs_matchSIEVE_dich_slop( std::vector < fs_Match_t > const fsRaw ) {
 
         /* Instance return variable */
-        std::vector < fs_match > fsSieve;
+        std::vector < fs_Match_t > fsSieve;
 
         /* Instance differentials */
         std::vector < float > fsDiffX;
@@ -381,7 +381,7 @@
     Source - Arguments common handler
  */
 
-    int stda( int argc, char ** argv, const char * const ltag, const char * const stag ) {
+    int stda( int argc, char ** argv, char const * const ltag, char const * const stag ) {
 
         /* Search for argument */
         while ( ( -- argc ) > 0 ) {
@@ -403,7 +403,7 @@
     Source - Parameters common handler
  */
 
-    void stdp( int argi, char ** argv, void * param, int type ) {
+    void stdp( int argi, char ** argv, void * const param, int const type ) {
 
         /* Index consistency */
         if ( argi == FS_NULL ) return;
