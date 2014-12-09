@@ -88,7 +88,7 @@
 
     # include <iostream>
     # include <fstream>
-    # include <cstring>
+    # include <common-all.hpp>
     # include <opencv2/opencv.hpp>
     # include <opencv2/highgui/highgui_c.h>
     # include <opencv2/nonfree/features2d.hpp>
@@ -107,22 +107,6 @@
     "\t-m\tInput matches file\n\n"                          \
     "feature-match-view - feature-suite\n"                  \
     "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n"
-
-    /* Define standard types */
-    # define FS_NULL        0
-    # define FS_STRING      1
-    # define FS_CHAR        2
-    # define FS_SHORT       3
-    # define FS_INT         4
-    # define FS_LONG        5
-    # define FS_LLONG       6
-    # define FS_UCHAR       7
-    # define FS_USHORT      8
-    # define FS_UINT        9
-    # define FS_ULONG      10
-    # define FS_ULLONG     11
-    # define FS_FLOAT      12
-    # define FS_DOUBLE     13
 
 /* 
     Header - Preprocessor macros
@@ -152,36 +136,6 @@
      */
 
     int main ( int argc, char ** argv );
-
-    /*! \brief Arguments common handler
-     *  
-     *  This function searches in the argv string array the position of the
-     *  argument defined through ltag/stag and returns the detected index.
-     *  
-     *  \param  argc    Standard main parameter
-     *  \param  argv    Standard main parameter
-     *  \param  ltag    Long-form argument string
-     *  \param  stag    Short-form argument string
-     *
-     *  \return         Returns index of parameter in argv
-     */
-
-    int stda ( int argc, char ** argv, char const * const ltag, char const * const stag );
-
-    /*! \brief Parameters common handler
-     *  
-     *  This function interprets the parameter in the desired type and returns
-     *  it through the param variable. The argi variable is typically set using
-     *  stda function. If argi is set to CS_NULL, the function does nothing.
-     *  
-     *  \param argi     Index of the parameter in argv
-     *  \param argv     Standard main parameter
-     *  \param param    Pointer to the variable that recieve the interpreted
-     *                  parameter
-     *  \param type     Type to use for parameter interpretation
-     */
-
-    void stdp ( int argi, char ** argv, void * const param, int const type );
 
 /*
     Header - Include guard

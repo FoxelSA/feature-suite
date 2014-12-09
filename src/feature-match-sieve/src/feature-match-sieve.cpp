@@ -71,14 +71,14 @@
         std::fstream fsStream;
 
         /* Arguments and parameters handle */
-        stdp( stda( argc, argv, "--input"   , "-i" ), argv,   fsMatchfile, FS_STRING );
-        stdp( stda( argc, argv, "--output"  , "-o" ), argv,   fsSievefile, FS_STRING );
-        stdp( stda( argc, argv, "--strenght", "-s" ), argv, & fsStrength , FS_FLOAT  );
-        stdp( stda( argc, argv, "--minimum" , "-m" ), argv, & fsMinimum  , FS_FLOAT  );
-        stdp( stda( argc, argv, "--maximum" , "-a" ), argv, & fsMaximum  , FS_FLOAT  );
+        lc_stdp( lc_stda( argc, argv, "--input"   , "-i" ), argv,   fsMatchfile, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--output"  , "-o" ), argv,   fsSievefile, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--strenght", "-s" ), argv, & fsStrength , LC_FLOAT  );
+        lc_stdp( lc_stda( argc, argv, "--minimum" , "-m" ), argv, & fsMinimum  , LC_FLOAT  );
+        lc_stdp( lc_stda( argc, argv, "--maximum" , "-a" ), argv, & fsMaximum  , LC_FLOAT  );
 
         /* Software swicth */
-        if ( ( stda( argc, argv, "--help", "-h" ) ) || ( argc <= 1 ) ) {
+        if ( ( lc_stda( argc, argv, "--help", "-h" ) ) || ( argc <= 1 ) ) {
 
             /* Display message */
             std::cout << FS_HELP;
@@ -109,27 +109,27 @@
                 fsStream.close();
 
                 /* Switch filters */
-                if ( stda( argc, argv, "--stat-dist", "-r" ) ) {
+                if ( lc_stda( argc, argv, "--stat-dist", "-r" ) ) {
 
                     /* Statistical distance */
                     fsMatch = fs_matchSIEVE_stat_dist( fsMatch, fsStrength );
 
-                } else if ( stda( argc, argv, "--thre-dist", "-t" ) ) {
+                } else if ( lc_stda( argc, argv, "--thre-dist", "-t" ) ) {
 
                     /* Threshold distance */
                     fsMatch = fs_matchSIEVE_thre_dist( fsMatch, fsMinimum, fsMaximum );
 
-                } else if ( stda( argc, argv, "--stat-disp", "-d" ) ) {
+                } else if ( lc_stda( argc, argv, "--stat-disp", "-d" ) ) {
 
                     /* Statistical displacement */
                     fsMatch = fs_matchSIEVE_stat_disp( fsMatch, fsStrength );
 
-                } else if ( stda( argc, argv, "--stat-flow", "-f" ) ) {
+                } else if ( lc_stda( argc, argv, "--stat-flow", "-f" ) ) {
 
                     /* Statistical displacement */
                     fsMatch = fs_matchSIEVE_stat_flow( fsMatch, fsStrength );
 
-                } else if ( stda( argc, argv, "--dich-slop", "-l" ) ) {
+                } else if ( lc_stda( argc, argv, "--dich-slop", "-l" ) ) {
 
                     /* Statistical displacement */
                     fsMatch = fs_matchSIEVE_dich_slop( fsMatch );
@@ -201,8 +201,8 @@
             fsDist.push_back( FS_DIST( fsRaw[fsIndex] ) );
 
         /* Compute statistical quantities */
-        fsMean = FS_VMEAN( fsDist );
-        fsStdd = FS_VSTDD( fsDist, fsMean );
+        fsMean = LC_VMEAN( fsDist );
+        fsStdd = LC_VSTDD( fsDist, fsMean );
 
         /* Statistical distance filter */
         for ( unsigned int fsIndex( 0 ); fsIndex < fsRaw.size(); fsIndex ++ )
@@ -265,10 +265,10 @@
         }
 
         /* Compute statistical quantities */
-        fsMeanX = FS_VMEAN( fsDispX );
-        fsMeanY = FS_VMEAN( fsDispY );
-        fsStddX = FS_VSTDD( fsDispX, fsMeanX );
-        fsStddY = FS_VSTDD( fsDispY, fsMeanY );
+        fsMeanX = LC_VMEAN( fsDispX );
+        fsMeanY = LC_VMEAN( fsDispY );
+        fsStddX = LC_VSTDD( fsDispX, fsMeanX );
+        fsStddY = LC_VSTDD( fsDispY, fsMeanY );
 
         /* Statistical distance filter */
         for ( unsigned int fsIndex( 0 ); fsIndex < fsRaw.size(); fsIndex ++ )
@@ -311,10 +311,10 @@
         }
 
         /* Compute statistical quantities */
-        fsMeanX = FS_VMEAN( fsDispX );
-        fsMeanY = FS_VMEAN( fsDispY );
-        fsStddX = FS_VSTDD( fsDispX, fsMeanX );
-        fsStddY = FS_VSTDD( fsDispY, fsMeanY );
+        fsMeanX = LC_VMEAN( fsDispX );
+        fsMeanY = LC_VMEAN( fsDispY );
+        fsStddX = LC_VSTDD( fsDispX, fsMeanX );
+        fsStddY = LC_VSTDD( fsDispY, fsMeanY );
 
         /* Statistical distance filter */
         for ( unsigned int fsIndex( 0 ); fsIndex < fsRaw.size(); fsIndex ++ )
@@ -355,15 +355,15 @@
         }
 
         /* Compute differential mean signs */
-        fsMeanX = FS_SIGN( FS_VMEAN( fsDiffX ) );
-        fsMeanY = FS_SIGN( FS_VMEAN( fsDiffY ) );
+        fsMeanX = LC_SIGN( LC_VMEAN( fsDiffX ) );
+        fsMeanY = LC_SIGN( LC_VMEAN( fsDiffY ) );
 
         /* Dichotomous slope filter */
         for ( unsigned int fsIndex( 0 ); fsIndex < fsRaw.size(); fsIndex ++ ) {
 
             /* Apply sieve */
-            if ( ( FS_SIGN( fsDiffX[fsIndex] ) == fsMeanX ) && 
-                 ( FS_SIGN( fsDiffY[fsIndex] ) == fsMeanY ) ) {
+            if ( ( LC_SIGN( fsDiffX[fsIndex] ) == fsMeanX ) && 
+                 ( LC_SIGN( fsDiffY[fsIndex] ) == fsMeanY ) ) {
 
                 /* Sieve passed */
                 fsSieve.push_back( fsRaw[fsIndex] );
@@ -374,63 +374,6 @@
         
         /* Return filtered matches */
         return( fsSieve );
-
-    }
-
-/*
-    Source - Arguments common handler
- */
-
-    int stda( int argc, char ** argv, char const * const ltag, char const * const stag ) {
-
-        /* Search for argument */
-        while ( ( -- argc ) > 0 ) {
-
-            /* Search for tag matching */
-            if ( ( strcmp( argv[ argc ], ltag ) == 0 ) || ( strcmp( argv[ argc ], stag ) == 0 ) ) {
-
-                /* Return pointer to argument parameter */
-                return( argc + 1 );
-
-            }
-
-        /* Argument not found */
-        } return( FS_NULL );
-
-    }
-
-/*
-    Source - Parameters common handler
- */
-
-    void stdp( int argi, char ** argv, void * const param, int const type ) {
-
-        /* Index consistency */
-        if ( argi == FS_NULL ) return;
-
-        /* Select type */
-        switch ( type ) {
-
-            /* Specific reading operation - Integers */
-            case ( FS_CHAR   ) : { * ( signed char        * ) param = atoi ( ( const char * ) argv[argi] ); } break;
-            case ( FS_SHORT  ) : { * ( signed short       * ) param = atoi ( ( const char * ) argv[argi] ); } break;
-            case ( FS_INT    ) : { * ( signed int         * ) param = atoi ( ( const char * ) argv[argi] ); } break;
-            case ( FS_LONG   ) : { * ( signed long        * ) param = atol ( ( const char * ) argv[argi] ); } break;
-            case ( FS_LLONG  ) : { * ( signed long long   * ) param = atoll( ( const char * ) argv[argi] ); } break;
-            case ( FS_UCHAR  ) : { * ( unsigned char      * ) param = atol ( ( const char * ) argv[argi] ); } break;
-            case ( FS_USHORT ) : { * ( unsigned short     * ) param = atol ( ( const char * ) argv[argi] ); } break;
-            case ( FS_UINT   ) : { * ( unsigned int       * ) param = atol ( ( const char * ) argv[argi] ); } break;
-            case ( FS_ULONG  ) : { * ( unsigned long      * ) param = atoll( ( const char * ) argv[argi] ); } break;
-            case ( FS_ULLONG ) : { * ( unsigned long long * ) param = atoll( ( const char * ) argv[argi] ); } break;
-
-            /* Specific reading operation - Floating point */
-            case ( FS_FLOAT  ) : { * ( float              * ) param = atof ( ( const char * ) argv[argi] ); } break;
-            case ( FS_DOUBLE ) : { * ( double             * ) param = atof ( ( const char * ) argv[argi] ); } break;
-
-            /* Specific reading operation - String */
-            case ( FS_STRING ) : { strcpy( ( char * ) param, ( const char * ) argv[argi] );  } break;
-
-        };
 
     }
 

@@ -88,6 +88,8 @@
 
     # include <cstdlib>
     # include <cstring>
+    # include <vector>
+    # include <numeric>
 
 /* 
     Header - Preprocessor definitions
@@ -96,6 +98,15 @@
 /* 
     Header - Preprocessor macros
  */
+
+    /* Compute sign */
+    # define LC_SIGN(x)     ( ( x > 0 ) ? 1 : -1 )
+
+    /* Compute vector mean value */
+    # define LC_VMEAN(v)    ( ( float ) std::accumulate( v.begin(), v.end(), 0.0) / ( float ) v.size() )
+
+    /* Compute vector standard deviation */
+    # define LC_VSTDD(v,m)  ( std::sqrt( ( float ) std::inner_product( v.begin(), v.end(), v.begin(), 0.0) / ( float ) v.size() - m * m ) )
 
 /* 
     Header - Typedefs
