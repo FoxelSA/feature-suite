@@ -50,8 +50,8 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsImgIPath[256] = { };
-        char fsKeyOPath[256] = { };
+        char fsImgIPath[256] = { 0 };
+        char fsKeyOPath[256] = { 0 };
 
         /* SIFT variables */
         int   fsSIFTexported ( 0    );

@@ -54,9 +54,9 @@
     int main( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsSMatchfile[256] = { };
-        char fsIMatchfile[256] = { };
-        char fsOMatchfile[256] = { };
+        char fsSMatchfile[256] = { 0 };
+        char fsIMatchfile[256] = { 0 };
+        char fsOMatchfile[256] = { 0 };
 
         /* Reading variables */
         int   fsCount  ( 0   );
@@ -71,10 +71,10 @@
         float fsCondition ( 0.0 );
 
         /* Fundamental matrix sieve variables */
-        float fsEpiplA[3] = { };
-        float fsEpiplB[3] = { };
-        float fsPointA[3] = { };
-        float fsPointB[3] = { };
+        float fsEpiplA[3] = { 0.0 };
+        float fsEpiplB[3] = { 0.0 };
+        float fsPointA[3] = { 0.0 };
+        float fsPointB[3] = { 0.0 };
 
         /* Match buffer */
         fs_Match_t fsBuffer = { };

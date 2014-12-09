@@ -50,10 +50,10 @@
     int main ( int argc, char ** argv ) {
 
         /* Path strings */
-        char fsImAIPath[256] = { };
-        char fsImBIPath[256] = { };
-        char fsMatIPath[256] = { };
-        char fsImgOPath[256] = { };
+        char fsImAIPath[256] = { 0 };
+        char fsImBIPath[256] = { 0 };
+        char fsMatIPath[256] = { 0 };
+        char fsImgOPath[256] = { 0 };
 
         /* Keypoint matrix size */
         int fsRows ( 0 );

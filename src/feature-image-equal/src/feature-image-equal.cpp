@@ -50,10 +50,10 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsImAIPath[256] = { };
-        char fsImBIPath[256] = { };
-        char fsEqAOPath[256] = { };
-        char fsEqBOPath[256] = { };
+        char fsImAIPath[256] = { 0 };
+        char fsImBIPath[256] = { 0 };
+        char fsEqAOPath[256] = { 0 };
+        char fsEqBOPath[256] = { 0 };
 
         /* Parameters variables */
         int fsMode = FS_MODE_TO_HIGHEST;

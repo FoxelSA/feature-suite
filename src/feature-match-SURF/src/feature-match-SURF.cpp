@@ -50,11 +50,11 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsImAIPath[256] = { };
-        char fsKeAIPath[256] = { };
-        char fsImBIPath[256] = { };
-        char fsKeBIPath[256] = { };
-        char fsMatOPath[256] = { };
+        char fsImAIPath[256] = { 0 };
+        char fsKeAIPath[256] = { 0 };
+        char fsImBIPath[256] = { 0 };
+        char fsKeBIPath[256] = { 0 };
+        char fsMatOPath[256] = { 0 };
 
         /* Image variable */
         cv::Mat fsImageA, fsImageB;

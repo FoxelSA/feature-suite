@@ -50,8 +50,8 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsMatchfile[256] = { };
-        char fsSievefile[256] = { };
+        char fsMatchfile[256] = { 0 };
+        char fsSievefile[256] = { 0 };
 
         /* Reading variables */
         int fsCount ( 0 );

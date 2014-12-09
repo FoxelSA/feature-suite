@@ -50,8 +50,8 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsImgIPath[256] = { };
-        char fsImgOPath[256] = { };
+        char fsImgIPath[256] = { 0 };
+        char fsImgOPath[256] = { 0 };
 
         /* Parameters variables */
         float fsFixMean ( 0.0 );

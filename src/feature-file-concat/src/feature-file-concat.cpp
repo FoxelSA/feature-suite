@@ -50,9 +50,9 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsFileA[256] = { };
-        char fsFileB[256] = { };
-        char fsFileO[256] = { };
+        char fsFileA[256] = { 0 };
+        char fsFileB[256] = { 0 };
+        char fsFileO[256] = { 0 };
 
         /* Reading variables */
         int fsCountA ( 0 );

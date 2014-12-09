@@ -50,9 +50,9 @@
     int main ( int argc, char ** argv ) {
 
         /* Path strings */
-        char  fsImgIPath[256] = { };
-        char  fsImgOPath[256] = { };
-        char  fsKeyIPath[256] = { };
+        char  fsImgIPath[256] = { 0 };
+        char  fsImgOPath[256] = { 0 };
+        char  fsKeyIPath[256] = { 0 };
 
         /* Keypoint coordinates */
         float fsKeyX ( 0.0 );
