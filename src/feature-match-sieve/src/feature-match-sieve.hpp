@@ -1,7 +1,7 @@
 /*
  * feature suite - Feature detection suite
  *
- * Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch
+ * Copyright (c) 2013-2015 FOXEL SA - http://foxel.ch
  * Please read <http://foxel.ch/license> for more information.
  *
  *
@@ -59,7 +59,7 @@
      *
      *  \section Copyright
      * 
-     *  Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch \n
+     *  Copyright (c) 2013-2015 FOXEL SA - http://foxel.ch \n
      *  This program is part of the FOXEL project <http://foxel.ch>.
      *  
      *  Please read the COPYRIGHT.md file for more information.
@@ -114,7 +114,7 @@
     "\t-f\tSieve mode : flow\n"                              \
     "\t-l\tSieve mode : slop\n\n"                            \
     "feature-match-sieve - feature-suite\n"                  \
-    "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n"
+    "Copyright (c) 2013-2015 FOXEL SA - http://foxel.ch\n"
 
 /* 
     Header - Preprocessor macros

@@ -1,7 +1,7 @@
 /*
  * feature suite - Feature detection suite
  *
- * Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch
+ * Copyright (c) 2013-2015 FOXEL SA - http://foxel.ch
  * Please read <http://foxel.ch/license> for more information.
  *
  *
@@ -59,7 +59,7 @@
      *
      *  \section Copyright
      * 
-     *  Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch \n
+     *  Copyright (c) 2013-2015 FOXEL SA - http://foxel.ch \n
      *  This program is part of the FOXEL project <http://foxel.ch>.
      *  
      *  Please read the COPYRIGHT.md file for more information.
@@ -105,7 +105,7 @@
     "\t-d\tOutput image 2\n"                                 \
     "\t-m\tEqualization mode\n\n"                            \
     "feature-image-equal - feature-suite\n"                  \
-    "Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch\n"
+    "Copyright (c) 2013-2015 FOXEL SA - http://foxel.ch\n"
 
     /* Equalization mode */
     # define FS_MODE_TO_HIGHEST  1
