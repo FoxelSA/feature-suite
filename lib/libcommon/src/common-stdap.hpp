@@ -36,7 +36,7 @@
  *      Attribution" section of <http://foxel.ch/license>.
  */
 
-    /*! \file   common-stdap.h
+    /*! \file   common-stdap.hpp
      *  \author Nils Hamel <n.hamel@foxel.ch>
      *
      *  Standard arguments and parameters handler

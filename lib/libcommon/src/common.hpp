@@ -36,7 +36,7 @@
  *      Attribution" section of <http://foxel.ch/license>.
  */
 
-    /*! \file   common.h
+    /*! \file   common.hpp
      *  \author Nils Hamel <n.hamel@foxel.ch>
      *
      *  Library common header file
