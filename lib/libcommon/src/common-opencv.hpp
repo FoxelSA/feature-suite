@@ -77,9 +77,53 @@
     Header - Function prototypes
  */
 
+    /*! \brief Image exportation interface
+     *
+     *  This function is a simple front end to the OpenCV image exportation
+     *  function. It simply takes care of specific options that can be passed to
+     *  the OpenCV function according to the image format such as compression
+     *  or quality. The determination of the output format is made on the basis
+     *  of the file extention.
+     *
+     *  \param  lcPath          Image exportation path
+     *  \param  lcImage         Image to export
+     *  \param  lcOption        Image exportation options
+     *
+     *  \return The function returns true if the exportation succeed, false
+     *  otherwise - repport OpenCV function value
+     */    
+
     bool lc_imwrite ( char * lcPath, cv::Mat lcImage, int lcOption );
 
+    /*! \brief Image exportation methods
+     *
+     *  This function uses the OpenCV exportation method to export the provided
+     *  image in JPEG format using the specified quality value. The JPEG quality
+     *  value has to be between 0 and 100.
+     *
+     *  \param  lcPath          Image exportation path
+     *  \param  lcImage         Image to export
+     *  \param  lcQuality       JPEG image quality
+     *
+     *  \return The function returns true if the exportation succeed, false
+     *  otherwise - repport OpenCV function value
+     */
+
     bool lc_imwrite_jpeg ( char * lcPath, cv::Mat lcImage, int lcQuality );
+
+    /*! \brief Image exportation methods
+     *
+     *  This function uses the OpenCV exportation method to export the provided
+     *  image in PNG format using the specified compression value. The PNG
+     *  compression value has to be between 0 and 9.
+     *
+     *  \param  lcPath          Image exportation path
+     *  \param  lcImage         Image to export
+     *  \param  lcCompression   JPEG image quality
+     *
+     *  \return The function returns true if the exportation succeed, false
+     *  otherwise - repport OpenCV function value
+     */
 
     bool lc_imwrite_png ( char * lcPath, cv::Mat lcImage, int lcCompression );
 
