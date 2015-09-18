@@ -36,26 +36,26 @@
  *      Attribution" section of <http://foxel.ch/license>.
  */
 
-    /*! \file   common-all.hpp
+    /*! \file   common-opencv.hpp
      *  \author Nils Hamel <n.hamel@foxel.ch>
      *
-     *  Library general includer
+     *  OpenCV function interface
      */
 
 /* 
     Header - Include guard
  */
 
-    # ifndef __LC_ALL__
-    # define __LC_ALL__
+    # ifndef __LC_OPENCV__
+    # define __LC_OPENCV__
 
 /* 
     Header - Includes
  */
 
     # include "common.hpp"
-    # include "common-stdap.hpp"
-    # include "common-opencv.hpp"
+    # include <opencv2/opencv.hpp>
+    # include <opencv2/highgui/highgui_c.h>
 
 /* 
     Header - Preprocessor definitions
@@ -76,6 +76,12 @@
 /* 
     Header - Function prototypes
  */
+
+    bool lc_imwrite ( char * lcPath, cv::Mat lcImage, int lcOption );
+
+    bool lc_imwrite_jpeg ( char * lcPath, cv::Mat lcImage, int lcQuality );
+
+    bool lc_imwrite_png ( char * lcPath, cv::Mat lcImage, int lcCompression );
 
 /*
     Header - Include guard
