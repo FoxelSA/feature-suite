@@ -93,17 +93,27 @@
                 /* Compute histogram standard deviation */
                 fsStdd = LC_VSTDD( fsBytes, fsMean );
 
-                /* Apply exposure correction */
-                fsImage = ( ( fsImage - fsMean ) / fsStdd ) * fsFixStdd + fsFixMean;
+                /* Software switch */
+                if ( lc_stda( argc, argv, "--set", "-e" ) ) {
 
-                /* Write result image */
-                if ( imwrite( fsImgOPath, fsImage ) ) {
+                    /* Apply exposure correction */
+                    fsImage = ( ( fsImage - fsMean ) / fsStdd ) * fsFixStdd + fsFixMean;
+
+                    /* Write result image */
+                    if ( imwrite( fsImgOPath, fsImage ) ) {
+
+                        /* Display message */
+                        std::cout << "Exported " << fsImgOPath << std::endl;
 
                     /* Display message */
-                    std::cout << "Exported " << fsImgOPath << std::endl;
+                    } else { std::cout << "Error : Unable to write output image" << std::endl; }
 
-                /* Display message */
-                } else { std::cout << "Error : Unable to write output image" << std::endl; }
+                } else if ( lc_stda( argc, argv, "--get", "-g" ) ) {
+
+                    /* Display image histogramm mean and standard deviation */
+                    std::cout << fsMean << " " << fsStdd << std::endl;
+
+                }
 
             /* Display message */
             } else { std::cout << "Error : Unable to read input image" << std::endl; }
