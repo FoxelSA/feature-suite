@@ -127,13 +127,13 @@
                         if ( strcmp( fsMode, "both" ) != 0 ) {
 
                             /* Exposure correction */
-                            fsImage = ( fsImage - fsMean ) + fsFixMean;
+                            fsImage = fsImage + ( fsFixMean - fsMean );
 
                         }
 
                     }
 
-                    if ( ( strcmp( fsMode, "std" ) == 0 ) || ( strcmp( fsMode, "both" ) == 0 ) ) {
+                    if ( ( strcmp( fsMode, "stdd" ) == 0 ) || ( strcmp( fsMode, "both" ) == 0 ) ) {
 
                         /* Compute histogram standard deviation */
                         fsStdD = LC_VSTDD( fsBytes, fsMean );
@@ -142,7 +142,7 @@
                         if ( strcmp( fsMode, "both" ) != 0 ) {
 
                             /* Exposure correction */
-                            fsImage = ( fsImage / fsStdD ) * fsFixStdd;
+                            fsImage = fsImage * ( fsFixStdd / fsStdD );
 
                         }
 
