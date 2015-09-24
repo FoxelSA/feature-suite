@@ -53,9 +53,6 @@
         char fsImgIPath[256] = { 0 };
         char fsImgOPath[256] = { 0 };
 
-        /* Execution mode variables */
-        char fsMode[256] = { 0 };
-
         /* Parameters variables */
         float fsFixMean ( 0.0 );
         float fsFixStdd ( 0.0 );
@@ -70,7 +67,6 @@
         /* Search in parameters */
         lc_stdp( lc_stda( argc, argv, "--input" , "-i" ), argv,   fsImgIPath, LC_STRING );
         lc_stdp( lc_stda( argc, argv, "--output", "-o" ), argv,   fsImgOPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--mode"  , "-d" ), argv,   fsMode    , LC_STRING );
         lc_stdp( lc_stda( argc, argv, "--mean"  , "-m" ), argv, & fsFixMean , LC_FLOAT  );
         lc_stdp( lc_stda( argc, argv, "--stdd"  , "-s" ), argv, & fsFixStdd , LC_FLOAT  );
 
@@ -91,70 +87,22 @@
                 /* Create array on image bytes */
                 std::vector < char > fsBytes( fsImage.data, fsImage.data + fsImage.rows * fsImage.cols * fsImage.channels() );
 
+                /* Compute histogram mean */
+                fsMean = LC_VMEAN( fsBytes );
+
+                /* Compute histogram standard deviation */
+                fsStdD = LC_VSTDD( fsBytes, fsMean );
+
                 /* Software switch */
                 if ( lc_stda( argc, argv, "--get", "-g" ) ) {
 
-                    /* Check execution mode */
-                    if ( ( strcmp( fsMode, "mean" ) == 0 ) || ( strcmp( fsMode, "both" ) == 0 ) ) {
-
-                        /* Compute histogram mean */
-                        fsMean = LC_VMEAN( fsBytes );
-
-                        /* Display mean value */
-                        std::cout << fsMean << std::endl;
-
-                    }
-
-                    if ( ( strcmp( fsMode, "std" ) == 0 ) || ( strcmp( fsMode, "both" ) == 0 ) ) {
-
-                        /* Compute histogram standard deviation */
-                        fsStdD = LC_VSTDD( fsBytes, fsMean );
-
-                        /* Display standard deviation value */
-                        std::cout << fsStdD << std::endl;
-
-                    }
+                    /* Display mean and standard deviation */
+                    std::cout << fsMean << std::endl << fsStdD << std::endl;
 
                 } else if ( lc_stda( argc, argv, "--set", "-e" ) ) {
 
-                    /* Check execution mode */
-                    if ( ( strcmp( fsMode, "mean" ) == 0 ) || ( strcmp( fsMode, "both" ) == 0 ) ) {
-
-                        /* Compute histogram mean */
-                        fsMean = LC_VMEAN( fsBytes );
-
-                        /* Check execution mode */
-                        if ( strcmp( fsMode, "both" ) != 0 ) {
-
-                            /* Exposure correction */
-                            fsImage = fsImage + ( fsFixMean - fsMean );
-
-                        }
-
-                    }
-
-                    if ( ( strcmp( fsMode, "stdd" ) == 0 ) || ( strcmp( fsMode, "both" ) == 0 ) ) {
-
-                        /* Compute histogram standard deviation */
-                        fsStdD = LC_VSTDD( fsBytes, fsMean );
-
-                        /* Check execution mode */
-                        if ( strcmp( fsMode, "both" ) != 0 ) {
-
-                            /* Exposure correction */
-                            fsImage = fsImage * ( fsFixStdd / fsStdD );
-
-                        }
-
-                    }
-
-                    /* Check execution mode */
-                    if ( strcmp( fsMode, "both" ) == 0 ) {
-
-                        /* Exposure correction */
-                        fsImage = ( ( fsImage - fsMean ) / fsStdD ) * fsFixStdd + fsFixMean;
-
-                    }
+                    /* Exposure correction */
+                    fsImage = ( ( fsImage - fsMean ) / fsStdD ) * fsFixStdd + fsFixMean;
 
                     /* Write result image */
                     if ( imwrite( fsImgOPath, fsImage ) == false ) {
