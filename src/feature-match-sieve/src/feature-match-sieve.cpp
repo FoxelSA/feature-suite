@@ -73,7 +73,7 @@
         /* Arguments and parameters handle */
         lc_stdp( lc_stda( argc, argv, "--input"   , "-i" ), argv,   fsMatchfile, LC_STRING );
         lc_stdp( lc_stda( argc, argv, "--output"  , "-o" ), argv,   fsSievefile, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--strenght", "-s" ), argv, & fsStrength , LC_FLOAT  );
+        lc_stdp( lc_stda( argc, argv, "--strength", "-s" ), argv, & fsStrength , LC_FLOAT  );
         lc_stdp( lc_stda( argc, argv, "--minimum" , "-m" ), argv, & fsMinimum  , LC_FLOAT  );
         lc_stdp( lc_stda( argc, argv, "--maximum" , "-a" ), argv, & fsMaximum  , LC_FLOAT  );
 
