@@ -54,9 +54,9 @@
     int main( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsSMatchfile[256] = { 0 };
-        char fsIMatchfile[256] = { 0 };
-        char fsOMatchfile[256] = { 0 };
+        char * fsSMatchfile( NULL );
+        char * fsIMatchfile( NULL );
+        char * fsOMatchfile( NULL );
 
         /* Reading variables */
         int   fsCount  ( 0   );
@@ -94,9 +94,9 @@
         std::fstream fsStream;
 
         /* Arguments and parameters handle */
-        lc_stdp( lc_stda( argc, argv, "--strict"   , "-s" ), argv,   fsSMatchfile, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--input"    , "-i" ), argv,   fsIMatchfile, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--output"   , "-o" ), argv,   fsOMatchfile, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--strict"   , "-s" ), argv, & fsSMatchfile, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--input"    , "-i" ), argv, & fsIMatchfile, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--output"   , "-o" ), argv, & fsOMatchfile, LC_STRING );
         lc_stdp( lc_stda( argc, argv, "--tolerance", "-t" ), argv, & fsTolerence , LC_FLOAT  );
 
         /* Software swicth */
@@ -107,156 +107,159 @@
 
         } else {
 
-            /* Open strict match stream */
-            fsStream.open( fsSMatchfile, std::ios::in );
+            /* Verify path strings */
+            if ( ( fsSMatchfile != NULL ) && ( fsIMatchfile != NULL ) && ( fsOMatchfile != NULL ) ) {
 
-            /* Check stream openning */
-            if ( fsStream.is_open() == true ) {
+                /* Open strict match stream */
+                fsStream.open( fsSMatchfile, std::ios::in );
 
-                /* Read matches count */
-                fsStream >> fsCount;
+                /* Check stream openning */
+                if ( fsStream.is_open() == true ) {
 
-                /* Read matches coordinates and index */
-                for ( int fsIndex( 0 ); fsIndex < fsCount; fsIndex ++ ) {
+                    /* Read matches count */
+                    fsStream >> fsCount;
 
-                    /* Read indexes (not used) */
-                    fsStream >> fsKeyIdx >> fsKeyIdx;
+                    /* Read matches coordinates and index */
+                    for ( int fsIndex( 0 ); fsIndex < fsCount; fsIndex ++ ) {
 
-                    /* Read first key parameters */
-                    fsStream >> fsKeyX >> fsKeyY;
+                        /* Read indexes (not used) */
+                        fsStream >> fsKeyIdx >> fsKeyIdx;
 
-                    /* Push first key parameters */
-                    fsKeyA.push_back( cv::Point2f( fsKeyX, fsKeyY ) );
+                        /* Read first key parameters */
+                        fsStream >> fsKeyX >> fsKeyY;
 
-                    /* Read second key parameters */
-                    fsStream >> fsKeyX >> fsKeyY;
+                        /* Push first key parameters */
+                        fsKeyA.push_back( cv::Point2f( fsKeyX, fsKeyY ) );
 
-                    /* Push second key parameters */
-                    fsKeyB.push_back( cv::Point2f( fsKeyX, fsKeyY ) );
+                        /* Read second key parameters */
+                        fsStream >> fsKeyX >> fsKeyY;
 
-                }
+                        /* Push second key parameters */
+                        fsKeyB.push_back( cv::Point2f( fsKeyX, fsKeyY ) );
 
-                /* Close input stream */
-                fsStream.close();
+                    }
 
-                /* Check strict matches count */
-                if ( fsCount >= 8 ) {
+                    /* Close input stream */
+                    fsStream.close();
 
-                    /* Compute fundamental matrix estimation */
-                    fsFundmat = cv::findFundamentalMat( fsKeyA, fsKeyB, cv::FM_RANSAC, 1.0 , 0.99 );
+                    /* Check strict matches count */
+                    if ( fsCount >= 8 ) {
 
-                    /* Open input matches file */
-                    fsStream.open( fsIMatchfile, std::ios::in );
+                        /* Compute fundamental matrix estimation */
+                        fsFundmat = cv::findFundamentalMat( fsKeyA, fsKeyB, cv::FM_RANSAC, 1.0 , 0.99 );
 
-                    /* Check stream openning */
-                    if ( fsStream.is_open() == true ) {
+                        /* Open input matches file */
+                        fsStream.open( fsIMatchfile, std::ios::in );
 
-                        /* Read matches count */
-                        fsStream >> fsCount;
+                        /* Check stream openning */
+                        if ( fsStream.is_open() == true ) {
 
-                        /* Read matches coordinates and index */
-                        for ( int fsIndex( 0 ); fsIndex < fsCount; fsIndex ++ ) {
+                            /* Read matches count */
+                            fsStream >> fsCount;
 
-                            /* Read matches coordinates */
-                            fsStream >> fsBuffer.ai >> fsBuffer.bi >> fsBuffer.ax >> fsBuffer.ay >> fsBuffer.bx >> fsBuffer.by; 
+                            /* Read matches coordinates and index */
+                            for ( int fsIndex( 0 ); fsIndex < fsCount; fsIndex ++ ) {
 
-                            /* Push reading buffer */
-                            fsIMatch.push_back( fsBuffer );
+                                /* Read matches coordinates */
+                                fsStream >> fsBuffer.ai >> fsBuffer.bi >> fsBuffer.ax >> fsBuffer.ay >> fsBuffer.bx >> fsBuffer.by; 
 
-                        }
+                                /* Push reading buffer */
+                                fsIMatch.push_back( fsBuffer );
 
-                        /* Close input stream */
-                        fsStream.close();
+                            }
 
-                        /* Apply fundamental matrix sieve */
-                        for ( unsigned int fsIndex( 0 ); fsIndex < fsIMatch.size(); fsIndex ++ ) {
+                            /* Close input stream */
+                            fsStream.close();
 
-                            /* Create homogenous vectors */
-                            fsPointA[0] = fsIMatch[fsIndex].ax;
-                            fsPointA[1] = fsIMatch[fsIndex].ay;
-                            fsPointA[2] = 1.0;
-                            fsPointB[0] = fsIMatch[fsIndex].bx;
-                            fsPointB[1] = fsIMatch[fsIndex].by;
-                            fsPointB[2] = 1.0;
+                            /* Apply fundamental matrix sieve */
+                            for ( unsigned int fsIndex( 0 ); fsIndex < fsIMatch.size(); fsIndex ++ ) {
 
-                            /* Reset epipolar line coefficients */
-                            fsEpiplA[0] = 0.0;
-                            fsEpiplA[1] = 0.0;
-                            fsEpiplA[2] = 0.0;
-                            fsEpiplB[0] = 0.0;
-                            fsEpiplB[1] = 0.0;
-                            fsEpiplB[2] = 0.0;
+                                /* Create homogenous vectors */
+                                fsPointA[0] = fsIMatch[fsIndex].ax;
+                                fsPointA[1] = fsIMatch[fsIndex].ay;
+                                fsPointA[2] = 1.0;
+                                fsPointB[0] = fsIMatch[fsIndex].bx;
+                                fsPointB[1] = fsIMatch[fsIndex].by;
+                                fsPointB[2] = 1.0;
 
-                            /* Reset fundamental matrix condition */
-                            fsCondition = 0.0;
+                                /* Reset epipolar line coefficients */
+                                fsEpiplA[0] = 0.0;
+                                fsEpiplA[1] = 0.0;
+                                fsEpiplA[2] = 0.0;
+                                fsEpiplB[0] = 0.0;
+                                fsEpiplB[1] = 0.0;
+                                fsEpiplB[2] = 0.0;
 
-                            /* Compute fundamental matrix condition and coefficients - Rows */
-                            for ( int fsi ( 0 ); fsi < int( 3 ); fsi ++ ) {
+                                /* Reset fundamental matrix condition */
+                                fsCondition = 0.0;
 
-                                /* Compute fundamental matrix condition and coefficients - Columns */
-                                for ( int fsj ( 0 ); fsj < int( 3 ); fsj ++ ) {
+                                /* Compute fundamental matrix condition and coefficients - Rows */
+                                for ( int fsi ( 0 ); fsi < int( 3 ); fsi ++ ) {
 
-                                    /* Fundamental matrix condition */
-                                    fsCondition += fsPointB[fsi] * ( fsFundmat.at < double > ( fsi, fsj ) ) * fsPointA[fsj];
+                                    /* Compute fundamental matrix condition and coefficients - Columns */
+                                    for ( int fsj ( 0 ); fsj < int( 3 ); fsj ++ ) {
 
-                                    /* Epipolar line coefficients */
-                                    fsEpiplB[fsi] += ( fsFundmat.at < double > ( fsi, fsj ) ) * fsPointA[fsj];
-                                    fsEpiplA[fsi] += ( fsFundmat.at < double > ( fsj, fsi ) ) * fsPointB[fsj];
+                                        /* Fundamental matrix condition */
+                                        fsCondition += fsPointB[fsi] * ( fsFundmat.at < double > ( fsi, fsj ) ) * fsPointA[fsj];
+
+                                        /* Epipolar line coefficients */
+                                        fsEpiplB[fsi] += ( fsFundmat.at < double > ( fsi, fsj ) ) * fsPointA[fsj];
+                                        fsEpiplA[fsi] += ( fsFundmat.at < double > ( fsj, fsi ) ) * fsPointB[fsj];
+
+                                    }
+
+                                }
+
+                                /* Apply fundamental matrix sieve */
+                                if ( ( ( fabs( fsCondition ) / sqrt( fsEpiplA[0] * fsEpiplA[0] + fsEpiplA[1] * fsEpiplA[1] ) ) <  fsTolerence ) &&
+                                     ( ( fabs( fsCondition ) / sqrt( fsEpiplB[0] * fsEpiplB[0] + fsEpiplB[1] * fsEpiplB[1] ) ) <  fsTolerence ) ) {
+
+                                    /* Matches passed the fundamental matrix sieve */
+                                    fsOMatch.push_back( fsIMatch[fsIndex] );
 
                                 }
 
                             }
 
-                            /* Apply fundamental matrix sieve */
-                            if ( ( ( fabs( fsCondition ) / sqrt( fsEpiplA[0] * fsEpiplA[0] + fsEpiplA[1] * fsEpiplA[1] ) ) <  fsTolerence ) &&
-                                 ( ( fabs( fsCondition ) / sqrt( fsEpiplB[0] * fsEpiplB[0] + fsEpiplB[1] * fsEpiplB[1] ) ) <  fsTolerence ) ) {
+                            /* Open output matches file */
+                            fsStream.open( fsOMatchfile, std::ios::out );
 
-                                /* Matches passed the fundamental matrix sieve */
-                                fsOMatch.push_back( fsIMatch[fsIndex] );
+                            /* Check stream openning */
+                            if ( fsStream.is_open() == true ) {
 
-                            }
+                                /* Export matches count */
+                                fsStream << fsOMatch.size() << std::endl;
 
-                        }
+                                /* Export matches coordinates and index */
+                                for ( unsigned int fsIndex( 0 ); fsIndex < fsOMatch.size(); fsIndex ++ ) {
 
-                        /* Open output matches file */
-                        fsStream.open( fsOMatchfile, std::ios::out );
+                                    /* Export matches coordinates */
+                                    fsStream << fsOMatch[fsIndex].ai << " " 
+                                             << fsOMatch[fsIndex].bi << " " 
+                                             << fsOMatch[fsIndex].ax << " " 
+                                             << fsOMatch[fsIndex].ay << " " 
+                                             << fsOMatch[fsIndex].bx << " " 
+                                             << fsOMatch[fsIndex].by << std::endl;
 
-                        /* Check stream openning */
-                        if ( fsStream.is_open() == true ) {
+                                }    
 
-                            /* Export matches count */
-                            fsStream << fsOMatch.size() << std::endl;
-
-                            /* Export matches coordinates and index */
-                            for ( unsigned int fsIndex( 0 ); fsIndex < fsOMatch.size(); fsIndex ++ ) {
-
-                                /* Export matches coordinates */
-                                fsStream << fsOMatch[fsIndex].ai << " " 
-                                         << fsOMatch[fsIndex].bi << " " 
-                                         << fsOMatch[fsIndex].ax << " " 
-                                         << fsOMatch[fsIndex].ay << " " 
-                                         << fsOMatch[fsIndex].bx << " " 
-                                         << fsOMatch[fsIndex].by << std::endl;
-
-                            }    
-
-                            /* Close output stream */
-                            fsStream.close();
+                                /* Close output stream */
+                                fsStream.close();
 
                             /* Display message */
-                            std::cout << fsOMatch.size() << " matches have passed the sieve !" << std::endl;
+                            } else { std::cout << "Error : Unable to open output matches file" << std::endl; }
 
                         /* Display message */
-                        } else { std::cout << "Error : Unable to open output matches file" << std::endl; }
+                        } else { std::cout << "Error : Unable to open input matches file" << std::endl; }
 
                     /* Display message */
-                    } else { std::cout << "Error : Unable to open input matches file" << std::endl; }
+                    } else { std::cout << "Error : Not enough strict matches for matrix estimation" << std::endl; }
 
                 /* Display message */
-                } else { std::cout << "Error : Not enough strict matches for matrix estimation" << std::endl; }
+                } else { std::cout << "Error : Unable to open strict matches file" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Unable to open strict matches file" << std::endl; }
+            } else { std::cout << "Error : Invalid path specification" << std::endl; }
 
         }
 
