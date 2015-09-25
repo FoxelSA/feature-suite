@@ -50,8 +50,8 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsMatchfile[256] = { 0 };
-        char fsSievefile[256] = { 0 };
+        char * fsMatchfile( NULL );
+        char * fsSievefile( NULL );
 
         /* Reading variables */
         int fsCount ( 0 );
@@ -71,8 +71,8 @@
         std::fstream fsStream;
 
         /* Arguments and parameters handle */
-        lc_stdp( lc_stda( argc, argv, "--input"   , "-i" ), argv,   fsMatchfile, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--output"  , "-o" ), argv,   fsSievefile, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--input"   , "-i" ), argv, & fsMatchfile, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--output"  , "-o" ), argv, & fsSievefile, LC_STRING );
         lc_stdp( lc_stda( argc, argv, "--strength", "-s" ), argv, & fsStrength , LC_FLOAT  );
         lc_stdp( lc_stda( argc, argv, "--minimum" , "-m" ), argv, & fsMinimum  , LC_FLOAT  );
         lc_stdp( lc_stda( argc, argv, "--maximum" , "-a" ), argv, & fsMaximum  , LC_FLOAT  );
@@ -85,91 +85,93 @@
 
         } else {
 
-            /* Open input stream */
-            fsStream.open( fsMatchfile, std::ios::in );
+            /* Verify path strings */
+            if ( ( fsMatchfile != NULL ) && ( fsSievefile != NULL ) ) {
 
-            /* Check stream openning */
-            if ( fsStream.is_open() == true ) {
-
-                /* Read matches count */
-                fsStream >> fsCount;
-
-                /* Read matches coordinates */
-                for ( int fsIndex( 0 ); fsIndex < fsCount; fsIndex ++ ) {
-
-                    /* Read matches coordinates */
-                    fsStream >> fsBuffer.ai >> fsBuffer.bi >> fsBuffer.ax >> fsBuffer.ay >> fsBuffer.bx >> fsBuffer.by; 
-
-                    /* Push reading buffer */
-                    fsMatch.push_back( fsBuffer );
-
-                }
-
-                /* Close input stream */
-                fsStream.close();
-
-                /* Switch filters */
-                if ( lc_stda( argc, argv, "--stat-dist", "-r" ) ) {
-
-                    /* Statistical distance */
-                    fsMatch = fs_matchSIEVE_stat_dist( fsMatch, fsStrength );
-
-                } else if ( lc_stda( argc, argv, "--thre-dist", "-t" ) ) {
-
-                    /* Threshold distance */
-                    fsMatch = fs_matchSIEVE_thre_dist( fsMatch, fsMinimum, fsMaximum );
-
-                } else if ( lc_stda( argc, argv, "--stat-disp", "-d" ) ) {
-
-                    /* Statistical displacement */
-                    fsMatch = fs_matchSIEVE_stat_disp( fsMatch, fsStrength );
-
-                } else if ( lc_stda( argc, argv, "--stat-flow", "-f" ) ) {
-
-                    /* Statistical displacement */
-                    fsMatch = fs_matchSIEVE_stat_flow( fsMatch, fsStrength );
-
-                } else if ( lc_stda( argc, argv, "--dich-slop", "-l" ) ) {
-
-                    /* Statistical displacement */
-                    fsMatch = fs_matchSIEVE_dich_slop( fsMatch );
-
-                }
-
-                /* Open output stream */
-                fsStream.open( fsSievefile, std::ios::out );
+                /* Open input stream */
+                fsStream.open( fsMatchfile, std::ios::in );
 
                 /* Check stream openning */
                 if ( fsStream.is_open() == true ) {
 
-                    /* Export matches count */
-                    fsStream << fsMatch.size() << std::endl;
+                    /* Read matches count */
+                    fsStream >> fsCount;
 
-                    /* Export matches coordinates and index */
-                    for ( unsigned int fsIndex( 0 ); fsIndex < fsMatch.size(); fsIndex ++ ) {
+                    /* Read matches coordinates */
+                    for ( int fsIndex( 0 ); fsIndex < fsCount; fsIndex ++ ) {
 
-                        /* Export matches coordinates */
-                        fsStream << fsMatch[fsIndex].ai << " " 
-                                 << fsMatch[fsIndex].bi << " " 
-                                 << fsMatch[fsIndex].ax << " " 
-                                 << fsMatch[fsIndex].ay << " " 
-                                 << fsMatch[fsIndex].bx << " " 
-                                 << fsMatch[fsIndex].by << std::endl;
+                        /* Read matches coordinates */
+                        fsStream >> fsBuffer.ai >> fsBuffer.bi >> fsBuffer.ax >> fsBuffer.ay >> fsBuffer.bx >> fsBuffer.by; 
+
+                        /* Push reading buffer */
+                        fsMatch.push_back( fsBuffer );
 
                     }
 
-                    /* Close output stream */
+                    /* Close input stream */
                     fsStream.close();
 
-                    /* Display message */
-                    std::cout << fsMatch.size() << " matches have passed the sieve !" << std::endl;
+                    /* Switch filters */
+                    if ( lc_stda( argc, argv, "--stat-dist", "-r" ) ) {
 
+                        /* Statistical distance */
+                        fsMatch = fs_matchSIEVE_stat_dist( fsMatch, fsStrength );
+
+                    } else if ( lc_stda( argc, argv, "--thre-dist", "-t" ) ) {
+
+                        /* Threshold distance */
+                        fsMatch = fs_matchSIEVE_thre_dist( fsMatch, fsMinimum, fsMaximum );
+
+                    } else if ( lc_stda( argc, argv, "--stat-disp", "-d" ) ) {
+
+                        /* Statistical displacement */
+                        fsMatch = fs_matchSIEVE_stat_disp( fsMatch, fsStrength );
+
+                    } else if ( lc_stda( argc, argv, "--stat-flow", "-f" ) ) {
+
+                        /* Statistical displacement */
+                        fsMatch = fs_matchSIEVE_stat_flow( fsMatch, fsStrength );
+
+                    } else if ( lc_stda( argc, argv, "--dich-slop", "-l" ) ) {
+
+                        /* Statistical displacement */
+                        fsMatch = fs_matchSIEVE_dich_slop( fsMatch );
+
+                    }
+
+                    /* Open output stream */
+                    fsStream.open( fsSievefile, std::ios::out );
+
+                    /* Check stream openning */
+                    if ( fsStream.is_open() == true ) {
+
+                        /* Export matches count */
+                        fsStream << fsMatch.size() << std::endl;
+
+                        /* Export matches coordinates and index */
+                        for ( unsigned int fsIndex( 0 ); fsIndex < fsMatch.size(); fsIndex ++ ) {
+
+                            /* Export matches coordinates */
+                            fsStream << fsMatch[fsIndex].ai << " " 
+                                     << fsMatch[fsIndex].bi << " " 
+                                     << fsMatch[fsIndex].ax << " " 
+                                     << fsMatch[fsIndex].ay << " " 
+                                     << fsMatch[fsIndex].bx << " " 
+                                     << fsMatch[fsIndex].by << std::endl;
+
+                        }
+
+                        /* Close output stream */
+                        fsStream.close();
+
+                    /* Display message */
+                    } else { std::cout << "Error : Unable to open output file" << std::endl; }
 
                 /* Display message */
-                } else { std::cout << "Error : Unable to open output file" << std::endl; }
+                } else { std::cout << "Error : Unable to open input file" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Unable to open input file" << std::endl; }
+            } else { std::cout << "Error : Invalid path specification" << std::endl; }
 
         }
 
