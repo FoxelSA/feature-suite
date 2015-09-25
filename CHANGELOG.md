@@ -4,7 +4,7 @@
 
 - `Revised` : Arguments and parameter management
 - `Added` : Histogramm values exportation in **feature-image-expose**
-- `Revised` : Removed argument and parameter parser from external module to bring them back in main module
+- `Added` : Common library for generic algorithms
 - `Added` : Terminal contextual help feature for each software
 
 ### Release 0.1 (July 24, 2014)
