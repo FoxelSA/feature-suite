@@ -1,7 +1,9 @@
 ## Changelog
 
-### Beta 0.2
+### Release 0.2 (September 25, 2015)
 
+- `Revised` : Message removal on success
+- `Revised` : Error message redirected on standard error
 - `Revised` : Arguments and parameter management
 - `Added` : Histogramm values exportation in **feature-image-expose**
 - `Added` : Common library for generic algorithms
