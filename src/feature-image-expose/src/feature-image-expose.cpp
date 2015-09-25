@@ -50,8 +50,8 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsImgIPath[256] = { 0 };
-        char fsImgOPath[256] = { 0 };
+        char * fsImgIPath( NULL );
+        char * fsImgOPath( NULL );
 
         /* Parameters variables */
         float fsFixMean ( 0.0 );
@@ -65,8 +65,8 @@
         cv::Mat fsImage;
 
         /* Search in parameters */
-        lc_stdp( lc_stda( argc, argv, "--input" , "-i" ), argv,   fsImgIPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--output", "-o" ), argv,   fsImgOPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--input" , "-i" ), argv, & fsImgIPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--output", "-o" ), argv, & fsImgOPath, LC_STRING );
         lc_stdp( lc_stda( argc, argv, "--mean"  , "-m" ), argv, & fsFixMean , LC_FLOAT  );
         lc_stdp( lc_stda( argc, argv, "--stdd"  , "-s" ), argv, & fsFixStdd , LC_FLOAT  );
 
@@ -77,46 +77,52 @@
             std::cout << FS_HELP;
 
         } else {
+
+            /* Verify path strings */
+            if ( ( fsImgIPath != NULL ) && ( fsImgOPath != NULL ) ) {
     
-            /* Read input image */
-            fsImage = cv::imread( fsImgIPath, CV_LOAD_IMAGE_COLOR );
+                /* Read input image */
+                fsImage = cv::imread( fsImgIPath, CV_LOAD_IMAGE_COLOR );
 
-            /* Verify image reading */
-            if ( fsImage.data != NULL ) {
+                /* Verify image reading */
+                if ( fsImage.data != NULL ) {
 
-                /* Create array on image bytes */
-                std::vector < char > fsBytes( fsImage.data, fsImage.data + fsImage.rows * fsImage.cols * fsImage.channels() );
+                    /* Create array on image bytes */
+                    std::vector < char > fsBytes( fsImage.data, fsImage.data + fsImage.rows * fsImage.cols * fsImage.channels() );
 
-                /* Compute histogram mean */
-                fsMean = LC_VMEAN( fsBytes );
+                    /* Compute histogram mean */
+                    fsMean = LC_VMEAN( fsBytes );
 
-                /* Compute histogram standard deviation */
-                fsStdD = LC_VSTDD( fsBytes, fsMean );
+                    /* Compute histogram standard deviation */
+                    fsStdD = LC_VSTDD( fsBytes, fsMean );
 
-                /* Software switch */
-                if ( lc_stda( argc, argv, "--get", "-g" ) ) {
+                    /* Software switch */
+                    if ( lc_stda( argc, argv, "--get", "-g" ) ) {
 
-                    /* Display mean and standard deviation */
-                    std::cout << fsMean << std::endl << fsStdD << std::endl;
+                        /* Display mean and standard deviation */
+                        std::cout << fsMean << std::endl << fsStdD << std::endl;
 
-                } else if ( lc_stda( argc, argv, "--set", "-e" ) ) {
+                    } else if ( lc_stda( argc, argv, "--set", "-e" ) ) {
 
-                    /* Exposure correction */
-                    fsImage = ( ( fsImage - fsMean ) / fsStdD ) * fsFixStdd + fsFixMean;
+                        /* Exposure correction */
+                        fsImage = ( ( fsImage - fsMean ) / fsStdD ) * fsFixStdd + fsFixMean;
 
-                    /* Write result image */
-                    if ( imwrite( fsImgOPath, fsImage ) == false ) {
+                        /* Write result image */
+                        if ( imwrite( fsImgOPath, fsImage ) == false ) {
 
-                        /* Display message */
-                        std::cout << "Error : Unable to write output image" << std::endl;
+                            /* Display message */
+                            std::cout << "Error : Unable to write output image" << std::endl;
 
-                    }
+                        }
+
+                    /* Display message */
+                    } else { std::cout << "Error : Execution switch not provided" << std::endl; }
 
                 /* Display message */
-                } else { std::cout << "Error : Execution switch not provided" << std::endl; }
+                } else { std::cout << "Error : Unable to read input image" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Unable to read input image" << std::endl; }
+            } else { std::cout << "Error : Invalid path specification" << std::endl; }
 
         }
 
