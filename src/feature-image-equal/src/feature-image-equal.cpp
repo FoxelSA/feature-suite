@@ -50,10 +50,10 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsImAIPath[256] = { 0 };
-        char fsImBIPath[256] = { 0 };
-        char fsEqAOPath[256] = { 0 };
-        char fsEqBOPath[256] = { 0 };
+        char * fsImAIPath( NULL );
+        char * fsImBIPath( NULL );
+        char * fsEqAOPath( NULL );
+        char * fsEqBOPath( NULL );
 
         /* Parameters variables */
         int fsMode = FS_MODE_TO_HIGHEST;
@@ -69,10 +69,10 @@
         cv::Mat fsImageB;
 
         /* Arguments and parameters handle */
-        lc_stdp( lc_stda( argc, argv, "--input-a" , "-a" ), argv,   fsImAIPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--input-b" , "-b" ), argv,   fsImBIPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--output-a", "-c" ), argv,   fsEqAOPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--output-b", "-d" ), argv,   fsEqBOPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--input-a" , "-a" ), argv, & fsImAIPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--input-b" , "-b" ), argv, & fsImBIPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--output-a", "-c" ), argv, & fsEqAOPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--output-b", "-d" ), argv, & fsEqBOPath, LC_STRING );
         lc_stdp( lc_stda( argc, argv, "--mode"    , "-m" ), argv, & fsMode    , LC_INT    );
 
         /* Software swicth */
@@ -83,78 +83,81 @@
 
         } else {
 
-            /* Read images */
-            fsImageA = cv::imread( fsImAIPath, CV_LOAD_IMAGE_GRAYSCALE );
-            fsImageB = cv::imread( fsImBIPath, CV_LOAD_IMAGE_GRAYSCALE );
+            /* Verify path strings */
+            if ( ( fsImAIPath != NULL ) && ( fsImBIPath != NULL ) && ( fsEqAOPath != NULL ) && ( fsEqBOPath != NULL ) ) {
 
-            /* Check images reading */
-            if ( ( fsImageA.data != NULL ) && ( fsImageB.data != NULL ) ) {
+                /* Read images */
+                fsImageA = cv::imread( fsImAIPath, CV_LOAD_IMAGE_GRAYSCALE );
+                fsImageB = cv::imread( fsImBIPath, CV_LOAD_IMAGE_GRAYSCALE );
 
-                /* Statistical buffers */
-                std::vector < char > fsByteA( fsImageA.data, fsImageA.data + fsImageA.rows * fsImageA.cols * fsImageA.channels() );
-                std::vector < char > fsByteB( fsImageB.data, fsImageB.data + fsImageB.rows * fsImageB.cols * fsImageB.channels() );
-                
-                /* Compute statistical means */
-                fsMeanA = LC_VMEAN( fsByteA );
-                fsMeanB = LC_VMEAN( fsByteB );
+                /* Check images reading */
+                if ( ( fsImageA.data != NULL ) && ( fsImageB.data != NULL ) ) {
 
-                /* Compute statistical standard deviation */
-                fsStddA = LC_VSTDD( fsByteA, fsMeanA );
-                fsStddB = LC_VSTDD( fsByteB, fsMeanB );
+                    /* Statistical buffers */
+                    std::vector < char > fsByteA( fsImageA.data, fsImageA.data + fsImageA.rows * fsImageA.cols * fsImageA.channels() );
+                    std::vector < char > fsByteB( fsImageB.data, fsImageB.data + fsImageB.rows * fsImageB.cols * fsImageB.channels() );
+                    
+                    /* Compute statistical means */
+                    fsMeanA = LC_VMEAN( fsByteA );
+                    fsMeanB = LC_VMEAN( fsByteB );
 
-                /* Check equalization mode */
-                if ( fsMode == FS_MODE_TO_HIGHEST ) {
+                    /* Compute statistical standard deviation */
+                    fsStddA = LC_VSTDD( fsByteA, fsMeanA );
+                    fsStddB = LC_VSTDD( fsByteB, fsMeanB );
 
-                    /* Retrieve highest contrast */
-                    if ( fsMeanA > fsMeanB ) {
+                    /* Check equalization mode */
+                    if ( fsMode == FS_MODE_TO_HIGHEST ) {
 
-                        /* Apply exposure correction */
-                        fsImageB = ( ( fsImageB - fsMeanB ) / ( 2.0 * fsStddB ) ) * 2.0 * fsStddA + fsMeanA;
+                        /* Retrieve highest contrast */
+                        if ( fsMeanA > fsMeanB ) {
 
-                    } else {
+                            /* Apply exposure correction */
+                            fsImageB = ( ( fsImageB - fsMeanB ) / ( 2.0 * fsStddB ) ) * 2.0 * fsStddA + fsMeanA;
 
-                        /* Apply exposure correction */
-                        fsImageA = ( ( fsImageA - fsMeanA ) / ( 2.0 * fsStddA ) ) * 2.0 * fsStddB + fsMeanB;
+                        } else {
 
-                    }
+                            /* Apply exposure correction */
+                            fsImageA = ( ( fsImageA - fsMeanA ) / ( 2.0 * fsStddA ) ) * 2.0 * fsStddB + fsMeanB;
 
-                } else {
-
-                    /* Retrieve highest contrast */
-                    if ( fsMeanA > fsMeanB ) {
-
-                        /* Apply exposure correction */
-                        fsImageA = ( ( fsImageA - fsMeanA ) / ( 2.0 * fsStddA ) ) * 2.0 * fsStddB + fsMeanB;
+                        }
 
                     } else {
 
-                        /* Apply exposure correction */
-                        fsImageB = ( ( fsImageB - fsMeanB ) / ( 2.0 * fsStddB ) ) * 2.0 * fsStddA + fsMeanA;
+                        /* Retrieve highest contrast */
+                        if ( fsMeanA > fsMeanB ) {
+
+                            /* Apply exposure correction */
+                            fsImageA = ( ( fsImageA - fsMeanA ) / ( 2.0 * fsStddA ) ) * 2.0 * fsStddB + fsMeanB;
+
+                        } else {
+
+                            /* Apply exposure correction */
+                            fsImageB = ( ( fsImageB - fsMeanB ) / ( 2.0 * fsStddB ) ) * 2.0 * fsStddA + fsMeanA;
+
+                        }
 
                     }
 
-                }
+                    /* Write result image */
+                    if ( imwrite( fsEqAOPath, fsImageA ) == false ) {
 
-                /* Write result image */
-                if ( imwrite( fsEqAOPath, fsImageA ) ) {
+                        std::cout << "Error : Unable to write " << fsEqAOPath << " output image" << std::endl;
 
-                    /* Display message */
-                    std::cout << "Exported " << fsEqAOPath << std::endl;
+                    }
 
-                /* Display message */
-                } else { std::cout << "Error : Unable to write " << fsEqAOPath << " output image" << std::endl; }
+                    /* Write result image */
+                    if ( imwrite( fsEqBOPath, fsImageB ) == false ) {
 
-                /* Write result image */
-                if ( imwrite( fsEqBOPath, fsImageB ) ) {
+                        /* Display message */
+                        std::cout << "Error : Unable to write " << fsEqBOPath << " output image" << std::endl;
 
-                    /* Display message */
-                    std::cout << "Exported " << fsEqBOPath << std::endl;
+                    }
 
                 /* Display message */
-                } else { std::cout << "Error : Unable to write " << fsEqBOPath << " output image" << std::endl; }
+                } else { std::cout << "Error : Unable to read input images" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Unable to read input images" << std::endl; }
+            } else { std::cout << "Error : Invalid path specification" << std::endl; }
 
         }
 
