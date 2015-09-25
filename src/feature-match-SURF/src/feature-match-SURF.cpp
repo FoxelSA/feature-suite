@@ -141,16 +141,16 @@
                             fsMatchfile.close();
 
                         /* Display message */
-                        } else { std::cout << "Error : Unable to write output matchfile" << std::endl; }                
+                        } else { std::cerr << "Error : Unable to write output matchfile" << std::endl; }                
 
                     /* Display message */
-                    } else { std::cout << "Error : Unable to read input keyfiles" << std::endl; }
+                    } else { std::cerr << "Error : Unable to read input keyfiles" << std::endl; }
 
                 /* Display message */
-                } else { std::cout << "Error : Unable to read input images" << std::endl; }
+                } else { std::cerr << "Error : Unable to read input images" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Invalid path specification" << std::endl; }
+            } else { std::cerr << "Error : Invalid path specification" << std::endl; }
 
         }
 

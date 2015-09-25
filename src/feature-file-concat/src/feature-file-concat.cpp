@@ -141,16 +141,16 @@
                             fsStreamO.close();
 
                         /* Display message */
-                        } else { std::cout << "Error : Unable to open output file" << std::endl; }
+                        } else { std::cerr << "Error : Unable to open output file" << std::endl; }
 
                     /* Display message */
-                    } else { std::cout << "Error : Unable to open second input file" << std::endl; }
+                    } else { std::cerr << "Error : Unable to open second input file" << std::endl; }
 
                 /* Display message */
-                } else { std::cout << "Error : Unable to open first input file" << std::endl; }
+                } else { std::cerr << "Error : Unable to open first input file" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Invalid path specification" << std::endl; }
+            } else { std::cerr << "Error : Invalid path specification" << std::endl; }
 
         }
 

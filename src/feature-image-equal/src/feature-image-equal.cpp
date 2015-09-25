@@ -141,7 +141,7 @@
                     /* Write result image */
                     if ( imwrite( fsEqAOPath, fsImageA ) == false ) {
 
-                        std::cout << "Error : Unable to write " << fsEqAOPath << " output image" << std::endl;
+                        std::cerr << "Error : Unable to write " << fsEqAOPath << " output image" << std::endl;
 
                     }
 
@@ -149,15 +149,15 @@
                     if ( imwrite( fsEqBOPath, fsImageB ) == false ) {
 
                         /* Display message */
-                        std::cout << "Error : Unable to write " << fsEqBOPath << " output image" << std::endl;
+                        std::cerr << "Error : Unable to write " << fsEqBOPath << " output image" << std::endl;
 
                     }
 
                 /* Display message */
-                } else { std::cout << "Error : Unable to read input images" << std::endl; }
+                } else { std::cerr << "Error : Unable to read input images" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Invalid path specification" << std::endl; }
+            } else { std::cerr << "Error : Invalid path specification" << std::endl; }
 
         }
 

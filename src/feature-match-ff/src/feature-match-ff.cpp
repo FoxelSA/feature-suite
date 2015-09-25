@@ -247,19 +247,19 @@
                                 fsStream.close();
 
                             /* Display message */
-                            } else { std::cout << "Error : Unable to open output matches file" << std::endl; }
+                            } else { std::cerr << "Error : Unable to open output matches file" << std::endl; }
 
                         /* Display message */
-                        } else { std::cout << "Error : Unable to open input matches file" << std::endl; }
+                        } else { std::cerr << "Error : Unable to open input matches file" << std::endl; }
 
                     /* Display message */
-                    } else { std::cout << "Error : Not enough strict matches for matrix estimation" << std::endl; }
+                    } else { std::cerr << "Error : Not enough strict matches for matrix estimation" << std::endl; }
 
                 /* Display message */
-                } else { std::cout << "Error : Unable to open strict matches file" << std::endl; }
+                } else { std::cerr << "Error : Unable to open strict matches file" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Invalid path specification" << std::endl; }
+            } else { std::cerr << "Error : Invalid path specification" << std::endl; }
 
         }
 
