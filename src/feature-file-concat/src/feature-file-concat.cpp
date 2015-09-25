@@ -140,9 +140,6 @@
                             /* Close output stream */
                             fsStreamO.close();
 
-                            /* Display message */
-                            std::cout << "Exported " << fsCountA + fsCountB << " in " << fsFileO << " output file" << std::endl;
-
                         /* Display message */
                         } else { std::cout << "Error : Unable to open output file" << std::endl; }
 

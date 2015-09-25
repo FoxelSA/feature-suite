@@ -99,7 +99,7 @@
 
 
                     /* Write result image */
-                    if ( cv::imwrite( fsImgOPath, fsGrayscale ) ) {
+                    if ( cv::imwrite( fsImgOPath, fsGrayscale ) == false ) {
 
                         /* Display message */
                          std::cout << "Error : Unable to write output image" << std::endl;
