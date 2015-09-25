@@ -1,12 +1,15 @@
 
 ## feature suite<br />Features detection suite
 
-The feature-suite provides tools in the context of automatic image matching. The suite is separated into small softwares that solve a specific part of the problem. It is designed so in order to perform research using each software as a brick of the overall solver.
-
+<p align="justify">
+The <i>feature-suite</i> provides tools in the context of automatic image matching. The suite is separated into small softwares that solve a specific part of the problem. It is designed so in order to perform research using each software as a brick of the overall solver.
+</p>
 
 ### Documentation
 
+<p align="justify">
 A detailed documentation can be generated through doxygen. A more general documentation can be consulted on the [wiki](https://github.com/FoxelSA/feature-suite/wiki).
+</p>
 
 ### Copyright
 
