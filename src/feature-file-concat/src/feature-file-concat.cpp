@@ -50,9 +50,9 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsFileA[256] = { 0 };
-        char fsFileB[256] = { 0 };
-        char fsFileO[256] = { 0 };
+        char * fsFileA( NULL );
+        char * fsFileB( NULL );
+        char * fsFileO( NULL );
 
         /* Reading variables */
         int fsCountA ( 0 );
@@ -67,9 +67,9 @@
         std::string fsLine;
 
         /* Arguments and parameters handle */
-        lc_stdp( lc_stda( argc, argv, "--input-a", "-a" ), argv, fsFileA, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--input-b", "-b" ), argv, fsFileB, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--output" , "-o" ), argv, fsFileO, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--input-a", "-a" ), argv, & fsFileA, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--input-b", "-b" ), argv, & fsFileB, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--output" , "-o" ), argv, & fsFileO, LC_STRING );
 
         /* Software swicth */
         if ( ( lc_stda( argc, argv, "--help", "-h" ) ) || ( argc <= 1 ) ) {
@@ -79,75 +79,78 @@
 
         } else {
 
-            /* Open input stream */
-            fsStreamA.open( fsFileA, std::ios::in );
-
-            /* Check stream openning */
-            if ( fsStreamA.is_open() == true ) {
+            /* Verify path strings */
+            if ( ( fsFileA != NULL ) && ( fsFileB != NULL ) && ( fsFileO != NULL ) ) {
 
                 /* Open input stream */
-                fsStreamB.open( fsFileB, std::ios::in );
+                fsStreamA.open( fsFileA, std::ios::in );
 
                 /* Check stream openning */
-                if ( fsStreamB.is_open() == true ) {
+                if ( fsStreamA.is_open() == true ) {
 
-                    /* Open output stream */
-                    fsStreamO.open( fsFileO, std::ios::out );
+                    /* Open input stream */
+                    fsStreamB.open( fsFileB, std::ios::in );
 
                     /* Check stream openning */
-                    if ( fsStreamO.is_open() == true ) {
-                
-                        /* Read elements count */
-                        std::getline( fsStreamA, fsLine ); fsCountA = std::stoi( fsLine );
-                        std::getline( fsStreamB, fsLine ); fsCountB = std::stoi( fsLine );
+                    if ( fsStreamB.is_open() == true ) {
 
-                        /* Export concatenation count */
-                        fsStreamO << fsCountA + fsCountB << std::endl;
+                        /* Open output stream */
+                        fsStreamO.open( fsFileO, std::ios::out );
 
-                        /* Read matches coordinates */
-                        for ( int fsIndex( 0 ); fsIndex < fsCountA; fsIndex ++ ) {
+                        /* Check stream openning */
+                        if ( fsStreamO.is_open() == true ) {
+                    
+                            /* Read elements count */
+                            std::getline( fsStreamA, fsLine ); fsCountA = std::stoi( fsLine );
+                            std::getline( fsStreamB, fsLine ); fsCountB = std::stoi( fsLine );
 
-                            /* Import input file line */
-                            std::getline( fsStreamA, fsLine );
+                            /* Export concatenation count */
+                            fsStreamO << fsCountA + fsCountB << std::endl;
 
-                            /* Export line in output file */
-                            fsStreamO << fsLine << std::endl;
+                            /* Read matches coordinates */
+                            for ( int fsIndex( 0 ); fsIndex < fsCountA; fsIndex ++ ) {
 
+                                /* Import input file line */
+                                std::getline( fsStreamA, fsLine );
 
-                        }
-
-                        /* Close input stream */
-                        fsStreamA.close();
-
-                        /* Read matches coordinates */
-                        for ( int fsIndex( 0 ); fsIndex < fsCountB; fsIndex ++ ) {
-
-                            /* Import input file line */
-                            std::getline( fsStreamB, fsLine );
-
-                            /* Export line in output file */
-                            fsStreamO << fsLine << std::endl;
+                                /* Export line in output file */
+                                fsStreamO << fsLine << std::endl;
 
 
-                        }
+                            }
 
-                        /* Close input stream */
-                        fsStreamB.close();
+                            /* Close input stream */
+                            fsStreamA.close();
 
-                        /* Close output stream */
-                        fsStreamO.close();
+                            /* Read matches coordinates */
+                            for ( int fsIndex( 0 ); fsIndex < fsCountB; fsIndex ++ ) {
+
+                                /* Import input file line */
+                                std::getline( fsStreamB, fsLine );
+
+                                /* Export line in output file */
+                                fsStreamO << fsLine << std::endl;
+
+
+                            }
+
+                            /* Close input stream */
+                            fsStreamB.close();
+
+                            /* Close output stream */
+                            fsStreamO.close();
 
                         /* Display message */
-                        std::cout << "Exported " << fsCountA + fsCountB << " in " << fsFileO << " output file" << std::endl;
+                        } else { std::cout << "Error : Unable to open output file" << std::endl; }
 
                     /* Display message */
-                    } else { std::cout << "Error : Unable to open output file" << std::endl; }
+                    } else { std::cout << "Error : Unable to open second input file" << std::endl; }
 
                 /* Display message */
-                } else { std::cout << "Error : Unable to open second input file" << std::endl; }
+                } else { std::cout << "Error : Unable to open first input file" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Unable to open first input file" << std::endl; }
+            } else { std::cout << "Error : Invalid path specification" << std::endl; }
 
         }
 

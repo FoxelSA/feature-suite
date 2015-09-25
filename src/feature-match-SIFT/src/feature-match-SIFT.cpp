@@ -50,11 +50,11 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsImAIPath[256] = { 0 };
-        char fsKeAIPath[256] = { 0 };
-        char fsImBIPath[256] = { 0 };
-        char fsKeBIPath[256] = { 0 };
-        char fsMatOPath[256] = { 0 };
+        char * fsImAIPath( NULL );
+        char * fsKeAIPath( NULL );
+        char * fsImBIPath( NULL );
+        char * fsKeBIPath( NULL );
+        char * fsMatOPath( NULL );
 
         /* Image variable */
         cv::Mat fsImageA, fsImageB;
@@ -63,11 +63,11 @@
         std::ofstream fsMatchfile;
 
         /* Search in parameters */
-        lc_stdp( lc_stda( argc, argv,  "--input-a"  , "-i" ), argv, fsImAIPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv,  "--input-b"  , "-j" ), argv, fsImBIPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv,  "--keyfile-a", "-k" ), argv, fsKeAIPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv,  "--keyfile-b", "-l" ), argv, fsKeBIPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv,  "--output"   , "-o" ), argv, fsMatOPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv,  "--input-a"  , "-i" ), argv, & fsImAIPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv,  "--input-b"  , "-j" ), argv, & fsImBIPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv,  "--keyfile-a", "-k" ), argv, & fsKeAIPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv,  "--keyfile-b", "-l" ), argv, & fsKeBIPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv,  "--output"   , "-o" ), argv, & fsMatOPath, LC_STRING );
 
         /* Software swicth */
         if ( ( lc_stda( argc, argv, "--help", "-h" ) ) || ( argc <= 1 ) ) {
@@ -76,78 +76,81 @@
             std::cout << FS_HELP;
 
         } else {
+
+            /* Verify path strings */
+            if ( ( fsImAIPath != NULL ) && ( fsKeAIPath != NULL ) && ( fsImBIPath != NULL ) && ( fsKeBIPath != NULL ) && ( fsMatOPath != NULL ) ) {
     
-            /* Read input image */
-            fsImageA = cv::imread( fsImAIPath, CV_LOAD_IMAGE_GRAYSCALE );
-            fsImageB = cv::imread( fsImBIPath, CV_LOAD_IMAGE_GRAYSCALE );
+                /* Read input image */
+                fsImageA = cv::imread( fsImAIPath, CV_LOAD_IMAGE_GRAYSCALE );
+                fsImageB = cv::imread( fsImBIPath, CV_LOAD_IMAGE_GRAYSCALE );
 
-            /* Verify image reading */
-            if ( ( fsImageA.data != NULL ) && ( fsImageB.data != NULL ) ) {
+                /* Verify image reading */
+                if ( ( fsImageA.data != NULL ) && ( fsImageB.data != NULL ) ) {
 
-                /* Keypoint vectors */
-                std::vector < cv::KeyPoint > fsKeyA = fs_matchSIFT_readkey( fsKeAIPath );
-                std::vector < cv::KeyPoint > fsKeyB = fs_matchSIFT_readkey( fsKeBIPath );
+                    /* Keypoint vectors */
+                    std::vector < cv::KeyPoint > fsKeyA = fs_matchSIFT_readkey( fsKeAIPath );
+                    std::vector < cv::KeyPoint > fsKeyB = fs_matchSIFT_readkey( fsKeBIPath );
 
-                /* Verify keyfile reading */
-                if ( ( fsKeyA.size() > 0 ) && ( fsKeyB.size() > 0 ) ) {
+                    /* Verify keyfile reading */
+                    if ( ( fsKeyA.size() > 0 ) && ( fsKeyB.size() > 0 ) ) {
 
-                    /* Instance SIFT detector */
-                    cv::SIFT fsSift;
+                        /* Instance SIFT detector */
+                        cv::SIFT fsSift;
 
-                    /* Instance SIFT descriptor */
-                    cv::Mat fsDescriptA, fsDescriptB;
+                        /* Instance SIFT descriptor */
+                        cv::Mat fsDescriptA, fsDescriptB;
 
-                    /* Instance match feature */
-                    cv::FlannBasedMatcher fsMatcher;
+                        /* Instance match feature */
+                        cv::FlannBasedMatcher fsMatcher;
 
-                    /* Instance matches array */
-                    std::vector < cv::DMatch > fsMatches;
+                        /* Instance matches array */
+                        std::vector < cv::DMatch > fsMatches;
 
-                    /* Compute images descriptors */
-                    fsSift.compute( fsImageA, fsKeyA, fsDescriptA );
-                    fsSift.compute( fsImageB, fsKeyB, fsDescriptB );
+                        /* Compute images descriptors */
+                        fsSift.compute( fsImageA, fsKeyA, fsDescriptA );
+                        fsSift.compute( fsImageB, fsKeyB, fsDescriptB );
 
-                    /* Compute matches */
-                    fsMatcher.match( fsDescriptA, fsDescriptB, fsMatches );
+                        /* Compute matches */
+                        fsMatcher.match( fsDescriptA, fsDescriptB, fsMatches );
 
-                    /* Open output match file */
-                    fsMatchfile.open( fsMatOPath );
+                        /* Open output match file */
+                        fsMatchfile.open( fsMatOPath );
 
-                    /* Verify file openning */
-                    if ( fsMatchfile.is_open() == true ) {
+                        /* Verify file openning */
+                        if ( fsMatchfile.is_open() == true ) {
 
-                        /* Export match count */
-                        fsMatchfile << fsMatches.size() << std::endl;
-
-                        /* Export match coordinates */
-                        for ( unsigned int fsIndex( 0 ); fsIndex < fsMatches.size(); fsIndex ++ ) {
-
-                            /* Export match index */
-                            fsMatchfile << fsMatches[fsIndex].queryIdx << " "
-                                        << fsMatches[fsIndex].trainIdx << " ";
+                            /* Export match count */
+                            fsMatchfile << fsMatches.size() << std::endl;
 
                             /* Export match coordinates */
-                            fsMatchfile << fsKeyA[fsMatches[fsIndex].queryIdx].pt.x << " " 
-                                        << fsKeyA[fsMatches[fsIndex].queryIdx].pt.y << " "
-                                        << fsKeyB[fsMatches[fsIndex].trainIdx].pt.x << " " 
-                                        << fsKeyB[fsMatches[fsIndex].trainIdx].pt.y << std::endl;
+                            for ( unsigned int fsIndex( 0 ); fsIndex < fsMatches.size(); fsIndex ++ ) {
 
-                        }
+                                /* Export match index */
+                                fsMatchfile << fsMatches[fsIndex].queryIdx << " "
+                                            << fsMatches[fsIndex].trainIdx << " ";
 
-                        /* Close file */
-                        fsMatchfile.close();
+                                /* Export match coordinates */
+                                fsMatchfile << fsKeyA[fsMatches[fsIndex].queryIdx].pt.x << " " 
+                                            << fsKeyA[fsMatches[fsIndex].queryIdx].pt.y << " "
+                                            << fsKeyB[fsMatches[fsIndex].trainIdx].pt.x << " " 
+                                            << fsKeyB[fsMatches[fsIndex].trainIdx].pt.y << std::endl;
+
+                            }
+
+                            /* Close file */
+                            fsMatchfile.close();
 
                         /* Display message */
-                        std::cout << "Exported " << fsMatches.size() << " matches in " << fsMatOPath << std::endl;
+                        } else { std::cout << "Error : Unable to write output matchfile" << std::endl; }                
 
                     /* Display message */
-                    } else { std::cout << "Error : Unable to write output matchfile" << std::endl; }                
+                    } else { std::cout << "Error : Unable to read input keyfiles" << std::endl; }
 
                 /* Display message */
-                } else { std::cout << "Error : Unable to read input keyfiles" << std::endl; }
+                } else { std::cout << "Error : Unable to read input images" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Unable to read input images" << std::endl; }
+            } else { std::cout << "Error : Invalid path specification" << std::endl; }
 
         }
 

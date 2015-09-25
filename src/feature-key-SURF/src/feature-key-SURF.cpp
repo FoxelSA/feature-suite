@@ -50,8 +50,8 @@
     int main ( int argc, char ** argv ) {
 
         /* Path strings */
-        char fsImgIPath[256] = { 0 };
-        char fsKeyOPath[256] = { 0 };
+        char * fsImgIPath( NULL );
+        char * fsKeyOPath( NULL );
 
         /* SIFT variables */
         int   fsSURFexported ( 0   );
@@ -72,8 +72,8 @@
         cv::Mat fsImage;
 
         /* Search in parameters */
-        lc_stdp( lc_stda( argc, argv, "--input"   , "-i" ), argv,   fsImgIPath    , LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--output"  , "-o" ), argv,   fsKeyOPath    , LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--input"   , "-i" ), argv, & fsImgIPath    , LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--output"  , "-o" ), argv, & fsKeyOPath    , LC_STRING );
         lc_stdp( lc_stda( argc, argv, "--extended", "-t" ), argv, & fsSURFextended, LC_INT    );
         lc_stdp( lc_stda( argc, argv, "--upright" , "-u" ), argv, & fsSURFupright , LC_INT    );
         lc_stdp( lc_stda( argc, argv, "--layer"   , "-l" ), argv, & fsSURFlayers  , LC_INT    );
@@ -89,64 +89,67 @@
             std::cout << FS_HELP;
 
         } else {
-    
-            /* Read input image */
-            fsImage = cv::imread( fsImgIPath, CV_LOAD_IMAGE_GRAYSCALE );
 
-            /* Verify image reading */
-            if ( fsImage.data != NULL ) {
+            /* Verify path strings */
+            if ( ( fsImgIPath != NULL ) && ( fsKeyOPath != NULL ) ) {
 
-                /* Instance SIFT detector */
-                cv::SURF fsSURF( fsSURFhessian, fsSURFoctave, fsSURFlayers, fsSURFextended, fsSURFupright );
+                /* Read input image */
+                fsImage = cv::imread( fsImgIPath, CV_LOAD_IMAGE_GRAYSCALE );
 
-                /* Keypoint vector */
-                std::vector < cv::KeyPoint > fsKey;
+                /* Verify image reading */
+                if ( fsImage.data != NULL ) {
 
-                /* SIFT detection */
-                fsSURF.detect( fsImage, fsKey );
+                    /* Instance SIFT detector */
+                    cv::SURF fsSURF( fsSURFhessian, fsSURFoctave, fsSURFlayers, fsSURFextended, fsSURFupright );
 
-                /* Open keypoint output file */
-                fsKeyfile.open( fsKeyOPath, std::ios::out );
+                    /* Keypoint vector */
+                    std::vector < cv::KeyPoint > fsKey;
 
-                /* Verify stream state */
-                if ( fsKeyfile.is_open() == true ) {
+                    /* SIFT detection */
+                    fsSURF.detect( fsImage, fsKey );
 
-                    /* Export keypoint count */
-                    fsKeyfile << fsKey.size() << std::endl;
+                    /* Open keypoint output file */
+                    fsKeyfile.open( fsKeyOPath, std::ios::out );
 
-                    /* Export results */
-                    for ( unsigned int fsIndex( 0 ); fsIndex < fsKey.size(); fsIndex ++ ) {
+                    /* Verify stream state */
+                    if ( fsKeyfile.is_open() == true ) {
 
-                        /* Apply geometric filtering */
-                        if ( ( fsKey[fsIndex].pt.x >= fsEdgeX ) && ( fsKey[fsIndex].pt.x < fsImage.cols - fsEdgeX ) &&
-                             ( fsKey[fsIndex].pt.y >= fsEdgeY ) && ( fsKey[fsIndex].pt.y < fsImage.rows - fsEdgeY ) ) {
+                        /* Export keypoint count */
+                        fsKeyfile << fsKey.size() << std::endl;
 
-                            /* Export keypoint coordinates */
-                            fsKeyfile << fsKey[fsIndex].pt.x     << " " 
-                                      << fsKey[fsIndex].pt.y     << " " 
-                                      << fsKey[fsIndex].size     << " "
-                                      << fsKey[fsIndex].angle    << " " 
-                                      << fsKey[fsIndex].response << " " 
-                                      << fsKey[fsIndex].octave   << std::endl; 
+                        /* Export results */
+                        for ( unsigned int fsIndex( 0 ); fsIndex < fsKey.size(); fsIndex ++ ) {
 
-                            /* Increment exportation count */
-                            fsSURFexported ++;
+                            /* Apply geometric filtering */
+                            if ( ( fsKey[fsIndex].pt.x >= fsEdgeX ) && ( fsKey[fsIndex].pt.x < fsImage.cols - fsEdgeX ) &&
+                                 ( fsKey[fsIndex].pt.y >= fsEdgeY ) && ( fsKey[fsIndex].pt.y < fsImage.rows - fsEdgeY ) ) {
+
+                                /* Export keypoint coordinates */
+                                fsKeyfile << fsKey[fsIndex].pt.x     << " " 
+                                          << fsKey[fsIndex].pt.y     << " " 
+                                          << fsKey[fsIndex].size     << " "
+                                          << fsKey[fsIndex].angle    << " " 
+                                          << fsKey[fsIndex].response << " " 
+                                          << fsKey[fsIndex].octave   << std::endl; 
+
+                                /* Increment exportation count */
+                                fsSURFexported ++;
+
+                            }
 
                         }
 
-                    }
-
-                    /* Close output stream */
-                    fsKeyfile.close();
+                        /* Close output stream */
+                        fsKeyfile.close();
 
                     /* Display message */
-                    std::cout << "Exported " << fsSURFexported << " in file " << fsKeyOPath << std::endl;
+                    } else { std::cout << "Error : Unable to write output file" << std::endl; }
 
                 /* Display message */
-                } else { std::cout << "Error : Unable to write output file" << std::endl; }
+                } else { std::cout << "Error : Unable to read input image" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Unable to read input image" << std::endl; }
+            } else { std::cout << "Error : Invalid path specification" << std::endl; }
 
         }
 

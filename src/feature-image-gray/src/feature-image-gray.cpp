@@ -50,8 +50,8 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsImgIPath[256] = { 0 };
-        char fsImgOPath[256] = { 0 };
+        char * fsImgIPath( NULL );
+        char * fsImgOPath( NULL );
 
         /* Parameters variables */
         float fsFactorR ( 0.299 );
@@ -62,8 +62,8 @@
         cv::Mat fsImage;
 
         /* Search in parameters */
-        lc_stdp( lc_stda( argc, argv, "--input" , "-i" ), argv,   fsImgIPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--output", "-o" ), argv,   fsImgOPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--input" , "-i" ), argv, & fsImgIPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--output", "-o" ), argv, & fsImgOPath, LC_STRING );
         lc_stdp( lc_stda( argc, argv, "--red"   , "-r" ), argv, & fsFactorR , LC_FLOAT  );
         lc_stdp( lc_stda( argc, argv, "--green" , "-g" ), argv, & fsFactorG , LC_FLOAT  );
         lc_stdp( lc_stda( argc, argv, "--blue"  , "-b" ), argv, & fsFactorB , LC_FLOAT  );
@@ -75,37 +75,42 @@
             std::cout << FS_HELP;
 
         } else {
-    
-            /* Read input image */
-            fsImage = cv::imread( fsImgIPath, CV_LOAD_IMAGE_COLOR );
 
-            /* Verify image reading */
-            if ( fsImage.data != NULL ) {
+            /* Verify path strings */
+            if ( ( fsImgIPath != NULL ) && ( fsImgOPath != NULL ) ) {
 
-                /* Create grayscale image */
-                cv::Mat fsGrayscale( fsImage.rows, fsImage.cols, CV_8UC1 );
+                /* Read input image */
+                fsImage = cv::imread( fsImgIPath, CV_LOAD_IMAGE_COLOR );
 
-                /* Layer extraction images */
-                cv::Mat fsLayers[3];
+                /* Verify image reading */
+                if ( fsImage.data != NULL ) {
 
-                /* Extract chromatic layers */
-                cv::split( fsImage, fsLayers );
+                    /* Create grayscale image */
+                    cv::Mat fsGrayscale( fsImage.rows, fsImage.cols, CV_8UC1 );
 
-                /* Compose grayscale image */
-                fsGrayscale = fsFactorR * fsLayers[2] + fsFactorG * fsLayers[1] + fsFactorB * fsLayers[0];
+                    /* Layer extraction images */
+                    cv::Mat fsLayers[3];
+
+                    /* Extract chromatic layers */
+                    cv::split( fsImage, fsLayers );
+
+                    /* Compose grayscale image */
+                    fsGrayscale = fsFactorR * fsLayers[2] + fsFactorG * fsLayers[1] + fsFactorB * fsLayers[0];
 
 
-                /* Write result image */
-                if ( cv::imwrite( fsImgOPath, fsGrayscale ) ) {
+                    /* Write result image */
+                    if ( cv::imwrite( fsImgOPath, fsGrayscale ) == false ) {
 
-                    /* Display message */
-                    std::cout << "Exported " << fsImgOPath << std::endl;
+                        /* Display message */
+                         std::cout << "Error : Unable to write output image" << std::endl;
+
+                    }
 
                 /* Display message */
-                } else { std::cout << "Error : Unable to write output image" << std::endl; }
+                } else { std::cout << "Error : Unable to read input image" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Unable to read input image" << std::endl; }
+            } else { std::cout << "Error : Invalid path specification" << std::endl; }
 
         }
 

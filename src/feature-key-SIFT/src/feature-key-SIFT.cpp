@@ -50,8 +50,8 @@
     int main ( int argc, char ** argv ) {
 
         /* Path variables */
-        char fsImgIPath[256] = { 0 };
-        char fsKeyOPath[256] = { 0 };
+        char * fsImgIPath( NULL );
+        char * fsKeyOPath( NULL );
 
         /* SIFT variables */
         int   fsSIFTexported ( 0    );
@@ -72,8 +72,8 @@
         cv::Mat fsImage;
 
         /* Search in parameters */
-        lc_stdp( lc_stda( argc, argv, "--input"   , "-i" ), argv,   fsImgIPath    , LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--output"  , "-o" ), argv,   fsKeyOPath    , LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--input"   , "-i" ), argv, & fsImgIPath    , LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--output"  , "-o" ), argv, & fsKeyOPath    , LC_STRING );
         lc_stdp( lc_stda( argc, argv, "--maximum" , "-m" ), argv, & fsSIFTmaximum , LC_INT    );
         lc_stdp( lc_stda( argc, argv, "--octave"  , "-a" ), argv, & fsSIFToctave  , LC_INT    );
         lc_stdp( lc_stda( argc, argv, "--contrast", "-c" ), argv, & fsSIFTcontrast, LC_FLOAT  );
@@ -89,64 +89,67 @@
             std::cout << FS_HELP;
 
         } else {
+
+            /* Verify path strings */
+            if ( ( fsImgIPath != NULL ) && ( fsKeyOPath != NULL ) ) {
     
-            /* Read input image */
-            fsImage = cv::imread( fsImgIPath, CV_LOAD_IMAGE_GRAYSCALE );
+                /* Read input image */
+                fsImage = cv::imread( fsImgIPath, CV_LOAD_IMAGE_GRAYSCALE );
 
-            /* Verify image reading */
-            if ( fsImage.data != NULL ) {
+                /* Verify image reading */
+                if ( fsImage.data != NULL ) {
 
-                /* Instance SIFT detector */
-                cv::SIFT fsSift( fsSIFTmaximum, fsSIFToctave, fsSIFTcontrast, fsSIFTedge, fsSIFTsigma );
+                    /* Instance SIFT detector */
+                    cv::SIFT fsSift( fsSIFTmaximum, fsSIFToctave, fsSIFTcontrast, fsSIFTedge, fsSIFTsigma );
 
-                /* Keypoint vector */
-                std::vector < cv::KeyPoint > fsKey;
+                    /* Keypoint vector */
+                    std::vector < cv::KeyPoint > fsKey;
 
-                /* SIFT detection */
-                fsSift.detect( fsImage, fsKey );
+                    /* SIFT detection */
+                    fsSift.detect( fsImage, fsKey );
 
-                /* Open keypoint output file */
-                fsKeyfile.open( fsKeyOPath, std::ios::out );
+                    /* Open keypoint output file */
+                    fsKeyfile.open( fsKeyOPath, std::ios::out );
 
-                /* Verify stream state */
-                if ( fsKeyfile.is_open() == true ) {
+                    /* Verify stream state */
+                    if ( fsKeyfile.is_open() == true ) {
 
-                    /* Export keypoint count */
-                    fsKeyfile << fsKey.size() << std::endl;
+                        /* Export keypoint count */
+                        fsKeyfile << fsKey.size() << std::endl;
 
-                    /* Export results */
-                    for ( unsigned int fsIndex( 0 ); fsIndex < fsKey.size(); fsIndex ++ ) {
+                        /* Export results */
+                        for ( unsigned int fsIndex( 0 ); fsIndex < fsKey.size(); fsIndex ++ ) {
 
-                        /* Apply geometric filtering */
-                        if ( ( fsKey[fsIndex].pt.x >= fsEdgeX ) && ( fsKey[fsIndex].pt.x < fsImage.cols - fsEdgeX ) &&
-                             ( fsKey[fsIndex].pt.y >= fsEdgeY ) && ( fsKey[fsIndex].pt.y < fsImage.rows - fsEdgeY ) ) {
+                            /* Apply geometric filtering */
+                            if ( ( fsKey[fsIndex].pt.x >= fsEdgeX ) && ( fsKey[fsIndex].pt.x < fsImage.cols - fsEdgeX ) &&
+                                 ( fsKey[fsIndex].pt.y >= fsEdgeY ) && ( fsKey[fsIndex].pt.y < fsImage.rows - fsEdgeY ) ) {
 
-                            /* Export keypoint coordinates */
-                            fsKeyfile << fsKey[fsIndex].pt.x     << " " 
-                                      << fsKey[fsIndex].pt.y     << " " 
-                                      << fsKey[fsIndex].size     << " "
-                                      << fsKey[fsIndex].angle    << " " 
-                                      << fsKey[fsIndex].response << " " 
-                                      << fsKey[fsIndex].octave   << std::endl; 
+                                /* Export keypoint coordinates */
+                                fsKeyfile << fsKey[fsIndex].pt.x     << " " 
+                                          << fsKey[fsIndex].pt.y     << " " 
+                                          << fsKey[fsIndex].size     << " "
+                                          << fsKey[fsIndex].angle    << " " 
+                                          << fsKey[fsIndex].response << " " 
+                                          << fsKey[fsIndex].octave   << std::endl; 
 
-                            /* Increment exportation count */
-                            fsSIFTexported ++;
+                                /* Increment exportation count */
+                                fsSIFTexported ++;
+
+                            }
 
                         }
 
-                    }
-
-                    /* Close output stream */
-                    fsKeyfile.close();
+                        /* Close output stream */
+                        fsKeyfile.close();
 
                     /* Display message */
-                    std::cout << "Exported " << fsSIFTexported << " in file " << fsKeyOPath << std::endl;
+                    } else { std::cout << "Error : Unable to write output file" << std::endl; }
 
                 /* Display message */
-                } else { std::cout << "Error : Unable to write output file" << std::endl; }
+                } else { std::cout << "Error : Unable to read input image" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Unable to read input image" << std::endl; }
+            } else { std::cout << "Error : Invalid path specification" << std::endl; }
 
         }
 

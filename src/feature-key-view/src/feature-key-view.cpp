@@ -50,9 +50,9 @@
     int main ( int argc, char ** argv ) {
 
         /* Path strings */
-        char  fsImgIPath[256] = { 0 };
-        char  fsImgOPath[256] = { 0 };
-        char  fsKeyIPath[256] = { 0 };
+        char * fsImgIPath( NULL );
+        char * fsImgOPath( NULL );
+        char * fsKeyIPath( NULL );
 
         /* Keypoint coordinates */
         float fsKeyX ( 0.0 );
@@ -69,9 +69,9 @@
         cv::Mat fsImage;
 
         /* Search in parameters */
-        lc_stdp( lc_stda( argc, argv, "--input"   , "-i" ), argv, fsImgIPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--output"  , "-o" ), argv, fsImgOPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--keyfile" , "-k" ), argv, fsKeyIPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--input"   , "-i" ), argv, & fsImgIPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--output"  , "-o" ), argv, & fsImgOPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--keyfile" , "-k" ), argv, & fsKeyIPath, LC_STRING );
 
         /* Software swicth */
         if ( ( lc_stda( argc, argv, "--help", "-h" ) ) || ( argc <= 1 ) ) {
@@ -81,52 +81,57 @@
 
         } else {
     
-            /* Read input image */
-            fsImage = cv::imread( fsImgIPath, CV_LOAD_IMAGE_GRAYSCALE );
+            /* Verify path strings */
+            if ( ( fsImgIPath != NULL ) && ( fsImgOPath != NULL ) && ( fsKeyIPath != NULL ) ) {
 
-            /* Verify image reading */
-            if ( fsImage.data != NULL ) {
+                /* Read input image */
+                fsImage = cv::imread( fsImgIPath, CV_LOAD_IMAGE_GRAYSCALE );
 
-                /* Convert image to RGB */
-                cvtColor( fsImage, fsImage, CV_GRAY2RGB );
+                /* Verify image reading */
+                if ( fsImage.data != NULL ) {
 
-                /* Open keypoint output file */
-                fsKeyfile.open( fsKeyIPath, std::ios::in );
+                    /* Convert image to RGB */
+                    cvtColor( fsImage, fsImage, CV_GRAY2RGB );
 
-                /* Verify stream state */
-                if ( fsKeyfile.is_open() == true ) {
+                    /* Open keypoint output file */
+                    fsKeyfile.open( fsKeyIPath, std::ios::in );
 
-                    /* Read keypoint count */
-                    fsKeyfile >> fsRows;
+                    /* Verify stream state */
+                    if ( fsKeyfile.is_open() == true ) {
 
-                    /* Export results */
-                    for ( int fsIndex( 0 ); fsIndex < fsRows; fsIndex ++ ) {
+                        /* Read keypoint count */
+                        fsKeyfile >> fsRows;
 
-                        /* Read current keypoint */
-                        fsKeyfile >> fsKeyX >> fsKeyY >> fsVoid >> fsVoid >> fsVoid >> fsVoid;
+                        /* Export results */
+                        for ( int fsIndex( 0 ); fsIndex < fsRows; fsIndex ++ ) {
 
-                        /* Draw cricle in image */
-                        cv::circle( fsImage, cv::Point2f( fsKeyX, fsKeyY ), 4, cv::Scalar( 0, 177, 235 ) );
+                            /* Read current keypoint */
+                            fsKeyfile >> fsKeyX >> fsKeyY >> fsVoid >> fsVoid >> fsVoid >> fsVoid;
 
-                    }
+                            /* Draw cricle in image */
+                            cv::circle( fsImage, cv::Point2f( fsKeyX, fsKeyY ), 4, cv::Scalar( 0, 177, 235 ) );
 
-                    /* Close output stream */
-                    fsKeyfile.close();
+                        }
 
-                    /* Write result image */
-                    if ( imwrite( fsImgOPath, fsImage ) ) {
+                        /* Close output stream */
+                        fsKeyfile.close();
 
-                        /* Display message */
-                        std::cout << "Exported " << fsImgOPath << " using keyfile " << fsKeyIPath << std::endl;
+                        /* Write result image */
+                        if ( imwrite( fsImgOPath, fsImage ) == false ) {
+
+                            /* Display message */
+                            std::cout << "Error : Unable to write output image" << std::endl;
+
+                        }
 
                     /* Display message */
-                    } else { std::cout << "Error : Unable to write output image" << std::endl; }
+                    } else { std::cout << "Error : Unable to read keyfile" << std::endl; }
 
                 /* Display message */
-                } else { std::cout << "Error : Unable to read keyfile" << std::endl; }
+                } else { std::cout << "Error : Unable to read input image" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Unable to read input image" << std::endl; }
+            } else { std::cout << "Error : Invalid path specification" << std::endl; }
 
         }
 
