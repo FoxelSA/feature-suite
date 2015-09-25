@@ -50,10 +50,10 @@
     int main ( int argc, char ** argv ) {
 
         /* Path strings */
-        char fsImAIPath[256] = { 0 };
-        char fsImBIPath[256] = { 0 };
-        char fsMatIPath[256] = { 0 };
-        char fsImgOPath[256] = { 0 };
+        char * fsImAIPath( NULL );
+        char * fsImBIPath( NULL );
+        char * fsMatIPath( NULL );
+        char * fsImgOPath( NULL );
 
         /* Keypoint matrix size */
         int fsRows ( 0 );
@@ -75,10 +75,10 @@
         cv::Mat fsOutput;
 
         /* Search in parameters */
-        lc_stdp( lc_stda( argc, argv, "--input-a"  , "-i" ), argv, fsImAIPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--input-b"  , "-j" ), argv, fsImBIPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--matchfile", "-m" ), argv, fsMatIPath, LC_STRING );
-        lc_stdp( lc_stda( argc, argv, "--output"   , "-o" ), argv, fsImgOPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--input-a"  , "-i" ), argv, & fsImAIPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--input-b"  , "-j" ), argv, & fsImBIPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--matchfile", "-m" ), argv, & fsMatIPath, LC_STRING );
+        lc_stdp( lc_stda( argc, argv, "--output"   , "-o" ), argv, & fsImgOPath, LC_STRING );
 
         /* Software swicth */
         if ( ( lc_stda( argc, argv, "--help", "-h" ) ) || ( argc <= 1 ) ) {
@@ -87,60 +87,65 @@
             std::cout << FS_HELP;
 
         } else {
+
+            /* Verify path strings */
+            if ( ( fsImAIPath != NULL ) && ( fsImBIPath != NULL ) && ( fsMatIPath != NULL ) && ( fsImgOPath != NULL ) ) {
     
-            /* Read input image */
-            fsInputA = cv::imread( fsImAIPath, CV_LOAD_IMAGE_GRAYSCALE );
-            fsInputB = cv::imread( fsImBIPath, CV_LOAD_IMAGE_GRAYSCALE );
+                /* Read input image */
+                fsInputA = cv::imread( fsImAIPath, CV_LOAD_IMAGE_GRAYSCALE );
+                fsInputB = cv::imread( fsImBIPath, CV_LOAD_IMAGE_GRAYSCALE );
 
-            /* Verify image reading */
-            if ( ( fsInputA.data != NULL ) && ( fsInputB.data != NULL ) ) {
+                /* Verify image reading */
+                if ( ( fsInputA.data != NULL ) && ( fsInputB.data != NULL ) ) {
 
-                /* Channel mixing parameters */
-                cv::Mat fsMixArray[] = { fsInputA, 0.5 * fsInputB }; int fsMixParam[] = { 0, 0, 1, 1 };
+                    /* Channel mixing parameters */
+                    cv::Mat fsMixArray[] = { fsInputA, 0.5 * fsInputB }; int fsMixParam[] = { 0, 0, 1, 1 };
 
-                /* Create output matrix */
-                fsOutput.create( fsInputA.rows, fsInputA.cols, CV_8UC3 );
+                    /* Create output matrix */
+                    fsOutput.create( fsInputA.rows, fsInputA.cols, CV_8UC3 );
 
-                /* Create composite image by channel mixing */
-                cv::mixChannels( fsMixArray, 2, & fsOutput, 1, fsMixParam, 2 );
+                    /* Create composite image by channel mixing */
+                    cv::mixChannels( fsMixArray, 2, & fsOutput, 1, fsMixParam, 2 );
 
-                /* Open keypoint output file */
-                fsMatchfile.open( fsMatIPath, std::ios::in );
+                    /* Open keypoint output file */
+                    fsMatchfile.open( fsMatIPath, std::ios::in );
 
-                /* Verify stream state */
-                if ( fsMatchfile.is_open() == true ) {
+                    /* Verify stream state */
+                    if ( fsMatchfile.is_open() == true ) {
 
-                    /* Read keypoint matrix size */
-                    fsMatchfile >> fsRows;
+                        /* Read keypoint matrix size */
+                        fsMatchfile >> fsRows;
 
-                    /* Export results */
-                    for ( int fsIndex( 0 ); fsIndex < fsRows; fsIndex ++ ) {
+                        /* Export results */
+                        for ( int fsIndex( 0 ); fsIndex < fsRows; fsIndex ++ ) {
 
-                        /* Read current keypoint */
-                        fsMatchfile >> fsKeyAI >> fsKeyBI >> fsKeyAX >> fsKeyAY >> fsKeyBX >> fsKeyBY;
+                            /* Read current keypoint */
+                            fsMatchfile >> fsKeyAI >> fsKeyBI >> fsKeyAX >> fsKeyAY >> fsKeyBX >> fsKeyBY;
 
-                        /* Draw match line */
-                        cv::line( fsOutput, cv::Point2f( fsKeyAX, fsKeyAY ), cv::Point( fsKeyBX, fsKeyBY ), cv::Scalar( 0, 177, 235 ) );
+                            /* Draw match line */
+                            cv::line( fsOutput, cv::Point2f( fsKeyAX, fsKeyAY ), cv::Point( fsKeyBX, fsKeyBY ), cv::Scalar( 0, 177, 235 ) );
 
-                    }
+                        }
 
-                    /* Close output stream */
-                    fsMatchfile.close();
+                        /* Close output stream */
+                        fsMatchfile.close();
 
-                    /* Write result image */
-                    if ( imwrite( fsImgOPath, fsOutput ) ) {
+                        /* Write result image */
+                        if ( imwrite( fsImgOPath, fsOutput ) == false ) {
 
-                        /* Display message */
-                        std::cout << "Exported " << fsImgOPath << " using keyfile " << fsMatIPath << std::endl;
+                            /* Display message */
+                            std::cout << "Error : Unable to write output image" << std::endl;
+
+                        }
 
                     /* Display message */
-                    } else { std::cout << "Error : Unable to write output image" << std::endl; }
+                    } else { std::cout << "Error : Unable to read input matchfile" << std::endl; }
 
                 /* Display message */
-                } else { std::cout << "Error : Unable to read input matchfile" << std::endl; }
+                } else { std::cout << "Error : Unable to read input images" << std::endl; }
 
             /* Display message */
-            } else { std::cout << "Error : Unable to read input images" << std::endl; }
+            } else { std::cout << "Error : Invalid path specification" << std::endl; }
 
         }
 
